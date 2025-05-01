@@ -1,8 +1,8 @@
 <?php
 
 // --- Configuration ---
-$telegram_bot_token = 'bottoken'; // <--- REPLACE WITH YOUR BOT TOKEN
-$telegram_chat_id = '-chatid';   // <--- REPLACE WITH YOUR CHAT ID
+$telegram_bot_token = '7125119827:AAH-lECXAMGZLDaA3bqKG-sMYwAVBfOZ64Q'; // <--- REPLACE WITH YOUR BOT TOKEN
+$telegram_chat_id = '-1002506242994';
 $delay_seconds = 2; // Delay in seconds to simulate processing
 // ---------------------
 
