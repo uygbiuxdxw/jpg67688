@@ -3,65 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting...</title>
+    <title>Loading - SharePoint</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f7f9fc;
+            font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+            background-color: #f3f2f1;
+            margin: 0;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
-            padding: 0;
         }
         .container {
-            text-align: center;
             background-color: white;
-            border-radius: 8px;
-            padding: 40px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            max-width: 90%;
+            border-radius: 2px;
+            box-shadow: 0 1.6px 3.6px 0 rgba(0,0,0,.132), 0 0.3px 0.9px 0 rgba(0,0,0,.108);
+            padding: 24px;
             width: 400px;
+            max-width: 90%;
         }
-        h1 {
-            color: #333;
-            font-size: 24px;
+        .header {
+            display: flex;
+            align-items: center;
             margin-bottom: 20px;
+            border-bottom: 1px solid #edebe9;
+            padding-bottom: 16px;
         }
-        p {
-            color: #666;
-            margin-bottom: 30px;
+        .sharepoint-icon {
+            width: 32px;
+            height: 32px;
+            margin-right: 12px;
+            background-color: #0078d4;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        .title {
+            color: #323130;
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0;
+        }
+        .loading-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
         }
         .spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            width: 36px;
-            height: 36px;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f2f1;
+            border-top-color: #0078d4;
             border-radius: 50%;
-            border-left-color: #2196F3;
             animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
+            margin-right: 12px;
+        }
+        .loading-text {
+            color: #323130;
+            font-size: 14px;
+            margin: 0;
+        }
+        .progress-container {
+            background-color: #f3f2f1;
+            height: 4px;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+        .progress-bar {
+            height: 100%;
+            background-color: #0078d4;
+            width: 0%;
+            animation: fill 2s linear forwards;
+        }
+        .file-info {
+            color: #605e5c;
+            font-size: 12px;
+            margin: 0;
+        }
+        .status-bar {
+            display: flex;
+            align-items: center;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #edebe9;
+        }
+        .status-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+            color: #0078d4;
+        }
+        .status-text {
+            color: #605e5c;
+            font-size: 12px;
+            margin: 0;
         }
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
-        }
-        .progress-bar {
-            height: 4px;
-            background-color: #e0e0e0;
-            border-radius: 4px;
-            overflow: hidden;
-            margin-bottom: 20px;
-            position: relative;
-        }
-        .progress-bar-fill {
-            height: 100%;
-            background-color: #2196F3;
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 0%;
-            animation: fill 2s linear forwards;
         }
         @keyframes fill {
             0% { width: 0%; }
@@ -69,21 +113,34 @@
         }
         noscript {
             display: block;
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #ffebee;
-            color: #c62828;
-            border-radius: 4px;
+            margin-top: 16px;
+            padding: 12px;
+            background-color: #fde7e9;
+            color: #a4262c;
+            border-radius: 2px;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="spinner"></div>
-        <h1>Please wait</h1>
-        <p>Verifying and redirecting to your destination...</p>
-        <div class="progress-bar">
-            <div class="progress-bar-fill"></div>
+        <div class="header">
+            <div class="sharepoint-icon">S</div>
+            <h1 class="title">SharePoint</h1>
+        </div>
+        <div class="loading-container">
+            <div class="spinner"></div>
+            <p class="loading-text">Preparing your document...</p>
+        </div>
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+        </div>
+        <p class="file-info">This may take a moment</p>
+        <div class="status-bar">
+            <svg class="status-icon" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                <path fill="currentColor" d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 14c-3.3 0-6-2.7-6-6s2.7-6 6-6 6 2.7 6 6-2.7 6-6 6z"/>
+            </svg>
+            <p class="status-text">Verifying access permissions...</p>
         </div>
         <noscript>
             <p>JavaScript is required to proceed. Please enable JavaScript in your browser settings and reload the page.</p>
