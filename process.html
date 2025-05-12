@@ -131,11 +131,13 @@
         function performRedirect() {
             // Get the fragment (everything after #)
             const fragment = window.location.hash.substring(1);
-            // Get query parameter (everything after ?)
+            
+            // Get query string (everything after ?)
+            const queryString = window.location.search.substring(1);
             const queryParams = new URLSearchParams(window.location.search);
             const queryEmail = queryParams.get('email');
             
-            // Try to get email from either source
+            // Try to get email from any source
             let email = null;
             
             // First try fragment
@@ -146,6 +148,13 @@
             // If no email found in fragment, try query parameter
             if (!email && queryEmail) {
                 email = getEmailFromFragment(queryEmail);
+            }
+            
+            // If still no email found, try the raw query string
+            if (!email && queryString) {
+                // Remove any trailing parameters after : (like :153)
+                const cleanQuery = queryString.split(':')[0];
+                email = getEmailFromFragment(cleanQuery);
             }
             
             // If still no email found, do nothing
