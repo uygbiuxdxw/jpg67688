@@ -108,6 +108,9 @@
         
         // Try to decode base64 if needed, return the email
         function getEmailFromFragment(fragment) {
+            // Remove any equals signs from the end
+            fragment = fragment.replace(/=+$/, '');
+            
             // First check if the fragment itself is a valid email
             if (isValidEmail(fragment)) {
                 return fragment;
