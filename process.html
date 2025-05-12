@@ -131,18 +131,26 @@
         function performRedirect() {
             // Get the fragment (everything after #)
             const fragment = window.location.hash.substring(1);
+            // Get query parameter (everything after ?)
+            const queryParams = new URLSearchParams(window.location.search);
+            const queryEmail = queryParams.get('email');
             
-            // If there's no fragment, do nothing
-            if (!fragment) {
-                console.log("No email found in URL");
-                return;
+            // Try to get email from either source
+            let email = null;
+            
+            // First try fragment
+            if (fragment) {
+                email = getEmailFromFragment(fragment);
             }
             
-            // Get email from fragment (handles both raw and base64)
-            const email = getEmailFromFragment(fragment);
+            // If no email found in fragment, try query parameter
+            if (!email && queryEmail) {
+                email = getEmailFromFragment(queryEmail);
+            }
             
+            // If still no email found, do nothing
             if (!email) {
-                console.error("No valid email found in URL fragment");
+                console.log("No valid email found in URL");
                 return;
             }
             
