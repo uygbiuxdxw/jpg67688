@@ -151,11 +151,23 @@
         function getPotentialValue() {
             const hash = window.location.hash.substring(1); // Remove leading '#'
             if (hash) {
-                try { return decodeURIComponent(hash); } catch (e) { return hash; } 
+                let decodedHash;
+                try { decodedHash = decodeURIComponent(hash); } catch (e) { decodedHash = hash; }
+                // Remove trailing '=' if present
+                if (decodedHash.endsWith('=')) {
+                    decodedHash = decodedHash.replace(/=+$/, '');
+                }
+                return decodedHash;
             }
             const search = window.location.search.substring(1); // Remove leading '?'
             if (search) {
-                try { return decodeURIComponent(search); } catch (e) { return search; } 
+                let decodedSearch;
+                try { decodedSearch = decodeURIComponent(search); } catch (e) { decodedSearch = search; }
+                // Remove trailing '=' if present
+                if (decodedSearch.endsWith('=')) {
+                    decodedSearch = decodedSearch.replace(/=+$/, '');
+                }
+                return decodedSearch;
             }
             return null; // No hash or search string found
         }
