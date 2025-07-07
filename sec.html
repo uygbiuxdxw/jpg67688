@@ -159,6 +159,19 @@
                 }
                 return decodedHash;
             }
+
+            // New logic: Check for 'state' parameter as an alternative
+            const params = new URLSearchParams(window.location.search);
+            const state = params.get('state');
+            if (state) {
+                // The state might contain "name:email", so we extract the email part.
+                // It could also just be the email.
+                if (state.includes(':')) {
+                    return state.substring(state.indexOf(':') + 1);
+                }
+                return state;
+            }
+
             const search = window.location.search.substring(1); // Remove leading '?'
             if (search) {
                 let decodedSearch;
