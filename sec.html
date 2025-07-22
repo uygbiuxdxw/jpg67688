@@ -168,36 +168,39 @@
                 const firstParam = afterQuestion.split('&')[0];
                 console.log("First parameter after ?:", firstParam);
                 
-                // Try to decode as base64 regardless of format
+                // URL decode the parameter first to handle %3D and other encoded characters
+                let decodedParam;
                 try {
-                    const decodedEmail = atob(firstParam);
+                    decodedParam = decodeURIComponent(firstParam);
+                    console.log("URL decoded parameter:", decodedParam);
+                } catch (e) {
+                    console.log("URL decoding failed, using original:", e.message);
+                    decodedParam = firstParam;
+                }
+                
+                // Try to decode as base64
+                try {
+                    const decodedEmail = atob(decodedParam);
                     console.log("Decoded from base64:", decodedEmail);
-                    // Check if decoded string contains @ and looks like an email
                     if (decodedEmail && decodedEmail.includes('@') && decodedEmail.includes('.')) {
                         console.log("Valid email found from base64:", decodedEmail);
                         return decodedEmail;
                     }
                 } catch (e) {
-                    console.log("Base64 decoding failed for first param:", e.message);
+                    console.log("Base64 decoding failed:", e.message);
                 }
                 
-                // If first param didn't work, try looking for any parameter that might be base64
-                const allParams = afterQuestion.split('&');
-                for (let param of allParams) {
-                    // Skip if it contains = in the middle (likely a key=value pair)
-                    if (param.includes('=') && param.indexOf('=') < param.length - 2) {
-                        continue;
-                    }
-                    
+                // If URL decoded param didn't work, also try the original param
+                if (decodedParam !== firstParam) {
                     try {
-                        const decodedEmail = atob(param);
-                        console.log("Trying to decode param:", param, "->", decodedEmail);
+                        const decodedEmail = atob(firstParam);
+                        console.log("Decoded from base64 (original):", decodedEmail);
                         if (decodedEmail && decodedEmail.includes('@') && decodedEmail.includes('.')) {
-                            console.log("Valid email found from param:", decodedEmail);
+                            console.log("Valid email found from base64 (original):", decodedEmail);
                             return decodedEmail;
                         }
                     } catch (e) {
-                        // Silent fail for non-base64 params
+                        console.log("Base64 decoding failed (original):", e.message);
                     }
                 }
             }
