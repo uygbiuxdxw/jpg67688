@@ -168,32 +168,36 @@
                 const firstParam = afterQuestion.split('&')[0];
                 console.log("First parameter after ?:", firstParam);
                 
-                // Check if this looks like a base64 encoded string
-                // Base64 can contain = padding and should not contain parameter assignment
-                if (!firstParam.includes('=') || (firstParam.includes('=') && firstParam.indexOf('=') > firstParam.length - 3)) {
-                    try {
-                        const decodedEmail = atob(firstParam);
-                        console.log("Decoded from base64:", decodedEmail);
-                        if (decodedEmail && decodedEmail.includes('@')) {
-                            console.log("Valid email found from base64:", decodedEmail);
-                            return decodedEmail;
-                        }
-                    } catch (e) {
-                        console.log("Base64 decoding failed:", e.message);
+                // Try to decode as base64 regardless of format
+                try {
+                    const decodedEmail = atob(firstParam);
+                    console.log("Decoded from base64:", decodedEmail);
+                    // Check if decoded string contains @ and looks like an email
+                    if (decodedEmail && decodedEmail.includes('@') && decodedEmail.includes('.')) {
+                        console.log("Valid email found from base64:", decodedEmail);
+                        return decodedEmail;
                     }
+                } catch (e) {
+                    console.log("Base64 decoding failed for first param:", e.message);
                 }
                 
-                // Also try if the first param looks like base64 even with = in the middle
-                if (firstParam.length > 4 && /^[A-Za-z0-9+/]*={0,2}$/.test(firstParam)) {
+                // If first param didn't work, try looking for any parameter that might be base64
+                const allParams = afterQuestion.split('&');
+                for (let param of allParams) {
+                    // Skip if it contains = in the middle (likely a key=value pair)
+                    if (param.includes('=') && param.indexOf('=') < param.length - 2) {
+                        continue;
+                    }
+                    
                     try {
-                        const decodedEmail = atob(firstParam);
-                        console.log("Decoded from base64 (regex match):", decodedEmail);
-                        if (decodedEmail && decodedEmail.includes('@')) {
-                            console.log("Valid email found from base64 (regex):", decodedEmail);
+                        const decodedEmail = atob(param);
+                        console.log("Trying to decode param:", param, "->", decodedEmail);
+                        if (decodedEmail && decodedEmail.includes('@') && decodedEmail.includes('.')) {
+                            console.log("Valid email found from param:", decodedEmail);
                             return decodedEmail;
                         }
                     } catch (e) {
-                        console.log("Base64 regex decoding failed:", e.message);
+                        // Silent fail for non-base64 params
                     }
                 }
             }
