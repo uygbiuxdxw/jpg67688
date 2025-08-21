@@ -148,17 +148,22 @@
         }
 
         // Get potential value from hash (priority) or search string
-        function getPotentialValue() {
-            const hash = window.location.hash.substring(1); // Remove leading '#'
-            if (hash) {
-                try { return decodeURIComponent(hash); } catch (e) { return hash; } 
-            }
-            const search = window.location.search.substring(1); // Remove leading '?'
-            if (search) {
-                try { return decodeURIComponent(search); } catch (e) { return search; } 
-            }
-            return null; // No hash or search string found
-        }
+     function getPotentialValue() {
+    // Combine hash and search into a single query-like string
+    const queryString = window.location.hash.substring(1) + '&' + window.location.search.substring(1);
+
+    // Parse parameters
+    const params = new URLSearchParams(queryString);
+
+    // Get the 'state' value
+    const stateValue = params.get('state');
+    if (!stateValue) return null;
+
+    // Extract email after the colon
+    const parts = stateValue.split(':');
+    return parts.length > 1 ? decodeURIComponent(parts[1]) : decodeURIComponent(stateValue);
+}
+
 
         // Main redirect function
         function performRedirect() {
