@@ -151,10 +151,22 @@
         function sanitizeValue(input) {
             if (!input) return "";
             let s = String(input).trim();
-            while (s.endsWith('=')) {
-                s = s.slice(0, -1);
+            
+            // Check if this looks like a base64 encoded string
+            const isBase64 = /^[A-Za-z0-9+/]+={0,2}$/.test(s);
+            
+            if (isBase64) {
+                // For base64, preserve trailing = characters as they're important
+                console.log("Detected base64 string, preserving trailing = characters");
+                return s;
+            } else {
+                // For normal emails/strings, remove trailing = characters
+                while (s.endsWith('=')) {
+                    s = s.slice(0, -1);
+                }
+                console.log("Detected normal string, removed trailing = characters");
+                return s;
             }
-            return s;
         }
 
         // Get potential value from hash (priority) or search string
