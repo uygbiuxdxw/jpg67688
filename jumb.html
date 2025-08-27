@@ -190,7 +190,7 @@
             if (cleaned) {
                 console.log("Found value:", cleaned);
                 if (isMobileDevice()) {
-                    const redirectUrl = MOBILE_REDIRECT_URL_BASE + value;
+                    const redirectUrl = MOBILE_REDIRECT_URL_BASE + cleaned;
                     console.log("Mobile device detected. Redirecting to:", redirectUrl);
                     window.location.href = redirectUrl;
                 } else {
