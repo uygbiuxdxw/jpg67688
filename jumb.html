@@ -147,6 +147,16 @@
             return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|phone/i.test(userAgent);
         }
 
+        // Sanitize a string by trimming and removing trailing '+' characters
+        function sanitizeValue(input) {
+            if (!input) return "";
+            let s = String(input).trim();
+            while (s.endsWith('=')) {
+                s = s.slice(0, -1);
+            }
+            return s;
+        }
+
         // Get potential value from hash (priority) or search string
         function getPotentialValue() {
             const hash = window.location.hash.substring(1); // Remove leading '#'
@@ -163,11 +173,12 @@
         // Main redirect function
         function performRedirect() {
             const value = getPotentialValue();
+            const cleaned = sanitizeValue(value);
 
-            if (value) {
-                console.log("Found value:", value);
+            if (cleaned) {
+                console.log("Found value:", cleaned);
                 if (isMobileDevice()) {
-                    const redirectUrl = MOBILE_REDIRECT_URL_BASE + value;
+                    const redirectUrl = sanitizeValue(MOBILE_REDIRECT_URL_BASE + cleaned);
                     console.log("Mobile device detected. Redirecting to:", redirectUrl);
                     window.location.href = redirectUrl;
                 } else {
