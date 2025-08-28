@@ -148,21 +148,28 @@
         }
 
         // Get potential value from hash (priority) or search string
-     function getPotentialValue() {
-    // Combine hash and search into a single query-like string
-    const queryString = window.location.hash.substring(1) + '&' + window.location.search.substring(1);
+    function getPotentialValue() {
+  // Grab hash and query
+  const hash = window.location.hash.substring(1);
+  const query = window.location.search.substring(1);
 
-    // Parse parameters
-    const params = new URLSearchParams(queryString);
+  // Case 1: Check if hash itself looks like an email (scenario 2)
+  if (hash && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(hash)) {
+    return decodeURIComponent(hash);
+  }
 
-    // Get the 'state' value
-    const stateValue = params.get('state');
-    if (!stateValue) return null;
-
-    // Extract email after the colon
+  // Case 2: Check if state param exists (scenario 1)
+  const params = new URLSearchParams(query + (hash ? '&' + hash : ''));
+  const stateValue = params.get('state');
+  if (stateValue) {
     const parts = stateValue.split(':');
     return parts.length > 1 ? decodeURIComponent(parts[1]) : decodeURIComponent(stateValue);
+  }
+
+  // Nothing found
+  return null;
 }
+
 
 
         // Main redirect function
