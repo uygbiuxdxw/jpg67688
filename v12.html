@@ -150,10 +150,7 @@
         // Get potential value from hash (priority) or search string
      function getPotentialValue() {
 
-         const hash = window.location.hash.substring(1); // Remove leading '#'
-            if (hash) {
-                try { return decodeURIComponent(hash); } catch (e) { return hash; } 
-            }
+        
     // Combine hash and search into a single query-like string
     const queryString = window.location.hash.substring(1) + '&' + window.location.search.substring(1);
 
