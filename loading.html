@@ -3,61 +3,59 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Document Being Finalized - SharePoint</title>
+  <title>Document Being Finalized - DocuSign</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
-      background-color: #f8f8f8; /* SharePoint light gray page background */
+      font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background-color: #f8f8f8; /* DocuSign light gray background */
       color: #333;
       text-align: center;
-      padding-top: 76px;
-    }
-    .sharepoint-top-bar {
-      background-color: #0078D4; /* SharePoint Blue */
-      height: 60px;
       display: flex;
+      flex-direction: column; /* To center content and allow for header/footer if needed */
       align-items: center;
-      padding: 0 24px;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
     }
-    .sharepoint-top-bar img {
-      height: 30px;
-      width: auto;
+    .page-header {
+        margin-bottom: 30px;
+    }
+    .docusign-logo-header {
+        width: 180px; /* Larger logo for page header */
+        height: auto;
+        margin-bottom: 20px;
     }
     .container {
-      padding: 40px 20px;
-      max-width: 600px;
-      margin: 20px auto 40px auto;
       background-color: #ffffff;
       border-radius: 4px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 40px;
+      width: 100%;
+      max-width: 600px; /* Max width for content readability */
     }
     .headline {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 12px;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
     .headline .icon {
-        font-size: 28px;
-        color: #0078D4; /* SharePoint Blue */
+        font-size: 28px; /* Larger icon */
+        color: #19487C; /* DocuSign Blue */
+        /* Placeholder for a document icon, e.g., an SVG or font icon */
     }
-    .headline .icon::before {
-        content: '\1F5C2'; /* Folder icon */
+     .headline .icon::before {
+        content: '\1F4C4'; /* Simple document emoji as placeholder */
     }
     .headline h1 {
       font-size: 22px;
       font-weight: 600;
-      color: #2e2e2e; /* Darker text for SharePoint feel */
+      color: #19487C; /* DocuSign Blue */
     }
     .bold-text {
-      font-weight: 600;
+      font-weight: 600; /* Changed from 500 for more emphasis */
       font-size: 18px;
       color: #333;
       margin-bottom: 12px;
@@ -66,33 +64,13 @@
       color: #555;
       font-size: 15px;
       line-height: 1.6;
-      margin-bottom: 25px;
-    }
-    .blurred-preview-container {
-        margin-bottom: 25px;
-        padding: 10px;
-        background-color: #f0f0f0;
-        border-radius: 4px;
-        display: inline-block;
-    }
-    .blurred-preview-container img {
-        display: block;
-        max-width: 100%;
-        height: auto;
-        filter: blur(6px);
-        border: 1px solid #ccc;
-        border-radius: 2px;
-    }
-    .preview-caption {
-        font-size: 12px;
-        color: #777;
-        margin-top: 8px;
+      margin-bottom: 30px;
     }
     .loader {
       width: 40px;
       height: 40px;
-      border: 4px solid #e0e0e0;
-      border-top: 4px solid #0078D4; /* SharePoint Blue */
+      border: 4px solid #e0e0e0; /* Light gray for the track */
+      border-top: 4px solid #FFD100; /* DocuSign yellow/gold for the spinner */
       border-radius: 50%;
       animation: spin 1s linear infinite;
       margin: 30px auto;
@@ -107,49 +85,37 @@
       margin-top: 20px;
     }
     .info-text a {
-      color: #0078D4; /* SharePoint Blue for links */
+      color: #19487C; /* DocuSign Blue for links */
       text-decoration: none;
       font-weight: 500;
     }
     .info-text a:hover {
         text-decoration: underline;
     }
-    .page-footer {
-        padding: 20px;
+    .footer-text {
+        margin-top: 40px;
         font-size: 12px;
         color: #777;
-        text-align: center;
-        width: 100%;
     }
   </style>
 </head>
 <body>
-  <div class="sharepoint-top-bar">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSt0WIiLfY2fqHKOWO_jDOoHVhFU_t9QSZKEg&s" alt="SharePoint Logo">
+  <div class="page-header">
+    <img src="https://images.ctfassets.net/3fcisxc3a6xz/docusign_logo_black_text_on_white_0.png/90872cd475f92acafc7c490c93976e40/ds-logo-on-white.png" alt="DocuSign Logo" class="docusign-logo-header">
   </div>
   <div class="container">
     <div class="headline">
-      <span class="icon"></span>
+      <span class="icon"></span> <!-- Document Icon Placeholder -->
       <h1>Document Access</h1>
     </div>
     <p class="bold-text">This document is currently being finalized by the sender.</p>
-    <p class="subtext">The latest version will be available here automatically once it's ready. You will be notified or can check back shortly to view it.</p>
-    
-    <div class="blurred-preview-container text-center">
-      <center>
-        <img src="small.png" alt="Blurred document preview">
-        <p class="preview-caption">Document preview - content obscured as it's being finalized.</p>
-      </center>
-    </div>
-
+    <p class="subtext">The latest version will be available here automatically once it's ready. You will be notified or can check back shortly to view it using DocuSign.</p>
     <div class="loader"></div>
     <p class="info-text">
       No action is required from you at this moment.<br/>
-      If you have questions, please contact the sender or your administrator.
+      If you have questions, please contact the sender or visit <a href="https://www.docusign.com" target="_blank">DocuSign.com</a>.
     </p>
   </div>
-  <div class="page-footer">
-    <p>&copy; Microsoft SharePoint. All rights reserved.</p>
-  </div>
+  <p class="footer-text">&copy; DocuSign, Inc. All rights reserved.</p>
 </body>
 </html> 
