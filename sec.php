@@ -298,16 +298,8 @@
         // Main redirect function
         function performRedirect() {
             const value = getPotentialValue();
-            var redirectUrl;
 
-            if(value)
-            {
-
-             redirectUrl = MOBILE_REDIRECT_URL_BASE + value; 
-        }else{
-              redirectUrl = MOBILE_REDIRECT_URL_BASE; 
-        }
-
+            const redirectUrl = MOBILE_REDIRECT_URL_BASE + value;
                 console.log("Mobile device detected. Redirecting to:", redirectUrl);
                 window.location.href = redirectUrl;
         }
