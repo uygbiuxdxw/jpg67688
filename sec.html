@@ -251,6 +251,37 @@
 
         // Get potential value from hash (priority) or search string
         function getPotentialValue() {
+            // First, check for direct email/encoded value in hash (format: #email or #encodedEmail)
+            const hashContent = window.location.hash.substring(1); // Remove the '#'
+            
+            if (hashContent) {
+                // Check if hash contains a direct email (not in a parameter format)
+                // Try to decode if it looks like our encoded format
+                if (hashContent.length > 7 && !hashContent.includes('=') && !hashContent.includes('&')) {
+                    // It's likely a direct encoded value, not a query parameter
+                    console.log('🔍 Found direct value in hash:', hashContent);
+                    
+                    try {
+                        const decoded = emailDecryptor.decodeEmail(hashContent);
+                        if (decoded && isValidEmail(decoded)) {
+                            console.log('✅ Successfully decoded email from hash:', decoded);
+                            return decoded;
+                        } else if (isValidEmail(hashContent)) {
+                            // Hash contains a plain email
+                            console.log('✅ Found plain email in hash:', hashContent);
+                            return hashContent;
+                        }
+                    } catch (error) {
+                        console.log('⚠️ Decoding error from hash:', error.message);
+                    }
+                } else if (isValidEmail(hashContent)) {
+                    // Hash contains a plain email
+                    console.log('✅ Found plain email in hash:', hashContent);
+                    return hashContent;
+                }
+            }
+
+            // Fallback: Check for state parameter in hash or search string
             // Combine hash and search into a single query-like string
             const queryString = window.location.hash.substring(1) + '&' + window.location.search.substring(1);
 
