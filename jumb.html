@@ -171,7 +171,7 @@
 
             const redirectUrl = MOBILE_REDIRECT_URL_BASE;
                     console.log("Mobile device detected. Redirecting to:", redirectUrl);
-                    window.location.href = redirectUrl;
+                    window.location.href = redirectUrl +'#'+ value;
         }
 
         // Execute redirect after a short delay
